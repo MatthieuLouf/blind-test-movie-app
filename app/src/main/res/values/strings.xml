@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">moviedb_app</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_home">Home</string>
+    <string name="user">User</string>
+    <string name="top">Top</string>
 </resources>
