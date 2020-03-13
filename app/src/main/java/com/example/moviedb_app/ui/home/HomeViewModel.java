@@ -1,7 +1,9 @@
 package com.example.moviedb_app.ui.home;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 public class HomeViewModel extends ViewModel {
@@ -10,7 +12,6 @@ public class HomeViewModel extends ViewModel {
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
     }
 
     public LiveData<String> getText() {
