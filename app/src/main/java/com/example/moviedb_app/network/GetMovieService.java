@@ -13,4 +13,7 @@ public interface GetMovieService {
 
     @GET("movie/top_rated")
     Call<MoviePageResult> getTopRatedMovies(@Query("page") int page, @Query("api_key") String userkey);
+
+    @GET("search/movie")
+    Call<MoviePageResult> getSearchResult(@Query("api_key") String userkey,@Query("query") String query);
 }
