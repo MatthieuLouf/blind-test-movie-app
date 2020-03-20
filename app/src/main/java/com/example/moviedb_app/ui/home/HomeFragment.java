@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getPopularMovies(1, MOVIE_KEY).enqueue(new Callback<MoviePageResult>() {
+        retrofitService.getPopularMovies(1, MOVIE_KEY,"US").enqueue(new Callback<MoviePageResult>() {
             @Override
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 MoviePageResult res = response.body();

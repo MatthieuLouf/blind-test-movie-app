@@ -26,6 +26,7 @@ public class TopFragment extends Fragment {
 
     private RecyclerView recyclerViewPopularMovies;
     private RecyclerView recyclerViewTopRatedMovies;
+    private RecyclerView recyclerViewDiscoverMovies;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class TopFragment extends Fragment {
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager layoutManagerTopRated
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerDiscover
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         recyclerViewPopularMovies = root.findViewById(R.id.recycler_view_popular);
         recyclerViewPopularMovies.setLayoutManager(layoutManagerPopular);
@@ -43,8 +46,12 @@ public class TopFragment extends Fragment {
         recyclerViewTopRatedMovies = root.findViewById(R.id.recycler_view_toprated);
         recyclerViewTopRatedMovies.setLayoutManager(layoutManagerTopRated);
 
+        recyclerViewDiscoverMovies = root.findViewById(R.id.recycler_view_discover);
+        recyclerViewDiscoverMovies.setLayoutManager(layoutManagerDiscover);
+
         startPopularMovies();
         startTopRatedMovies();
+        startDiscoverMovies();
 
         return root;
     }
@@ -54,7 +61,7 @@ public class TopFragment extends Fragment {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getPopularMovies(1, KEY_API).enqueue(new Callback<MoviePageResult>() {
+        retrofitService.getPopularMovies(1, KEY_API,"US").enqueue(new Callback<MoviePageResult>() {
             @Override
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 MoviePageResult res = response.body();
@@ -74,12 +81,32 @@ public class TopFragment extends Fragment {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getTopRatedMovies(1, KEY_API).enqueue(new Callback<MoviePageResult>() {
+        retrofitService.getTopRatedMovies(1, KEY_API,"US").enqueue(new Callback<MoviePageResult>() {
             @Override
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 MoviePageResult res = response.body();
 
                 recyclerViewTopRatedMovies.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie_top,"horizontal_view"));
+            }
+
+            @Override
+            public void onFailure(Call<MoviePageResult> call, Throwable t) {
+            }
+
+        });
+    }
+
+    public void startDiscoverMovies() {
+        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
+
+        GetMovieService retrofitService = retrofit.create(GetMovieService.class);
+
+        retrofitService.getDiscoverEigthiesMovies(1, KEY_API,"vote_count.desc","US","false","1980-01-01","1989-12-31").enqueue(new Callback<MoviePageResult>() {
+            @Override
+            public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
+                MoviePageResult res = response.body();
+
+                recyclerViewDiscoverMovies.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie_top,"horizontal_view"));
             }
 
             @Override

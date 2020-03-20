@@ -11,10 +11,23 @@ import retrofit2.http.Query;
 @SuppressWarnings("ALL")
 public interface GetMovieService {
     @GET("movie/popular")
-    Call<MoviePageResult> getPopularMovies(@Query("page") int page, @Query("api_key") String userkey);
+    Call<MoviePageResult> getPopularMovies(@Query("page") int page,
+                                           @Query("api_key") String userkey,
+                                           @Query("region") String region);
 
     @GET("movie/top_rated")
-    Call<MoviePageResult> getTopRatedMovies(@Query("page") int page, @Query("api_key") String userkey);
+    Call<MoviePageResult> getTopRatedMovies(@Query("page") int page,
+                                            @Query("api_key") String userkey,
+                                            @Query("region") String region);
+
+    @GET("discover/movie")
+    Call<MoviePageResult> getDiscoverEigthiesMovies(@Query("page") int page,
+                                                    @Query("api_key") String userkey,
+                                                    @Query("sort_by") String sort_by,
+                                                    @Query("region") String region,
+                                                    @Query("include_adult") String include_adult,
+                                                    @Query("primary_release_date.gte") String greaterThan,
+                                                    @Query("primary_release_date.lte") String lessThan);
 
     @GET("search/movie")
     Call<MoviePageResult> getSearchResult(@Query("api_key") String userkey,@Query("query") String query);

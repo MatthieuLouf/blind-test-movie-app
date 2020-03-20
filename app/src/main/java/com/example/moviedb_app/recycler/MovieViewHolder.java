@@ -37,7 +37,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final Movie movie) {
-        original_title.setText(movie.getOriginalTitle());
+        original_title.setText(movie.getTitle());
         Glide.with(itemView).load(BASE_URL_IMAGE + movie.getPosterPath()).into(image);
 
         if (this.viewType.equals("vertical_view")) {
