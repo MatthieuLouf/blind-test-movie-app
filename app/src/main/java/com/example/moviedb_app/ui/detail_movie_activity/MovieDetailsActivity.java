@@ -30,6 +30,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView rate;
     private TextView release_date;
     private TextView genres;
+    private TextView synopsis;
+    private TextView budget;
+    private TextView collection_name;
+    private TextView collection_separator;
+    private ImageView collection_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.rate=findViewById(R.id.rating_details);
         this.release_date=findViewById(R.id.release_date_details);
         this.genres=findViewById(R.id.genre_details);
+        this.synopsis=findViewById(R.id.synopsis_details);
+        this.budget=findViewById(R.id.budget_details);
+        this.collection_image=findViewById(R.id.collection_details_image);
+        this.collection_name=findViewById(R.id.collection_details_name);
+        this.collection_separator=findViewById(R.id.collection_details_separator);
         startSearch(movieId);
     }
 
@@ -58,8 +68,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 MovieDetails res = response.body();
-                TextView test = findViewById(R.id.test);
-                test.setText(res.getOriginalTitle());
 
                 Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE+res.getPosterPath()).into(image);
                 original_title.setText(res.getOriginalTitle());
@@ -74,6 +82,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     }
                 }
                 genres.setText(genre_comment);
+                synopsis.setText("Synopsis : \n \n"+res.getOverview());
+                budget.setText("Budget : \n \n"+res.getBudget().toString()+"$"+"\n \nRevenue : \n \n"+res.getRevenue().toString()+"$");
+                if (res.getBelongsToCollection() != null)
+                {
+                    collection_name.setText(res.getBelongsToCollection().getName());
+                    collection_separator.setText("Collection :");
+                    Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE+res.getBelongsToCollection().getPosterPath()).into(collection_image);
+                }
 
 
             }
