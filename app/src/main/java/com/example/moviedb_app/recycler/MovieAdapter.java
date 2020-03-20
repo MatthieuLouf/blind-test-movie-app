@@ -14,17 +14,19 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     private final List<Movie> movies;
     private final int layout;
+    private final String viewType;
 
-    public MovieAdapter(List<Movie> movies,int layout) {
+    public MovieAdapter(List<Movie> movies,int layout, String viewType) {
         this.movies = movies;
         this.layout = layout;
+        this.viewType = viewType;
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup, false);
-        return new MovieViewHolder(view);
+        return new MovieViewHolder(view,viewType);
     }
 
     @Override

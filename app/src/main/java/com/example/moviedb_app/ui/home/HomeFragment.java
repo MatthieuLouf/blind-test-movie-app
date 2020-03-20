@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 MoviePageResult res = response.body();
 
-                recyclerView.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie));
+                recyclerView.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie_home,"vertical_view"));
 
             }
 
@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 MoviePageResult res = response.body();
                 if (res != null) {
-                    recyclerView.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie));
+                    recyclerView.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie_home,"vertical_view"));
                 }
                 else
                 {
