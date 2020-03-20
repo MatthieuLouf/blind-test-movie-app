@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:maxWidth="300dp"
-        android:maxLines="3"
+        android:maxLines="2"
         android:paddingStart="8dp"
         android:paddingTop="0dp"
         android:paddingEnd="8dp"
