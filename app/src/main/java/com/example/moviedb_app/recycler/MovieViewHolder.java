@@ -20,7 +20,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     private TextView language;
     private String BASE_URL_IMAGE ="https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
 
-
     private final String viewType;
 
     public MovieViewHolder(@NonNull View itemView,String viewType) {
