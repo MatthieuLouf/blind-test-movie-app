@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
+import com.example.moviedb_app.ui.detail_movie_activity.MovieDetailsActivity;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder {
 
@@ -52,16 +53,12 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
             language.setText("Language : " + movie.getOriginalLanguage());
         }
 
-        /*
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Main2Activity.start(view.getContext(),movie.getId().getVideoId());
+                MovieDetailsActivity.start(view.getContext(),movie.getId().toString());
             }
 
-
         });
-
-         */
     }
 }
