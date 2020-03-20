@@ -28,91 +28,59 @@ public class TopFragment extends Fragment {
     private RecyclerView recyclerViewTopRatedMovies;
     private RecyclerView recyclerViewDiscoverMovies;
 
+    private RecyclerView[] recyclerViews = new RecyclerView[3];
+    private int[] recycler_view_ids = {R.id.recycler_view_popular, R.id.recycler_view_toprated, R.id.recycler_view_discover};
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_top, container, false);
 
-        LinearLayoutManager layoutManagerPopular
-                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        LinearLayoutManager layoutManagerTopRated
-                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        LinearLayoutManager layoutManagerDiscover
-                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-
-        recyclerViewPopularMovies = root.findViewById(R.id.recycler_view_popular);
-        recyclerViewPopularMovies.setLayoutManager(layoutManagerPopular);
-
-        recyclerViewTopRatedMovies = root.findViewById(R.id.recycler_view_toprated);
-        recyclerViewTopRatedMovies.setLayoutManager(layoutManagerTopRated);
-
-        recyclerViewDiscoverMovies = root.findViewById(R.id.recycler_view_discover);
-        recyclerViewDiscoverMovies.setLayoutManager(layoutManagerDiscover);
-
-        startPopularMovies();
-        startTopRatedMovies();
-        startDiscoverMovies();
+        LinearLayoutManager[] linearLayoutManagers = new LinearLayoutManager[3];
+        for (int i = 0; i < linearLayoutManagers.length; i++) {
+            linearLayoutManagers[i] = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerViews[i] = root.findViewById(recycler_view_ids[i]);
+            recyclerViews[i].setLayoutManager(linearLayoutManagers[i]);
+            startRecyclerViewsMovies(i);
+        }
 
         return root;
     }
 
-    public void startPopularMovies() {
+    public void startRecyclerViewsMovies(int index) {
         Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
-
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getPopularMovies(1, KEY_API,"US").enqueue(new Callback<MoviePageResult>() {
-            @Override
-            public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
-                MoviePageResult res = response.body();
-
-                recyclerViewPopularMovies.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie_top,"horizontal_view"));
-            }
-
-            @Override
-            public void onFailure(Call<MoviePageResult> call, Throwable t) {
-            }
-
-        });
+        switch (index) {
+            case 0:
+                retrofitService.getPopularMovies(1, KEY_API, "US").enqueue(getMoviePageCallback(index));
+                break;
+            case 1:
+                retrofitService.getTopRatedMovies(1, KEY_API, "US").enqueue(getMoviePageCallback(index));
+                break;
+            case 2:
+                retrofitService.getDiscoverEigthiesMovies(1, KEY_API, "vote_count.desc", "US",
+                        "false", "1980-01-01", "1989-12-31").enqueue(getMoviePageCallback(index));
+                break;
+        }
     }
 
-    public void startTopRatedMovies() {
-        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
-
-        GetMovieService retrofitService = retrofit.create(GetMovieService.class);
-
-        retrofitService.getTopRatedMovies(1, KEY_API,"US").enqueue(new Callback<MoviePageResult>() {
+    public Callback<MoviePageResult> getMoviePageCallback(int index) {
+        Callback<MoviePageResult> callback = new Callback<MoviePageResult>() {
             @Override
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 MoviePageResult res = response.body();
 
-                recyclerViewTopRatedMovies.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie_top,"horizontal_view"));
+                recyclerViews[index].setAdapter(new MovieAdapter(res.getResults(), R.layout.preview_movie_top, "horizontal_view"));
             }
 
             @Override
             public void onFailure(Call<MoviePageResult> call, Throwable t) {
             }
 
-        });
-    }
-
-    public void startDiscoverMovies() {
-        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
-
-        GetMovieService retrofitService = retrofit.create(GetMovieService.class);
-
-        retrofitService.getDiscoverEigthiesMovies(1, KEY_API,"vote_count.desc","US","false","1980-01-01","1989-12-31").enqueue(new Callback<MoviePageResult>() {
-            @Override
-            public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
-                MoviePageResult res = response.body();
-
-                recyclerViewDiscoverMovies.setAdapter(new MovieAdapter(res.getResults(),R.layout.preview_movie_top,"horizontal_view"));
-            }
-
-            @Override
-            public void onFailure(Call<MoviePageResult> call, Throwable t) {
-            }
-
-        });
+        };
+        return callback;
     }
 }
+
+
