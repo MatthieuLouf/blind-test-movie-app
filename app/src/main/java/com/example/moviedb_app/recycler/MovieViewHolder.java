@@ -1,16 +1,15 @@
-package com.example.moviedb_app.ui.home.RecyclerView;
+package com.example.moviedb_app.recycler;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.moviedb_app.R;
-import com.example.moviedb_app.model.Movie;
-
-import com.bumptech.glide.Glide;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.moviedb_app.R;
+import com.example.moviedb_app.model.Movie;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder {
 
