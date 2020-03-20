@@ -30,7 +30,7 @@ public interface GetMovieService {
                                                     @Query("primary_release_date.lte") String lessThan);
 
     @GET("search/movie")
-    Call<MoviePageResult> getSearchResult(@Query("api_key") String userkey,@Query("query") String query);
+    Call<MoviePageResult> getSearchResult(@Query("page") int page,@Query("api_key") String userkey,@Query("query") String query);
 
     @GET("movie/{id}")
     Call<MovieDetails> getMovieDetails(@Path("id") String id, @Query("api_key") String userkey);

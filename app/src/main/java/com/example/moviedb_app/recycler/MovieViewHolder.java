@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
@@ -48,9 +49,12 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     public void bind(final Movie movie) {
         original_title.setText(movie.getTitle());
         progressBar.setVisibility(View.VISIBLE);
-        Glide.with(itemView).load(BASE_URL_IMAGE + movie.getPosterPath()).listener(new RequestListener<Drawable>() {
+        Glide.with(itemView).applyDefaultRequestOptions(new RequestOptions()
+                .error(R.drawable.ic_dashboard_black_24dp))
+                .load(BASE_URL_IMAGE + movie.getPosterPath()).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
                 return false;
             }
 
