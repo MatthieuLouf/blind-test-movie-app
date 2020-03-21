@@ -2,6 +2,7 @@
     <string name="app_name">Movie DB</string>
     <string name="title_activity_home">Home</string>
     <string name="title_home">Home</string>
+    <string name="USER_LIKE_KEY">Text</string>
     <string name="user">User</string>
     <string name="top">Top</string>
     <string name="search">Search</string>

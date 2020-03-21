@@ -49,6 +49,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     public void bind(final Movie movie) {
         original_title.setText(movie.getTitle());
         progressBar.setVisibility(View.VISIBLE);
+
         Glide.with(itemView).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.drawable.ic_dashboard_black_24dp))
                 .load(BASE_URL_IMAGE + movie.getPosterPath()).listener(new RequestListener<Drawable>() {
