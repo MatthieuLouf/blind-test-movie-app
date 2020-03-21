@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviedb_app.R;
@@ -45,8 +45,8 @@ public class UserFragment extends Fragment {
         textView = root.findViewById(R.id.text_user);
         recyclerView = root.findViewById(R.id.recycler_view_user);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(gridLayoutManager);
         textView.setText("Liked Movies :");
 
         loadMovies();
@@ -77,7 +77,7 @@ public class UserFragment extends Fragment {
                 movieList.add(res);
                 if(movieList.size()==1)
                 {
-                    movieAdapter =new MovieAdapter(movieList,R.layout.preview_movie_home,"vertical_view");
+                    movieAdapter =new MovieAdapter(movieList,R.layout.preview_movie_user,"grid_view");
 
                     recyclerView.setAdapter(movieAdapter);
                 }
