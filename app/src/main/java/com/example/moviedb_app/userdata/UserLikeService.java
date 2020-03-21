@@ -3,7 +3,6 @@ package com.example.moviedb_app.userdata;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.example.moviedb_app.R;
 import com.google.gson.Gson;
@@ -16,12 +15,10 @@ import java.util.List;
 public class UserLikeService {
     private SharedPreferences sharedPreferences;
     private Gson gson;
-    private Activity activity;
     private String userDataString = String.valueOf(R.string.USER_LIKE_KEY);
 
     public UserLikeService(Activity activity) {
-        this.activity = activity;
-        Context context = this.activity;
+        Context context = activity;
         this.sharedPreferences = context.getSharedPreferences("USER", Context.MODE_PRIVATE);
         gson = new Gson();
     }

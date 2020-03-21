@@ -77,6 +77,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             else{
                 userLikeService.addLike(Integer.parseInt(movieId));
             }
+            isLiked = !isLiked;
             likeButton.setText(isLiked? R.string.unlike : R.string.like);
         });
     }

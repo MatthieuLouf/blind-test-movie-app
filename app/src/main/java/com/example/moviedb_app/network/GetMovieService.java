@@ -1,5 +1,6 @@
 package com.example.moviedb_app.network;
 
+import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.MoviePageResult;
 import com.example.moviedb_app.ui.detail_movie_activity.model.MovieDetails;
 
@@ -34,4 +35,7 @@ public interface GetMovieService {
 
     @GET("movie/{id}")
     Call<MovieDetails> getMovieDetails(@Path("id") String id, @Query("api_key") String userkey);
+
+    @GET("movie/{id}")
+    Call<Movie> getMovie(@Path("id") String id, @Query("api_key") String userkey);
 }
