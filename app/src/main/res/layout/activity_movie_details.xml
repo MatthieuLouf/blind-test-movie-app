@@ -53,6 +53,16 @@
         app:layout_constraintStart_toEndOf="@+id/image_details"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/button_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/like"
+        app:layout_constraintTop_toBottomOf="@id/release_date_details"
+        app:layout_constraintStart_toEndOf="@+id/image_details">
+
+    </Button>
+
 
     <ScrollView
         android:layout_width="wrap_content"

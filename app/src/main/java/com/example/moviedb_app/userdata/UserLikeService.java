@@ -10,13 +10,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserLikeService {
-    SharedPreferences sharedPreferences;
-    Gson gson;
-    Activity activity;
-    String userDataString = String.valueOf(R.string.USER_LIKE_KEY);
+    private SharedPreferences sharedPreferences;
+    private Gson gson;
+    private Activity activity;
+    private String userDataString = String.valueOf(R.string.USER_LIKE_KEY);
 
     public UserLikeService(Activity activity) {
         this.activity = activity;
@@ -43,7 +44,7 @@ public class UserLikeService {
         List<Integer> likedMovies = this.getLikes();
         if(likedMovies.contains(movieId))
         {
-            likedMovies.remove(movieId);
+            likedMovies.remove(likedMovies.indexOf(movieId));
             saveLikes(likedMovies);
         }
     }
@@ -52,8 +53,7 @@ public class UserLikeService {
         String json = sharedPreferences.getString(this.userDataString, "");
 
         if (json.isEmpty()) {
-            Toast.makeText(this.activity, "There is no liked Movies", Toast.LENGTH_LONG).show();
-            return null;
+            return new ArrayList<Integer>();
         } else {
             Type type = new TypeToken<List<Integer>>() {
             }.getType();
@@ -62,11 +62,11 @@ public class UserLikeService {
         }
     }
 
-    public void saveLikes(List<Integer> likedMovies)
+    private void saveLikes(List<Integer> likedMovies)
     {
         String json = gson.toJson(likedMovies);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(this.userDataString,json );
-        editor.apply();
+        editor.commit();
     }
 }

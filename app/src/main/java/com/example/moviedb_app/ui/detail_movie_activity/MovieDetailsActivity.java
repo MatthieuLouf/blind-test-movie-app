@@ -1,17 +1,14 @@
 package com.example.moviedb_app.ui.detail_movie_activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.moviedb_app.R;
@@ -19,6 +16,12 @@ import com.example.moviedb_app.network.GetMovieService;
 import com.example.moviedb_app.network.RetrofitInstance;
 import com.example.moviedb_app.ui.detail_movie_activity.model.Genre;
 import com.example.moviedb_app.ui.detail_movie_activity.model.MovieDetails;
+import com.example.moviedb_app.userdata.UserLikeService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MovieDetailsActivity extends AppCompatActivity {
     private static final String MOVIE_ID = "";
@@ -36,6 +39,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView collection_separator;
     private ImageView collection_image;
 
+    private Button likeButton;
+    private UserLikeService userLikeService;
+    private boolean isLiked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +51,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         if (intent != null) {
             movieId = intent.getStringExtra(MOVIE_ID);
         }
+
+        userLikeService = new UserLikeService(this);
+        isLiked = userLikeService.isLiked(Integer.parseInt(movieId));
+        this.likeButton = findViewById(R.id.button_like);
+        likeButton.setText(isLiked? R.string.unlike : R.string.like);
 
         this.image=findViewById(R.id.image_details);
         this.original_title=findViewById(R.id.original_title_details);
@@ -56,6 +68,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.collection_name=findViewById(R.id.collection_details_name);
         this.collection_separator=findViewById(R.id.collection_details_separator);
         startSearch(movieId);
+
+        this.likeButton.setOnClickListener(v -> {
+            if(isLiked)
+            {
+                userLikeService.removeLike(Integer.parseInt(movieId));
+            }
+            else{
+                userLikeService.addLike(Integer.parseInt(movieId));
+            }
+            likeButton.setText(isLiked? R.string.unlike : R.string.like);
+        });
     }
 
     public void startSearch(String query) {

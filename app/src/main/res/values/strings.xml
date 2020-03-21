@@ -6,6 +6,8 @@
     <string name="user">User</string>
     <string name="top">Top</string>
     <string name="search">Search</string>
+    <string name="like">Like</string>
+    <string name="unlike">Unlike</string>
     <string name="top_textview_popular">Popular Movies</string>
     <string name="top_textview_toprated">Top Rated Movies</string>
     <string name="top_textview_discover">Discover 80\'s Movies</string>
