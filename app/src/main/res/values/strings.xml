@@ -4,7 +4,10 @@
     <string name="title_home">Home</string>
     <string name="USER_LIKE_KEY">Text</string>
     <string name="user">User</string>
+    <string name="user_movies">User Liked Movies</string>
     <string name="top">Top</string>
+    <string name="top_movies">Top Movies</string>
+    <string name="movie_details">Movie Details</string>
     <string name="search">Search</string>
     <string name="like">Like</string>
     <string name="unlike">Unlike</string>

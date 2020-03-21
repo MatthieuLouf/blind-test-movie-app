@@ -5,11 +5,10 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
-
     <fragment
         android:id="@+id/navigation_top"
         android:name="com.example.moviedb_app.ui.Top.TopFragment"
-        android:label="@string/top"
+        android:label="@string/top_movies"
         tools:layout="@layout/fragment_top" />
     <fragment
         android:id="@+id/navigation_home"
@@ -20,6 +19,6 @@
     <fragment
         android:id="@+id/navigation_user"
         android:name="com.example.moviedb_app.ui.User.UserFragment"
-        android:label="@string/user"
+        android:label="@string/user_movies"
         tools:layout="@layout/fragment_user" />
 </navigation>

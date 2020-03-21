@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +30,6 @@ public class UserFragment extends Fragment {
 
     private String API_KEY = "5b061cba26b441ddec657d88428cc9fc";
 
-    private TextView textView;
     private List<Movie> movieList = new ArrayList<>();
     private MovieAdapter movieAdapter;
     private RecyclerView recyclerView;
@@ -47,12 +45,10 @@ public class UserFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_user, container, false);
 
-        textView = root.findViewById(R.id.text_user);
         recyclerView = root.findViewById(R.id.recycler_view_user);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        textView.setText("Liked Movies :");
 
         return root;
     }
