@@ -55,7 +55,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         userLikeService = new UserLikeService(this);
         isLiked = userLikeService.isLiked(Integer.parseInt(movieId));
         this.likeButton = findViewById(R.id.button_like);
-        likeButton.setText(isLiked? R.string.unlike : R.string.like);
+        likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked? R.drawable.ic_liked : R.drawable.ic_not_like,0,0,0);
+        likeButton.setText(isLiked? "Unlike" : "Like");
 
         this.image=findViewById(R.id.image_details);
         this.original_title=findViewById(R.id.original_title_details);
@@ -78,7 +79,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 userLikeService.addLike(Integer.parseInt(movieId));
             }
             isLiked = !isLiked;
-            likeButton.setText(isLiked? R.string.unlike : R.string.like);
+            likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked? R.drawable.ic_liked : R.drawable.ic_not_like,0,0,0);
+            likeButton.setText(isLiked? "Unlike" : "Like");
         });
     }
 
