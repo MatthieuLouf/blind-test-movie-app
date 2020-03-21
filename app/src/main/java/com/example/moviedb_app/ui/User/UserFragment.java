@@ -36,6 +36,11 @@ public class UserFragment extends Fragment {
     private MovieAdapter movieAdapter;
     private RecyclerView recyclerView;
 
+    public void onStart(){
+        super.onStart();
+        movieList = new ArrayList<>();
+        loadMovies();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +54,6 @@ public class UserFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         textView.setText("Liked Movies :");
 
-        loadMovies();
         return root;
     }
 
