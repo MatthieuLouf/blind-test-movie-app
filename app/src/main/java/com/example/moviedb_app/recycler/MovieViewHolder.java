@@ -75,14 +75,13 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
                 release_date.setText("Release date :\n" + movie.getReleaseDate().replace('-', '/'));
             }
             language.setText("Language : " + movie.getOriginalLanguage());
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MovieDetailsActivity.start(view.getContext(), movie.getId().toString());
-                }
-
-            });
         }
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MovieDetailsActivity.start(view.getContext(), movie.getId().toString());
+            }
+
+        });
     }
 }
