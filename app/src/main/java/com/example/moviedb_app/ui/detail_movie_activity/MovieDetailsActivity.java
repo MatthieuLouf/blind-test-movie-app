@@ -2,6 +2,7 @@ package com.example.moviedb_app.ui.detail_movie_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -9,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.network.GetMovieService;
 import com.example.moviedb_app.network.RetrofitInstance;
@@ -42,6 +46,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView collection_name;
     private TextView collection_separator;
     private ImageView collection_image;
+    private ImageView background_image;
     private  TextView production_separator;
     private RecyclerView recyclerView_production_company;
 
@@ -75,7 +80,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.collection_name=findViewById(R.id.collection_details_name);
         this.collection_separator=findViewById(R.id.collection_details_separator);
         this.production_separator=findViewById(R.id.production_details_separator);
+        background_image=findViewById(R.id.background_details);
+        background_image.setImageAlpha(75);
+        background_image.setScaleType(ImageView.ScaleType.FIT_XY);
         startSearch(movieId);
+
 
         this.likeButton.setOnClickListener(v -> {
             if(isLiked)
@@ -101,6 +110,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 MovieDetails res = response.body();
+                Glide.with(MovieDetailsActivity.this).load("https://image.tmdb.org/t/p/original/"+res.getBackdropPath()).into(background_image);
 
                 Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE+res.getPosterPath()).into(image);
                 original_title.setText(res.getOriginalTitle());
