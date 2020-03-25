@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,10 +15,13 @@ import com.bumptech.glide.Glide;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.network.GetMovieService;
 import com.example.moviedb_app.network.RetrofitInstance;
+import com.example.moviedb_app.recycler.recycler_movie_production.MovieProductionAdapter;
 import com.example.moviedb_app.ui.detail_movie_activity.model.Genre;
 import com.example.moviedb_app.ui.detail_movie_activity.model.MovieDetails;
 import com.example.moviedb_app.userdata.UserLikeService;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +42,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView collection_name;
     private TextView collection_separator;
     private ImageView collection_image;
+    private  TextView production_separator;
+    private RecyclerView recyclerView_production_company;
 
     private Button likeButton;
     private UserLikeService userLikeService;
@@ -68,6 +74,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.collection_image=findViewById(R.id.collection_details_image);
         this.collection_name=findViewById(R.id.collection_details_name);
         this.collection_separator=findViewById(R.id.collection_details_separator);
+        this.production_separator=findViewById(R.id.production_details_separator);
         startSearch(movieId);
 
         this.likeButton.setOnClickListener(v -> {
@@ -115,6 +122,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     collection_name.setText(res.getBelongsToCollection().getName());
                     collection_separator.setText("Collection :");
                     Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE+res.getBelongsToCollection().getPosterPath()).into(collection_image);
+                }
+                if (res.getProductionCompanies() !=null)
+                {
+                    production_separator.setText("Production Companies : ");
+                    recyclerView_production_company=findViewById(R.id.recycler_view_details_production);
+                    GridLayoutManager gridLayoutManager=new GridLayoutManager(MovieDetailsActivity.this,2,GridLayoutManager.VERTICAL,false);
+                    recyclerView_production_company.setLayoutManager(gridLayoutManager);
+                    MovieProductionAdapter movieProductionAdapter = new MovieProductionAdapter(res.getProductionCompanies(), R.layout.preview_movie_details_production);
+                    recyclerView_production_company.setAdapter(movieProductionAdapter);
                 }
 
 

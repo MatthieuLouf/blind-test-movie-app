@@ -89,11 +89,25 @@
                 android:id="@+id/synopsis_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/production_details_separator"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"  />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_details_production"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:padding="8dp"/>
 
             <TextView
                 android:id="@+id/budget_details"
