@@ -67,7 +67,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         isLiked = userLikeService.isLiked(Integer.parseInt(movieId));
         this.likeButton = findViewById(R.id.button_like);
         likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked? R.drawable.ic_liked : R.drawable.ic_not_like,0,0,0);
-        likeButton.setText(isLiked? "Unlike" : "Like");
+        likeButton.setText(isLiked? R.string.unlike : R.string.like);
 
         this.image=findViewById(R.id.image_details);
         this.original_title=findViewById(R.id.original_title_details);
@@ -96,7 +96,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
             isLiked = !isLiked;
             likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked? R.drawable.ic_liked : R.drawable.ic_not_like,0,0,0);
-            likeButton.setText(isLiked? "Unlike" : "Like");
+            likeButton.setText(isLiked? R.string.unlike : R.string.like);
         });
     }
 
@@ -114,9 +114,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                 Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE+res.getPosterPath()).into(image);
                 original_title.setText(res.getOriginalTitle());
-                rate.setText("Average note : "+res.getVoteAverage().toString());
-                release_date.setText("Release Date : "+res.getReleaseDate());
-                String genre_comment="Genres :";
+                rate.setText(getString(R.string.average_rate)+" : "+res.getVoteAverage().toString());
+                release_date.setText(getString(R.string.release_date)+" : "+res.getReleaseDate());
+                String genre_comment=getString(R.string.genres)+" : ";
                 if (res.getGenres() != null)
                 {
                     for (Genre x : res.getGenres())
@@ -125,17 +125,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     }
                 }
                 genres.setText(genre_comment);
-                synopsis.setText("Synopsis : \n \n"+res.getOverview());
-                budget.setText("Budget : \n \n"+res.getBudget().toString()+"$"+"\n \nRevenue : \n \n"+res.getRevenue().toString()+"$");
+                synopsis.setText(getString(R.string.synopsis)+" : \n \n"+res.getOverview());
+                budget.setText(getString(R.string.budget)+" : \n \n"+res.getBudget().toString()+"$ \n\n"+getString(R.string.revenue)+" : \n \n"+res.getRevenue().toString()+"$");
                 if (res.getBelongsToCollection() != null)
                 {
                     collection_name.setText(res.getBelongsToCollection().getName());
-                    collection_separator.setText("Collection :");
+                    collection_separator.setText(getString(R.string.collection));
                     Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE+res.getBelongsToCollection().getPosterPath()).into(collection_image);
                 }
                 if (res.getProductionCompanies() !=null)
                 {
-                    production_separator.setText("Production Companies : ");
+                    production_separator.setText(getString(R.string.production_companies)+ " :");
                     recyclerView_production_company=findViewById(R.id.recycler_view_details_production);
                     GridLayoutManager gridLayoutManager=new GridLayoutManager(MovieDetailsActivity.this,2,GridLayoutManager.VERTICAL,false);
                     recyclerView_production_company.setLayoutManager(gridLayoutManager);

@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(getActivity(),"Please insert what you want before !",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.research_empty,Toast.LENGTH_SHORT).show();
                 }
 
             }

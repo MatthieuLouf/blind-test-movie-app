@@ -14,4 +14,13 @@
     <string name="top_textview_popular">Popular Movies</string>
     <string name="top_textview_toprated">Top Rated Movies</string>
     <string name="top_textview_discover">Discover 80\'s Movies</string>
+    <string name="collection">Collection :</string>
+    <string name="production_companies">"Production Companies "</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="budget">Budget</string>
+    <string name="revenue">Revenue</string>
+    <string name="average_rate">Average note</string>
+    <string name="genres">Genres</string>
+    <string name="release_date">Release Date</string>
+    <string name="research_empty">Please insert what you want before !</string>
 </resources>
