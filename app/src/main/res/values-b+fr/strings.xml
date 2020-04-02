@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Film BDD</string>
+    <string name="app_name">Blindtests de film</string>
     <string name="title_activity_home">Accueil</string>
     <string name="title_home">Accueil</string>
     <string name="USER_LIKE_KEY">Text</string>

@@ -41,7 +41,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         this.original_title = itemView.findViewById(R.id.original_title);
         this.rate = itemView.findViewById(R.id.rating);
         this.release_date = itemView.findViewById(R.id.release_date);
-        this.background_image=itemView.findViewById(R.id.background_preview);
+        this.background_image = itemView.findViewById(R.id.background_preview);
         background_image.setImageAlpha(75);
         background_image.setScaleType(ImageView.ScaleType.FIT_XY);
         this.viewType = viewType;
@@ -53,7 +53,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     public void bind(final Movie movie) {
         original_title.setText(movie.getTitle());
         progressBar.setVisibility(View.VISIBLE);
-        Glide.with(itemView).load("https://image.tmdb.org/t/p/w1280/"+movie.getBackdropPath()).into(background_image);
+        Glide.with(itemView).load("https://image.tmdb.org/t/p/w1280/" + movie.getBackdropPath()).into(background_image);
 
         Glide.with(itemView).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.drawable.ic_dashboard_black_24dp))

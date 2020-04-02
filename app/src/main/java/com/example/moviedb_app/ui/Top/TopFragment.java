@@ -77,13 +77,13 @@ public class TopFragment extends Fragment {
 
         switch (recyclerIndex) {
             case 0:
-                retrofitService.getPopularMovies(page, KEY_API, getString(R.string.api_language_key),"US").enqueue(getMoviePageCallback(recyclerIndex, page));
+                retrofitService.getPopularMovies(page, KEY_API, getString(R.string.api_language_key), "US").enqueue(getMoviePageCallback(recyclerIndex, page));
                 break;
             case 1:
-                retrofitService.getTopRatedMovies(page, KEY_API,getString(R.string.api_language_key), "US").enqueue(getMoviePageCallback(recyclerIndex, page));
+                retrofitService.getTopRatedMovies(page, KEY_API, getString(R.string.api_language_key), "US").enqueue(getMoviePageCallback(recyclerIndex, page));
                 break;
             case 2:
-                retrofitService.getDiscoverEigthiesMovies(page, KEY_API,getString(R.string.api_language_key), "vote_count.desc", "US",
+                retrofitService.getDiscoverMovies(page, KEY_API, getString(R.string.api_language_key), "vote_count.desc", "US",
                         "false", "1980-01-01", "1989-12-31").enqueue(getMoviePageCallback(recyclerIndex, page));
                 break;
         }

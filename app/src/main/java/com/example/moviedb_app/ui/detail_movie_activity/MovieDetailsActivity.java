@@ -26,6 +26,7 @@ import com.example.moviedb_app.userdata.UserLikeService;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +35,7 @@ import retrofit2.Retrofit;
 public class MovieDetailsActivity extends AppCompatActivity {
     private static final String MOVIE_ID = "";
     private String MOVIE_KEY = "5b061cba26b441ddec657d88428cc9fc";
-    private String BASE_URL_IMAGE ="https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
+    private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
     private String movieId;
     private ImageView image;
     private TextView original_title;
@@ -47,7 +48,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView collection_separator;
     private ImageView collection_image;
     private ImageView background_image;
-    private  TextView production_separator;
+    private TextView production_separator;
     private RecyclerView recyclerView_production_company;
 
     private Button likeButton;
@@ -66,37 +67,35 @@ public class MovieDetailsActivity extends AppCompatActivity {
         userLikeService = new UserLikeService(this);
         isLiked = userLikeService.isLiked(Integer.parseInt(movieId));
         this.likeButton = findViewById(R.id.button_like);
-        likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked? R.drawable.ic_liked : R.drawable.ic_not_like,0,0,0);
-        likeButton.setText(isLiked? R.string.unlike : R.string.like);
+        likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked ? R.drawable.ic_liked : R.drawable.ic_not_like, 0, 0, 0);
+        likeButton.setText(isLiked ? R.string.unlike : R.string.like);
 
-        this.image=findViewById(R.id.image_details);
-        this.original_title=findViewById(R.id.original_title_details);
-        this.rate=findViewById(R.id.rating_details);
-        this.release_date=findViewById(R.id.release_date_details);
-        this.genres=findViewById(R.id.genre_details);
-        this.synopsis=findViewById(R.id.synopsis_details);
-        this.budget=findViewById(R.id.budget_details);
-        this.collection_image=findViewById(R.id.collection_details_image);
-        this.collection_name=findViewById(R.id.collection_details_name);
-        this.collection_separator=findViewById(R.id.collection_details_separator);
-        this.production_separator=findViewById(R.id.production_details_separator);
-        background_image=findViewById(R.id.background_details);
+        this.image = findViewById(R.id.image_details);
+        this.original_title = findViewById(R.id.original_title_details);
+        this.rate = findViewById(R.id.rating_details);
+        this.release_date = findViewById(R.id.release_date_details);
+        this.genres = findViewById(R.id.genre_details);
+        this.synopsis = findViewById(R.id.synopsis_details);
+        this.budget = findViewById(R.id.budget_details);
+        this.collection_image = findViewById(R.id.collection_details_image);
+        this.collection_name = findViewById(R.id.collection_details_name);
+        this.collection_separator = findViewById(R.id.collection_details_separator);
+        this.production_separator = findViewById(R.id.production_details_separator);
+        background_image = findViewById(R.id.background_details);
         background_image.setImageAlpha(75);
         background_image.setScaleType(ImageView.ScaleType.FIT_XY);
         startSearch(movieId);
 
 
         this.likeButton.setOnClickListener(v -> {
-            if(isLiked)
-            {
+            if (isLiked) {
                 userLikeService.removeLike(Integer.parseInt(movieId));
-            }
-            else{
+            } else {
                 userLikeService.addLike(Integer.parseInt(movieId));
             }
             isLiked = !isLiked;
-            likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked? R.drawable.ic_liked : R.drawable.ic_not_like,0,0,0);
-            likeButton.setText(isLiked? R.string.unlike : R.string.like);
+            likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked ? R.drawable.ic_liked : R.drawable.ic_not_like, 0, 0, 0);
+            likeButton.setText(isLiked ? R.string.unlike : R.string.like);
         });
     }
 
@@ -106,38 +105,34 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getMovieDetails(query, MOVIE_KEY,getString(R.string.api_language_key)).enqueue(new Callback<MovieDetails>() {
+        retrofitService.getMovieDetails(query, MOVIE_KEY, getString(R.string.api_language_key)).enqueue(new Callback<MovieDetails>() {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 MovieDetails res = response.body();
-                Glide.with(MovieDetailsActivity.this).load("https://image.tmdb.org/t/p/original/"+res.getBackdropPath()).into(background_image);
+                Glide.with(MovieDetailsActivity.this).load("https://image.tmdb.org/t/p/original/" + res.getBackdropPath()).into(background_image);
 
-                Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE+res.getPosterPath()).into(image);
+                Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE + res.getPosterPath()).into(image);
                 original_title.setText(res.getOriginalTitle());
-                rate.setText(getString(R.string.average_rate)+" : "+res.getVoteAverage().toString());
-                release_date.setText(getString(R.string.release_date)+" : "+res.getReleaseDate());
-                String genre_comment=getString(R.string.genres)+" : ";
-                if (res.getGenres() != null)
-                {
-                    for (Genre x : res.getGenres())
-                    {
-                        genre_comment=genre_comment+" "+x.getName();
+                rate.setText(getString(R.string.average_rate) + " : " + res.getVoteAverage().toString());
+                release_date.setText(getString(R.string.release_date) + " : " + res.getReleaseDate());
+                String genre_comment = getString(R.string.genres) + " : ";
+                if (res.getGenres() != null) {
+                    for (Genre x : res.getGenres()) {
+                        genre_comment = genre_comment + " " + x.getName();
                     }
                 }
                 genres.setText(genre_comment);
-                synopsis.setText(getString(R.string.synopsis)+" : \n \n"+res.getOverview());
-                budget.setText(getString(R.string.budget)+" : \n \n"+res.getBudget().toString()+"$ \n\n"+getString(R.string.revenue)+" : \n \n"+res.getRevenue().toString()+"$");
-                if (res.getBelongsToCollection() != null)
-                {
+                synopsis.setText(getString(R.string.synopsis) + " : \n \n" + res.getOverview());
+                budget.setText(getString(R.string.budget) + " : \n \n" + res.getBudget().toString() + "$ \n\n" + getString(R.string.revenue) + " : \n \n" + res.getRevenue().toString() + "$");
+                if (res.getBelongsToCollection() != null) {
                     collection_name.setText(res.getBelongsToCollection().getName());
                     collection_separator.setText(getString(R.string.collection));
-                    Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE+res.getBelongsToCollection().getPosterPath()).into(collection_image);
+                    Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE + res.getBelongsToCollection().getPosterPath()).into(collection_image);
                 }
-                if (res.getProductionCompanies() !=null)
-                {
-                    production_separator.setText(getString(R.string.production_companies)+ " :");
-                    recyclerView_production_company=findViewById(R.id.recycler_view_details_production);
-                    GridLayoutManager gridLayoutManager=new GridLayoutManager(MovieDetailsActivity.this,2,GridLayoutManager.VERTICAL,false);
+                if (res.getProductionCompanies() != null) {
+                    production_separator.setText(getString(R.string.production_companies) + " :");
+                    recyclerView_production_company = findViewById(R.id.recycler_view_details_production);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(MovieDetailsActivity.this, 2, GridLayoutManager.VERTICAL, false);
                     recyclerView_production_company.setLayoutManager(gridLayoutManager);
                     MovieProductionAdapter movieProductionAdapter = new MovieProductionAdapter(res.getProductionCompanies(), R.layout.preview_movie_details_production);
                     recyclerView_production_company.setAdapter(movieProductionAdapter);

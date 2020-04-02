@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movie DB</string>
+    <string name="app_name">Movie Blindtests</string>
     <string name="title_activity_home">Home</string>
     <string name="title_home">Home</string>
     <string name="USER_LIKE_KEY">Text</string>
@@ -24,4 +24,6 @@
     <string name="release_date">Release Date</string>
     <string name="research_empty">Please insert what you want before !</string>
     <string name="api_language_key">en-US</string>
+    <string name="start_blindtest">Start Blindtest</string>
+    <string name="blindtest_page_title">Movie Blindtest</string>
 </resources>

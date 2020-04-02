@@ -25,7 +25,7 @@ public interface GetMovieService {
                                             @Query("region") String region);
 
     @GET("discover/movie")
-    Call<MoviePageResult> getDiscoverEigthiesMovies(@Query("page") int page,
+    Call<MoviePageResult> getDiscoverMovies(@Query("page") int page,
                                                     @Query("api_key") String userkey,
                                                     @Query("language") String language,
                                                     @Query("sort_by") String sort_by,
@@ -33,6 +33,13 @@ public interface GetMovieService {
                                                     @Query("include_adult") String include_adult,
                                                     @Query("primary_release_date.gte") String greaterThan,
                                                     @Query("primary_release_date.lte") String lessThan);
+
+    @GET("search/movie")
+    Call<MoviePageResult> getYearMovieResult(@Query("page") int page,
+                                             @Query("api_key") String userkey,
+                                             @Query("language") String language,
+                                             @Query("query") String query,
+    @Query("primary_release_year") String year);
 
     @GET("search/movie")
     Call<MoviePageResult> getSearchResult(@Query("page") int page,
