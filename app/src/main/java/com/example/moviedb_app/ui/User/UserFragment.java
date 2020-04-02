@@ -70,7 +70,7 @@ public class UserFragment extends Fragment {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getMovie(String.valueOf(movieId), API_KEY).enqueue(new Callback<Movie>() {
+        retrofitService.getMovie(String.valueOf(movieId), API_KEY,getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
                 Movie res = response.body();

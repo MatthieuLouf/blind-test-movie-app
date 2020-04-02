@@ -106,7 +106,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getMovieDetails(query, MOVIE_KEY).enqueue(new Callback<MovieDetails>() {
+        retrofitService.getMovieDetails(query, MOVIE_KEY,getString(R.string.api_language_key)).enqueue(new Callback<MovieDetails>() {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 MovieDetails res = response.body();

@@ -23,4 +23,5 @@
     <string name="genres">Genres</string>
     <string name="release_date">Release Date</string>
     <string name="research_empty">Please insert what you want before !</string>
+    <string name="api_language_key">en-US</string>
 </resources>

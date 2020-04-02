@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getPopularMovies(page, MOVIE_KEY,"US").enqueue(new Callback<MoviePageResult>() {
+        retrofitService.getPopularMovies(page, MOVIE_KEY,getString(R.string.api_language_key),"US").enqueue(new Callback<MoviePageResult>() {
             @Override
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 if(page==1)
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getSearchResult(page,MOVIE_KEY, query).enqueue(new Callback<MoviePageResult>() {
+        retrofitService.getSearchResult(page,MOVIE_KEY,getString(R.string.api_language_key), query).enqueue(new Callback<MoviePageResult>() {
             @Override
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 MoviePageResult res = response.body();
