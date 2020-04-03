@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Movie implements Serializable
 {
-
     @SerializedName("popularity")
     private Double popularity;
     @SerializedName("vote_count")

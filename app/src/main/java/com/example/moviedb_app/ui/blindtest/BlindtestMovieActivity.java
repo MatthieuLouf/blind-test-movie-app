@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.moviedb_app.R;
+import com.example.moviedb_app.model.Genre;
+import com.example.moviedb_app.model.GenrePageResult;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.MoviePageResult;
 import com.example.moviedb_app.network.GetMovieService;
@@ -43,77 +45,5 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_blindtest_movie_page);
     }
 
-    /*private void scrapTopMovies() {
-        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
-        GetMovieService retrofitService = retrofit.create(GetMovieService.class);
-        for (int j = 2010; j <= 2020; j++) {
-            for (int i = 0; i < 10; i++) {
-                retrofitService.getDiscoverMovies(i, KEY_API, "en-US", "vote_count.desc", "FR",
-                        "false", j+"-01-01", j+"-12-31").enqueue(getMoviePageCallback());
-            }
-        }
-    }
 
-    private Callback<MoviePageResult> getMoviePageCallback() {
-        Callback<MoviePageResult> callback = new Callback<MoviePageResult>() {
-            @Override
-            public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
-                MoviePageResult res = response.body();
-                if (res != null) {
-                    List<Movie> list = res.getResults();
-
-                    for (Movie movie : list
-                    ) {
-                        try {
-                            createMovie(movie);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MoviePageResult> call, Throwable t) {
-            }
-
-        };
-        return callback;
-    }
-
-    private void createMovie(Movie movie) throws ParseException {
-
-        db.collection("movies").document(movie.getId().toString())
-                .set(movie)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                        try {
-                            db.collection("movies").document(movie.getId().toString())
-                                    .update("releaseDate", new Timestamp(formatter.parse(movie.getReleaseDate())))
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error writing document", e);
-                                        }
-                                    });
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-    }*/
 }
