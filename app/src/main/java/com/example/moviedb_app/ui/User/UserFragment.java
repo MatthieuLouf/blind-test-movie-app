@@ -2,6 +2,7 @@ package com.example.moviedb_app.ui.User;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,8 +18,12 @@ import com.example.moviedb_app.network.GetMovieService;
 import com.example.moviedb_app.network.RetrofitInstance;
 import com.example.moviedb_app.recycler.MovieAdapter;
 import com.example.moviedb_app.userdata.UserLikeService;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,16 +34,26 @@ import retrofit2.Retrofit;
 public class UserFragment extends Fragment {
 
     private String API_KEY = "5b061cba26b441ddec657d88428cc9fc";
+    private static final int RC_SIGN_IN = 123;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private List<Movie> movieList = new ArrayList<>();
     private MovieAdapter movieAdapter;
     private RecyclerView recyclerView;
 
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        movieList = new ArrayList<>();
-        loadMovies();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            login();
+        } else {
+            movieList = new ArrayList<>();
+            loadMovies();
+        }
     }
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +62,7 @@ public class UserFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.recycler_view_user);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         return root;
@@ -70,18 +85,16 @@ public class UserFragment extends Fragment {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getMovie(String.valueOf(movieId), API_KEY,getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
+        retrofitService.getMovie(String.valueOf(movieId), API_KEY, getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
                 Movie res = response.body();
                 movieList.add(res);
-                if(movieList.size()==1)
-                {
-                    movieAdapter =new MovieAdapter(movieList,R.layout.preview_movie_user,"grid_view");
+                if (movieList.size() == 1) {
+                    movieAdapter = new MovieAdapter(movieList, R.layout.preview_movie_user, "grid_view");
 
                     recyclerView.setAdapter(movieAdapter);
-                }
-                else {
+                } else {
                     movieAdapter.notifyItemInserted(movieList.size() - 1);
                 }
             }
@@ -92,6 +105,21 @@ public class UserFragment extends Fragment {
             }
 
         });
+    }
+
+    private void login() {
+        // Choose authentication providers
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
+// Create and launch sign-in intent
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN);
     }
 
 }

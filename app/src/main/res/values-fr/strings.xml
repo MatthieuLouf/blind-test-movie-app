@@ -3,4 +3,7 @@
     <string name="api_language_key">fr-FR</string>
     <string name="start_blindtest">Commener le blindtest</string>
     <string name="blindtest_page_title">Blindtest de film</string>
+    <string name="user_settings_title">Paramètres</string>
+    <string name="logout">Déconnexion</string>
+    <string name="delete_user">Suppression du compte</string>
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movie Blindtests</string>
+    <string name="app_name">BlindMovies</string>
     <string name="title_activity_home">Home</string>
     <string name="title_home">Home</string>
     <string name="USER_LIKE_KEY">Text</string>
@@ -26,4 +26,7 @@
     <string name="api_language_key">en-US</string>
     <string name="start_blindtest">Start Blindtest</string>
     <string name="blindtest_page_title">Movie Blindtest</string>
+    <string name="user_settings_title">User\'s Settings</string>
+    <string name="logout" translatable="false">Logout</string>
+    <string name="delete_user">Delete Account</string>
 </resources>
