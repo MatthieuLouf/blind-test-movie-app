@@ -1,8 +1,8 @@
 package com.example.moviedb_app.ui.User;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviedb_app.MainActivity;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.network.GetMovieService;
@@ -19,6 +20,7 @@ import com.example.moviedb_app.network.RetrofitInstance;
 import com.example.moviedb_app.recycler.MovieAdapter;
 import com.example.moviedb_app.userdata.UserLikeService;
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -30,6 +32,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static android.app.Activity.RESULT_OK;
 
 public class UserFragment extends Fragment {
 
@@ -120,6 +124,24 @@ public class UserFragment extends Fragment {
                         .setAvailableProviders(providers)
                         .build(),
                 RC_SIGN_IN);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+            } else {
+                Toast.makeText(getActivity(), R.string.login_failed, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }
