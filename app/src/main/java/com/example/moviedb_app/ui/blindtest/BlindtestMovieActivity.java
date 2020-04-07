@@ -32,10 +32,14 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     private int max_movie_id = 700000;
     Random rnd = new Random();
 
+    boolean firstTime= true;
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     FragmentManager fragmentManager = getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+    Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
+    GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +51,13 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     }
 
-    private void getRandomMovie() {
-        int random = rnd.nextInt(5);
-        loadList(random + 1);
+    public void getRandomMovie() {
+        int random_page = rnd.nextInt(6);
+        loadList(random_page + 1);
     }
 
     public void loadList(int page) {
-        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
-
-        GetMovieService retrofitService = retrofit.create(GetMovieService.class);
-
-        retrofitService.getPopularMovies(page, KEY_API, getString(R.string.api_language_key), getString(R.string.api_region_key)).enqueue(movieListCallback());
+        retrofitService.getTopRatedMovies(page, KEY_API, getString(R.string.api_language_key), getString(R.string.api_region_key)).enqueue(movieListCallback());
     }
 
     public Callback<MoviePageResult> movieListCallback() {
@@ -68,9 +68,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                     List<Movie> movieList = response.body().getResults();
                     chooseMovieInList(movieList);
                 }
-
             }
-
 
             @Override
             public void onFailure(Call<MoviePageResult> call, Throwable t) {
@@ -88,7 +86,15 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     public void startFragment(Movie movie) {
         OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId());
-        fragmentTransaction.add(R.id.one_movie_fragment_container, fragment);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if(firstTime)
+        {
+            fragmentTransaction.add(R.id.one_movie_fragment_container, fragment);
+            firstTime = false;
+        }
+        else {
+            fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
+        }
         fragmentTransaction.commit();
     }
 }

@@ -11,19 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
+import com.example.moviedb_app.model.Video;
+import com.example.moviedb_app.model.VideoPageResult;
 import com.example.moviedb_app.network.GetMovieService;
 import com.example.moviedb_app.network.RetrofitInstance;
-import com.google.android.material.badge.BadgeUtils;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,9 +45,15 @@ public class OneMovieFragment extends Fragment {
     private Movie searched_movie;
 
     private Button hider_top;
+    private Button next_movie;
+
+    boolean next = false;
 
     private TextView movie_title;
     private YouTubePlayerView youTubePlayerView;
+
+    Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
+    GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
     public OneMovieFragment() {
     }
@@ -74,11 +81,52 @@ public class OneMovieFragment extends Fragment {
 
         movie_title = root.findViewById(R.id.one_movie_title);
         hider_top = root.findViewById(R.id.hider_top);
+        next_movie = root.findViewById(R.id.next_movie);
+
+        next_movie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!next)
+                {
+                    movie_title.setText(searched_movie.getTitle());
+                    next = true;
+                    next_movie.setText("Next");
+                }
+                else{
+                    BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
+                    blindtestMovieActivity.getRandomMovie();
+                }
+            }
+        });
 
         youTubePlayerView = root.findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
 
-        PlayerUiController playerUiController =youTubePlayerView.getPlayerUiController();
+        fetchMovieDetails();
+
+        setYouTubePlayerView();
+
+
+        return root;
+    }
+
+    private void fetchMovieDetails() {
+        retrofitService.getMovie(movie_id.toString(), KEY_API, getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                searched_movie = response.body();
+                getBestTrailer(searched_movie.getId().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setYouTubePlayerView() {
+        PlayerUiController playerUiController = youTubePlayerView.getPlayerUiController();
         playerUiController.showVideoTitle(false);
         playerUiController.showCurrentTime(false);
         playerUiController.showDuration(false);
@@ -90,59 +138,74 @@ public class OneMovieFragment extends Fragment {
         playerUiController.showCustomAction1(false);
         playerUiController.showCustomAction2(false);
         playerUiController.showSeekBar(false);
+    }
 
-
+    private void initVideo(String video_id) {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = "S0Q4gqBUs7c";
-                youTubePlayer.loadVideo(videoId, 0f);
+                youTubePlayer.loadVideo(video_id, 0f);
             }
 
             @Override
-            public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state){
-                if(state== PlayerConstants.PlayerState.PLAYING)
-                {
+            public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
+                if (state == PlayerConstants.PlayerState.PLAYING) {
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
                             hider_top.setVisibility(View.INVISIBLE);
                         }
-                    }, 700);
+                    }, 5000);
                 }
-                if(state== PlayerConstants.PlayerState.PAUSED)
-                {
+                if (state == PlayerConstants.PlayerState.PAUSED) {
                     hider_top.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
-            public void onVideoId(@NonNull YouTubePlayer youTubePlayer, String videoId){
-                Toast.makeText(getActivity(), "onVideoId", Toast.LENGTH_LONG).show();
+            public void onVideoId(@NonNull YouTubePlayer youTubePlayer, String videoId) {
+
             }
         });
-
-        fetchMovieDetails();
-
-        return root;
     }
 
-    public void fetchMovieDetails() {
-        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
-
-        GetMovieService retrofitService = retrofit.create(GetMovieService.class);
-
-        retrofitService.getMovie(movie_id.toString(), KEY_API, getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
+    public void getBestTrailer(String movie_id) {
+        retrofitService.getVideos(movie_id, KEY_API, getString(R.string.api_language_key)).enqueue(new Callback<VideoPageResult>() {
             @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                searched_movie = response.body();
-                movie_title.setText(searched_movie.getTitle());
+            public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
+                if (response.body() != null) {
+                    List<Video> videoList = response.body().getResults();
+                    Video video = selectBestTrailer(videoList);
+                    if (video != null) {
+                        initVideo(video.getKey());
+                    } else {
+                        BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
+                        blindtestMovieActivity.getRandomMovie();
+                    }
+                }
             }
 
             @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-
+            public void onFailure(Call<VideoPageResult> call, Throwable t) {
             }
         });
+    }
+
+    private Video selectBestTrailer(List<Video> videoList) {
+        Video videoSelected = null;
+        for (Video video : videoList) {
+            if (video.getType().equals("Trailer") && video.getSite().equals("YouTube")) {
+                if (getString(R.string.api_region_key).equals("FR")) {
+                    if (video.getName().toLowerCase().contains("vost")) {
+                        videoSelected = video;
+                        break;
+                    }
+                } else {
+                    videoSelected = video;
+                    break;
+                }
+            }
+        }
+        return videoSelected;
     }
 }

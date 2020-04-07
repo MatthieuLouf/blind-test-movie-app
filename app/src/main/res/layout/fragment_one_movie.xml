@@ -27,4 +27,12 @@
         app:layout_constraintTop_toBottomOf="@+id/youtube_player_view"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <Button
+        android:id="@+id/next_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/one_movie_title"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
