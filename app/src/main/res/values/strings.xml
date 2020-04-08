@@ -19,9 +19,9 @@
     <string name="synopsis">Synopsis</string>
     <string name="budget">Budget</string>
     <string name="revenue">Revenue</string>
-    <string name="average_rate">Average note</string>
+    <string name="average_rate">Rate</string>
     <string name="genres">Genres</string>
-    <string name="release_date">Release Date</string>
+    <string name="release_date">Release</string>
     <string name="research_empty">Please insert what you want before !</string>
     <string name="api_language_key">en-US</string>
     <string name="start_blindtest">Start Blindtest</string>
@@ -35,4 +35,5 @@
     <string name="api_region_key">US</string>
     <string name="validate_movie">Validate</string>
     <string name="next_movie">Next</string>
+    <string name="language_is">Language</string>
 </resources>

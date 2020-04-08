@@ -19,8 +19,8 @@
     <string name="synopsis">Synopsis</string>
     <string name="budget">Budget</string>
     <string name="revenue">Recette</string>
-    <string name="average_rate">Note moyenne</string>
+    <string name="average_rate">Note</string>
     <string name="genres">Genres</string>
-    <string name="release_date">Date de sortie</string>
+    <string name="release_date">Sortie</string>
     <string name="research_empty">Ecrivez avant de valider !</string>
 </resources>
