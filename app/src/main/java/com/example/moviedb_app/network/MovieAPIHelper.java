@@ -17,7 +17,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MovieAPIHelper extends Activity {
-    private String KEY_API = "5b061cba26b441ddec657d88428cc9fc";
 
     Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
     GetMovieService retrofitService = retrofit.create(GetMovieService.class);

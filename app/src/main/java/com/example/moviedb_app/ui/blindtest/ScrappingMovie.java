@@ -7,7 +7,7 @@ public class ScrappingMovie {
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
         for (int j = 2010; j <= 2020; j++) {
             for (int i = 0; i < 10; i++) {
-                retrofitService.getDiscoverMovies(i, KEY_API, "en-US", "vote_count.desc", "FR",
+                retrofitService.getDiscoverMovies(i,  getString(R.string.tmdb_api_key), "en-US", "vote_count.desc", "FR",
                         "false", j+"-01-01", j+"-12-31").enqueue(getMoviePageCallback());
             }
         }
@@ -79,7 +79,7 @@ public class ScrappingMovie {
     /*private void scrapGenres() {
         Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
-        retrofitService.getGenres(KEY_API, "en-US").enqueue(getGenrePageCallback());
+        retrofitService.getGenres( getString(R.string.tmdb_api_key), "en-US").enqueue(getGenrePageCallback());
     }
 
     private Callback<GenrePageResult> getGenrePageCallback() {

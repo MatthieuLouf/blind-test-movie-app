@@ -33,4 +33,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="api_region_key">US</string>
+    <string name="validate_movie">Validate</string>
+    <string name="next_movie">Next</string>
 </resources>

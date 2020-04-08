@@ -26,7 +26,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class BlindtestMovieActivity extends AppCompatActivity {
-    private String KEY_API = "5b061cba26b441ddec657d88428cc9fc";
     private String TAG = "create movie";
 
     private int max_movie_id = 700000;
@@ -57,7 +56,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     }
 
     public void loadList(int page) {
-        retrofitService.getTopRatedMovies(page, KEY_API, getString(R.string.api_language_key), getString(R.string.api_region_key)).enqueue(movieListCallback());
+        retrofitService.getTopRatedMovies(page,  getString(R.string.tmdb_api_key), getString(R.string.api_language_key), getString(R.string.api_region_key)).enqueue(movieListCallback());
     }
 
     public Callback<MoviePageResult> movieListCallback() {

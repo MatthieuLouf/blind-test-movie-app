@@ -8,4 +8,6 @@
     <string name="delete_user">Suppression du compte</string>
     <string name="login_failed">Erreur de connexion</string>
     <string name="api_region_key">FR</string>
+    <string name="validate_movie">Valider</string>
+    <string name="next_movie">Suivant</string>
 </resources>

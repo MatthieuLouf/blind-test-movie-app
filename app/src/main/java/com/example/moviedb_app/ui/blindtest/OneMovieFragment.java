@@ -42,7 +42,6 @@ import retrofit2.Retrofit;
  * create an instance of this fragment.
  */
 public class OneMovieFragment extends Fragment {
-    private String KEY_API = "5b061cba26b441ddec657d88428cc9fc";
 
     private static final String ARG_PARAM1 = "movie_id";
 
@@ -99,7 +98,7 @@ public class OneMovieFragment extends Fragment {
                 if (!next) {
                     movie_title.setText(searched_movie.getTitle());
                     next = true;
-                    next_movie.setText("Next");
+                    next_movie.setText(R.string.next_movie);
                 } else {
                     BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
                     blindtestMovieActivity.getRandomMovie();
@@ -119,7 +118,7 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void fetchMovieDetails() {
-        retrofitService.getMovie(movie_id.toString(), KEY_API, getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
+        retrofitService.getMovie(movie_id.toString(), getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 searched_movie = response.body();
@@ -184,7 +183,7 @@ public class OneMovieFragment extends Fragment {
     }
 
     public void getBestTrailer(String movie_id) {
-        retrofitService.getVideos(movie_id, KEY_API, getString(R.string.api_language_key)).enqueue(new Callback<VideoPageResult>() {
+        retrofitService.getVideos(movie_id,  getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<VideoPageResult>() {
             @Override
             public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
                 if (response.body() != null) {
@@ -214,6 +213,9 @@ public class OneMovieFragment extends Fragment {
                         videoSelected = video;
                         break;
                     }
+                    else{
+                        videoSelected = video;
+                    }
                 } else {
                     videoSelected = video;
                     break;
@@ -225,7 +227,7 @@ public class OneMovieFragment extends Fragment {
 
     private void setSimilarMovies()
     {
-        retrofitService.getSimilarMovies(movie_id.toString(),1,KEY_API,getString(R.string.api_language_key)).enqueue(new Callback<MoviePageResult>() {
+        retrofitService.getSimilarMovies(movie_id.toString(),1, getString(R.string.tmdb_api_key),getString(R.string.api_language_key)).enqueue(new Callback<MoviePageResult>() {
             @Override
             public void onResponse(Call<MoviePageResult> call, Response<MoviePageResult> response) {
                 MoviePageResult moviePageResult = response.body();

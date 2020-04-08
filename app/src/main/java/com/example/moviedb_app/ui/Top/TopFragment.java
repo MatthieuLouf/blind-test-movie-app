@@ -27,7 +27,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class TopFragment extends Fragment {
-    private String KEY_API = "5b061cba26b441ddec657d88428cc9fc";
 
     private RecyclerView[] recyclerViews = new RecyclerView[3];
     private int[] recycler_view_ids = {R.id.recycler_view_popular, R.id.recycler_view_toprated, R.id.recycler_view_discover};
@@ -77,13 +76,13 @@ public class TopFragment extends Fragment {
 
         switch (recyclerIndex) {
             case 0:
-                retrofitService.getPopularMovies(page, KEY_API, getString(R.string.api_language_key), "US").enqueue(getMoviePageCallback(recyclerIndex, page));
+                retrofitService.getPopularMovies(page,  getString(R.string.tmdb_api_key), getString(R.string.api_language_key), "US").enqueue(getMoviePageCallback(recyclerIndex, page));
                 break;
             case 1:
-                retrofitService.getTopRatedMovies(page, KEY_API, getString(R.string.api_language_key), "US").enqueue(getMoviePageCallback(recyclerIndex, page));
+                retrofitService.getTopRatedMovies(page,  getString(R.string.tmdb_api_key), getString(R.string.api_language_key), "US").enqueue(getMoviePageCallback(recyclerIndex, page));
                 break;
             case 2:
-                retrofitService.getDiscoverMovies(page, KEY_API, getString(R.string.api_language_key), "vote_count.desc", "US",
+                retrofitService.getDiscoverMovies(page,  getString(R.string.tmdb_api_key), getString(R.string.api_language_key), "vote_count.desc", "US",
                         "false", "1980-01-01", "1989-12-31").enqueue(getMoviePageCallback(recyclerIndex, page));
                 break;
         }
