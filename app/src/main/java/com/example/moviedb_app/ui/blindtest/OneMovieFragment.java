@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
+import com.example.moviedb_app.model.MoviePageResult;
 import com.example.moviedb_app.model.Video;
 import com.example.moviedb_app.model.VideoPageResult;
 import com.example.moviedb_app.network.GetMovieService;
@@ -24,6 +27,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,11 +51,13 @@ public class OneMovieFragment extends Fragment {
 
     private Button hider_top;
     private Button next_movie;
-
-    boolean next = false;
-
+    private NumberPicker picker;
     private TextView movie_title;
     private YouTubePlayerView youTubePlayerView;
+
+    private boolean next = false;
+    private List<String> listSimilarTitles = new ArrayList<String>();
+
 
     Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
     GetMovieService retrofitService = retrofit.create(GetMovieService.class);
@@ -82,17 +89,18 @@ public class OneMovieFragment extends Fragment {
         movie_title = root.findViewById(R.id.one_movie_title);
         hider_top = root.findViewById(R.id.hider_top);
         next_movie = root.findViewById(R.id.next_movie);
+        picker = root.findViewById(R.id.movie_picker);
+        picker.setVisibility(View.INVISIBLE);
+        picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         next_movie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!next)
-                {
+                if (!next) {
                     movie_title.setText(searched_movie.getTitle());
                     next = true;
                     next_movie.setText("Next");
-                }
-                else{
+                } else {
                     BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
                     blindtestMovieActivity.getRandomMovie();
                 }
@@ -116,6 +124,7 @@ public class OneMovieFragment extends Fragment {
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 searched_movie = response.body();
                 getBestTrailer(searched_movie.getId().toString());
+                setSimilarMovies();
             }
 
             @Override
@@ -166,6 +175,11 @@ public class OneMovieFragment extends Fragment {
             public void onVideoId(@NonNull YouTubePlayer youTubePlayer, String videoId) {
 
             }
+            @Override
+            public void onError(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerError error)
+            {
+                Toast.makeText(getActivity(), "video_error", Toast.LENGTH_LONG).show();
+            }
         });
     }
 
@@ -207,5 +221,44 @@ public class OneMovieFragment extends Fragment {
             }
         }
         return videoSelected;
+    }
+
+    private void setSimilarMovies()
+    {
+        retrofitService.getSimilarMovies(movie_id.toString(),1,KEY_API,getString(R.string.api_language_key)).enqueue(new Callback<MoviePageResult>() {
+            @Override
+            public void onResponse(Call<MoviePageResult> call, Response<MoviePageResult> response) {
+                MoviePageResult moviePageResult = response.body();
+                if(moviePageResult!=null)
+                {
+                    List<Movie> movieList = moviePageResult.getResults();
+                    for(Movie movie : movieList)
+                    {
+                        if(movie.getTitle()!=null && !movie.getTitle().replaceAll("[^a-zA-Z0-9]", "").equals(""))
+                        {
+                            listSimilarTitles.add(movie.getTitle());
+                        }
+                    }
+                    listSimilarTitles.add(searched_movie.getTitle());
+                    Collections.sort(listSimilarTitles);
+                    picker.setMinValue(0);
+                    picker.setMaxValue(listSimilarTitles.size()-1);
+                    picker.setDisplayedValues( listSimilarTitles.toArray(new String[listSimilarTitles.size()]));
+                    picker.setValue(listSimilarTitles.size()/2);
+                    picker.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MoviePageResult> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        youTubePlayerView.release();
     }
 }

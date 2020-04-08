@@ -60,4 +60,10 @@ public interface GetMovieService {
     Call<VideoPageResult> getVideos(@Path("movie_id") String movie_id,
                                     @Query("api_key") String api_key,
                                     @Query("language") String language);
+
+    @GET("movie/{movie_id}/similar")
+    Call<MoviePageResult> getSimilarMovies(@Path("movie_id") String movie_id,
+                                           @Query("page") int page,
+                                           @Query("api_key") String api_key,
+                                           @Query("language") String language);
 }
