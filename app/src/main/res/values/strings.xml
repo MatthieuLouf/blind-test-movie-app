@@ -38,4 +38,7 @@
     <string name="language_is">Language</string>
     <string name="good_response">Good response !</string>
     <string name="not_good_movie">Not the good movie</string>
+    <string name="top_rated_cardname">Top Rated Movies</string>
+    <string name="heigthies_cardname">80\'s Movies</string>
+    <string name="japanese_animation_cardname">Japanese Animation Movies</string>
 </resources>

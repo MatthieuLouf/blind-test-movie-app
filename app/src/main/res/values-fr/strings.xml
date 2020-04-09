@@ -13,4 +13,7 @@
     <string name="language_is">Langage</string>
     <string name="good_response">Bonne réponse !</string>
     <string name="not_good_movie">Ce n\'est pas le bon film</string>
+    <string name="top_rated_cardname">Films les mieux notés</string>
+    <string name="heigthies_cardname">Films des années 80</string>
+    <string name="japanese_animation_cardname">Films d\'animation japonais</string>
 </resources>

@@ -5,15 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.moviedb_app.R;
 
+import com.example.moviedb_app.model.BlindtestParameters;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.MoviePageResult;
 import com.example.moviedb_app.network.GetMovieService;
+import com.example.moviedb_app.network.MovieAPIHelper;
 import com.example.moviedb_app.network.RetrofitInstance;
 
+import com.example.moviedb_app.ui.detail_movie_activity.MovieDetailsActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -28,7 +33,10 @@ import retrofit2.Retrofit;
 public class BlindtestMovieActivity extends AppCompatActivity {
     private String TAG = "create movie";
 
-    private int max_movie_id = 700000;
+    private static final String PARAMETERS_KEY = "PARAMETERS_KEY";
+
+    private BlindtestParameters blindtestParameters;
+
     Random rnd = new Random();
 
     boolean firstTime= true;
@@ -37,13 +45,17 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
-    Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
-    GetMovieService retrofitService = retrofit.create(GetMovieService.class);
+    MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blindtest_movie_page);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            blindtestParameters = (BlindtestParameters) intent.getSerializableExtra(PARAMETERS_KEY);
+        }
 
         //rnd.setSeed(700363);
         getRandomMovie();
@@ -51,36 +63,20 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     }
 
     public void getRandomMovie() {
-        int random_page = rnd.nextInt(6);
-        loadList(random_page + 1);
-    }
-
-    public void loadList(int page) {
-        retrofitService.getTopRatedMovies(page,  getString(R.string.tmdb_api_key), getString(R.string.api_language_key), getString(R.string.api_region_key)).enqueue(movieListCallback());
-    }
-
-    public Callback<MoviePageResult> movieListCallback() {
-        return new Callback<MoviePageResult>() {
+        movieAPIHelper.loadList(this,blindtestParameters, new Callback<Movie>() {
             @Override
-            public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
-                if (response.body() != null) {
-                    List<Movie> movieList = response.body().getResults();
-                    chooseMovieInList(movieList);
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                if(response.body()!=null)
+                {
+                    startFragment(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<MoviePageResult> call, Throwable t) {
+            public void onFailure(Call<Movie> call, Throwable t) {
+
             }
-
-        };
-    }
-
-    public void chooseMovieInList(List<Movie> movies) {
-        int random = rnd.nextInt(20);
-        Movie movie = movies.get(random);
-
-        startFragment(movie);
+        });
     }
 
     public void startFragment(Movie movie) {
@@ -95,5 +91,11 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
         }
         fragmentTransaction.commit();
+    }
+
+    public static void start(Context context, BlindtestParameters parameters) {
+        Intent intent = new Intent(context, BlindtestMovieActivity.class);
+        intent.putExtra(PARAMETERS_KEY, parameters);
+        context.startActivity(intent);
     }
 }

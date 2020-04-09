@@ -66,4 +66,15 @@ public interface GetMovieService {
                                            @Query("page") int page,
                                            @Query("api_key") String api_key,
                                            @Query("language") String language);
+
+    @GET("discover/movie")
+    Call<MoviePageResult> getParametersMovies(@Query("page") int page,
+                                              @Query("api_key") String api_key,
+                                              @Query("language") String language,
+                                              @Query("region") String region,
+                                              @Query("sort_by") String sort_by,
+                                              @Query("primary_release_date.gte") String greaterThan,
+                                              @Query("primary_release_date.lte") String lessThan,
+                                              @Query("with_genres") String with_genres,
+                                              @Query("with_original_language") String with_original_language);
 }

@@ -27,6 +27,7 @@ import com.example.moviedb_app.model.MoviePageResult;
 import com.example.moviedb_app.model.Video;
 import com.example.moviedb_app.model.VideoPageResult;
 import com.example.moviedb_app.network.GetMovieService;
+import com.example.moviedb_app.network.MovieAPIHelper;
 import com.example.moviedb_app.network.RetrofitInstance;
 import com.example.moviedb_app.ui.detail_movie_activity.MovieDetailsActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
@@ -66,9 +67,11 @@ public class OneMovieFragment extends Fragment {
     private boolean next = false;
     private List<String> listSimilarTitles = new ArrayList<String>();
 
+
     private View root;
     private Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
     private GetMovieService retrofitService = retrofit.create(GetMovieService.class);
+    MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
 
     public OneMovieFragment() {
     }
@@ -120,7 +123,6 @@ public class OneMovieFragment extends Fragment {
         fetchMovieDetails();
 
         setYouTubePlayerView();
-
 
         return root;
     }
@@ -192,70 +194,40 @@ public class OneMovieFragment extends Fragment {
     }
 
     public void getBestTrailer(String movie_id) {
-        retrofitService.getVideos(movie_id, getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<VideoPageResult>() {
+        movieAPIHelper.getBestTrailer(getContext(), movie_id, new Callback<Video>() {
             @Override
-            public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
-                if (response.body() != null) {
-                    List<Video> videoList = response.body().getResults();
-                    Video video = selectBestTrailer(videoList);
-                    if (video != null) {
-                        initVideo(video.getKey());
-                    } else {
-                        changeFragment();
-                    }
+            public void onResponse(Call<Video> call, Response<Video> response) {
+                Video video = response.body();
+                if (video != null) {
+                    initVideo(video.getKey());
+                } else {
+                    changeFragment();
                 }
             }
 
             @Override
-            public void onFailure(Call<VideoPageResult> call, Throwable t) {
+            public void onFailure(Call<Video> call, Throwable t) {
             }
         });
     }
 
-    private Video selectBestTrailer(List<Video> videoList) {
-        Video videoSelected = null;
-        for (Video video : videoList) {
-            if (video.getType().equals("Trailer") && video.getSite().equals("YouTube")) {
-                if (getString(R.string.api_region_key).equals("FR")) {
-                    if (video.getName().toLowerCase().contains("vost")) {
-                        videoSelected = video;
-                        break;
-                    } else {
-                        videoSelected = video;
-                    }
-                } else {
-                    videoSelected = video;
-                    break;
-                }
-            }
-        }
-        return videoSelected;
-    }
 
     private void setSimilarMovies() {
-        retrofitService.getSimilarMovies(movie_id.toString(), 1, getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<MoviePageResult>() {
+        movieAPIHelper.getSimilarMovies(getContext(), movie_id, new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<MoviePageResult> call, Response<MoviePageResult> response) {
-                MoviePageResult moviePageResult = response.body();
-                if (moviePageResult != null) {
-                    List<Movie> movieList = moviePageResult.getResults();
-                    for (Movie movie : movieList) {
-                        if (movie.getTitle() != null && !movie.getTitle().replaceAll("[^a-zA-Z0-9]", "").equals("")) {
-                            listSimilarTitles.add(movie.getTitle());
-                        }
-                    }
-                    listSimilarTitles.add(searched_movie.getTitle());
-                    Collections.sort(listSimilarTitles);
-                    picker.setMinValue(0);
-                    picker.setMaxValue(listSimilarTitles.size() - 1);
-                    picker.setDisplayedValues(listSimilarTitles.toArray(new String[listSimilarTitles.size()]));
-                    picker.setValue(listSimilarTitles.size() / 2);
-                    picker.setVisibility(View.VISIBLE);
-                }
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                listSimilarTitles = response.body();
+                listSimilarTitles.add(searched_movie.getTitle());
+                Collections.sort(listSimilarTitles);
+                picker.setMinValue(0);
+                picker.setMaxValue(listSimilarTitles.size() - 1);
+                picker.setDisplayedValues(listSimilarTitles.toArray(new String[listSimilarTitles.size()]));
+                picker.setValue(listSimilarTitles.size() / 2);
+                picker.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onFailure(Call<MoviePageResult> call, Throwable t) {
+            public void onFailure(Call<List<String>> call, Throwable t) {
 
             }
         });
@@ -285,7 +257,7 @@ public class OneMovieFragment extends Fragment {
             result_sentence.setText(R.string.good_response);
             result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
         } else {
-            result_sentence.setText(getString(R.string.not_good_movie)+" ("+listSimilarTitles.get(picker.getValue())+")");
+            result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
             result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
         }
 
