@@ -76,5 +76,6 @@ public interface GetMovieService {
                                               @Query("primary_release_date.gte") String greaterThan,
                                               @Query("primary_release_date.lte") String lessThan,
                                               @Query("with_genres") String with_genres,
-                                              @Query("with_original_language") String with_original_language);
+                                              @Query("with_original_language") String with_original_language,
+                                              @Query("vote_count.gte") String vote_countGreaterThan);
 }

@@ -109,7 +109,8 @@ public class MovieAPIHelper extends AppCompatActivity {
                 parameters.getReleaseDateGTE(),
                 parameters.getReleaseDateLTE(),
                 parameters.getWithGenres(),
-                parameters.getWithOriginalLanguage()).enqueue(movieListCallback(movieCallback));
+                parameters.getWithOriginalLanguage(),
+                "300").enqueue(movieListCallback(movieCallback));
     }
 
     public Callback<MoviePageResult> movieListCallback(Callback<Movie> movieCallback) {

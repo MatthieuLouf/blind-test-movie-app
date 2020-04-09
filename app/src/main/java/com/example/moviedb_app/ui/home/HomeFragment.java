@@ -9,26 +9,29 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.BlindtestParameters;
+import com.example.moviedb_app.recycler.MovieAdapter;
+import com.example.moviedb_app.recycler.ThemeAdapter;
 import com.example.moviedb_app.ui.blindtest.BlindtestMovieActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment {
 
-    private Button[] buttons = new Button[3];
-    private int[] buttons_id = new int[]{
-            R.id.card_top_rated,
-            R.id.card_80s,
-            R.id.card_japanese_animation
-    };
-
     private BlindtestParameters[] blindtestParameters = new BlindtestParameters[]{
             new BlindtestParameters(R.string.top_rated_cardname,7,"vote_average.desc","","","",""),
-            new BlindtestParameters(R.string.heigthies_cardname,5,"vote_average.desc","1980-01-01","1989-12-31","",""),
+            new BlindtestParameters(R.string.heigthies_cardname,5,"vote_average.desc","1980-01-01","1989-12-31","","en"),
             new BlindtestParameters(R.string.japanese_animation_cardname,3,"vote_average.desc","","","16","ja")
     };
+
+    private ThemeAdapter themeAdapter;
+    private RecyclerView recyclerView;
 
     public HomeFragment() {
     }
@@ -37,17 +40,20 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView = root.findViewById(R.id.recycler_view_theme_cards);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        List<BlindtestParameters> parametersList = new ArrayList<BlindtestParameters>();
+
         for(int i=0;i<3;i++)
         {
-            buttons[i] = root.findViewById(buttons_id[i]);
-            int finalI = i;
-            buttons[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    BlindtestMovieActivity.start(getContext(),blindtestParameters[finalI]);
-                }
-            });
+            parametersList.add(blindtestParameters[i]);
         }
+
+        themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card,getContext());
+        recyclerView.setAdapter(themeAdapter);
+
         return root;
     }
 }
