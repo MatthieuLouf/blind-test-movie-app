@@ -1,9 +1,13 @@
 package com.example.moviedb_app.ui.blindtest;
 
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -274,10 +278,20 @@ public class OneMovieFragment extends Fragment {
         next_movie.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         movieCardView.setVisibility(View.VISIBLE);
         picker.setVisibility(View.INVISIBLE);
+
+        TextView result_sentence = root.findViewById(R.id.result_sentence);
+
+        if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
+            result_sentence.setText(R.string.good_response);
+            result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            result_sentence.setText(getString(R.string.not_good_movie)+" ("+listSimilarTitles.get(picker.getValue())+")");
+            result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
+        }
+
     }
 
-    private void setMovieViewComponents()
-    {
+    private void setMovieViewComponents() {
         ImageView movie_image = root.findViewById(R.id.movie_image);
         TextView movie_rating = root.findViewById(R.id.movie_rating);
         TextView movie_release_date = root.findViewById(R.id.movie_release_date);
@@ -285,8 +299,9 @@ public class OneMovieFragment extends Fragment {
 
         Glide.with(this).load(BASE_URL_IMAGE + searched_movie.getPosterPath()).into(movie_image);
         movie_title.setText(searched_movie.getTitle());
-        movie_rating.setText(getString(R.string.average_rate)+" : "+searched_movie.getVoteAverage().toString()+"/10");
-        movie_release_date.setText(getString(R.string.release_date)+" : "+searched_movie.getReleaseDate().replace('-', '/'));
-        movie_language.setText(getString(R.string.language_is)+" : "+searched_movie.getOriginalLanguage().toUpperCase());
+        movie_rating.setText(getString(R.string.average_rate) + " : " + searched_movie.getVoteAverage().toString() + "/10");
+        movie_release_date.setText(getString(R.string.release_date) + " : " + searched_movie.getReleaseDate().replace('-', '/'));
+        movie_language.setText(getString(R.string.language_is) + " : " + searched_movie.getOriginalLanguage().toUpperCase());
     }
+
 }

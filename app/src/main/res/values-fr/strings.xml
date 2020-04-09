@@ -11,4 +11,6 @@
     <string name="validate_movie">Valider</string>
     <string name="next_movie">Suivant</string>
     <string name="language_is">Langage</string>
+    <string name="good_response">Bonne réponse !</string>
+    <string name="not_good_movie">Ce n\'est pas le bon film</string>
 </resources>

@@ -36,8 +36,6 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:maxWidth="500dp"
-        android:maxHeight="300dp"
         card_view:cardCornerRadius="@dimen/activity_cardview_border_radius"
         card_view:layout_constraintBottom_toBottomOf="@id/movie_picker"
         card_view:layout_constraintEnd_toEndOf="parent"
@@ -105,17 +103,33 @@
                 android:maxLines="3"
                 android:singleLine="false"
                 android:text=""
-                card_view:layout_constrainedWidth="true"
                 android:textSize="@dimen/activity_textsize_title"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/movie_image"
+                card_view:layout_constrainedWidth="true"
                 card_view:layout_constraintTop_toBottomOf="@+id/movie_language" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/result_sentence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:maxLines="3"
+        android:singleLine="false"
+        android:textSize="@dimen/activity_textsize_title"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/next_movie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movie_picker" />
 
     <Button
         android:id="@+id/next_movie"
@@ -128,7 +142,6 @@
         android:text="@string/validate_movie"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movie_picker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

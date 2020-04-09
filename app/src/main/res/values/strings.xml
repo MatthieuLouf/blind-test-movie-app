@@ -36,4 +36,6 @@
     <string name="validate_movie">Validate</string>
     <string name="next_movie">Next</string>
     <string name="language_is">Language</string>
+    <string name="good_response">Good response !</string>
+    <string name="not_good_movie">Not the good movie</string>
 </resources>
