@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class BlindtestParameters implements Serializable {
     private Integer idName;
+    private Integer idImage;
     private Integer maximumPage;
     private String sortBy;
     private String releaseDateGTE;
@@ -11,8 +12,9 @@ public class BlindtestParameters implements Serializable {
     private String withGenres;
     private String withOriginalLanguage;
 
-    public BlindtestParameters(Integer idName, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOriginalLanguage) {
+    public BlindtestParameters(Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOriginalLanguage) {
         this.idName = idName;
+        this.idImage = idImage;
         this.maximumPage = maximumPage;
         this.sortBy = sortBy;
         this.releaseDateGTE = releaseDateGTE;
@@ -27,6 +29,14 @@ public class BlindtestParameters implements Serializable {
 
     public void setIdName(Integer idName) {
         this.idName = idName;
+    }
+
+    public Integer getIdImage() {
+        return idImage;
+    }
+
+    public void setIdImage(Integer idImage) {
+        this.idImage = idImage;
     }
 
     public Integer getMaximumPage() {

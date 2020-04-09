@@ -25,9 +25,9 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private BlindtestParameters[] blindtestParameters = new BlindtestParameters[]{
-            new BlindtestParameters(R.string.top_rated_cardname,7,"vote_average.desc","","","",""),
-            new BlindtestParameters(R.string.heigthies_cardname,5,"vote_average.desc","1980-01-01","1989-12-31","","en"),
-            new BlindtestParameters(R.string.japanese_animation_cardname,3,"vote_average.desc","","","16","ja")
+            new BlindtestParameters(R.string.top_rated_cardname,R.mipmap.infiltres,7,"vote_average.desc","","","",""),
+            new BlindtestParameters(R.string.heigthies_cardname,R.mipmap.indiana_jones,5,"vote_average.desc","1980-01-01","1989-12-31","","en"),
+            new BlindtestParameters(R.string.japanese_animation_cardname,R.mipmap.your_name,3,"vote_average.desc","","","16","ja")
     };
 
     private ThemeAdapter themeAdapter;
