@@ -1,11 +1,9 @@
 package com.example.moviedb_app.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.BlindtestParameters;
-import com.example.moviedb_app.recycler.MovieAdapter;
 import com.example.moviedb_app.recycler.ThemeAdapter;
-import com.example.moviedb_app.ui.blindtest.BlindtestMovieActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +21,10 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private BlindtestParameters[] blindtestParameters = new BlindtestParameters[]{
-            new BlindtestParameters(R.string.top_rated_cardname,R.mipmap.infiltres,7,"vote_average.desc","","","",""),
-            new BlindtestParameters(R.string.heigthies_cardname,R.mipmap.indiana_jones,5,"vote_average.desc","1980-01-01","1989-12-31","","en"),
-            new BlindtestParameters(R.string.japanese_animation_cardname,R.mipmap.your_name,3,"vote_average.desc","","","16","ja")
+            new BlindtestParameters(R.string.top_rated_cardname, R.mipmap.infiltres, 5, "vote_average.desc", "", "", "", ""),
+            new BlindtestParameters(R.string.heigthies_cardname, R.mipmap.indiana_jones, 3, "vote_average.desc", "1980-01-01", "1989-12-31", "", "en"),
+            new BlindtestParameters(R.string.japanese_animation_cardname, R.mipmap.your_name, 1, "vote_average.desc", "", "", "16", "ja"),
+            new BlindtestParameters(R.string.french_2010_cardname, R.mipmap.grand_bain, 2, "vote_average.desc", "2010-01-01", "", "", "fr")
     };
 
     private ThemeAdapter themeAdapter;
@@ -46,12 +43,11 @@ public class HomeFragment extends Fragment {
 
         List<BlindtestParameters> parametersList = new ArrayList<BlindtestParameters>();
 
-        for(int i=0;i<3;i++)
-        {
+        for (int i = 0; i < 4; i++) {
             parametersList.add(blindtestParameters[i]);
         }
 
-        themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card,getContext());
+        themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getContext());
         recyclerView.setAdapter(themeAdapter);
 
         return root;
