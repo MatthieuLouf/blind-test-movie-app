@@ -41,6 +41,8 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     boolean firstTime= true;
 
+    Integer movie_count=0;
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -80,7 +82,9 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     }
 
     public void startFragment(Movie movie) {
-        OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId());
+        movie_count++;
+        OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId(),
+                getString(blindtestParameters.getIdName())+" : " +movie_count);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(firstTime)
         {

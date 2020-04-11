@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -52,9 +53,11 @@ import retrofit2.Retrofit;
  */
 public class OneMovieFragment extends Fragment {
     private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
-    private static final String ARG_PARAM1 = "movie_id";
+    private static final String MOVIE_ID = "movie_id";
+    private static final String AB_TITLE = "ab_title";
 
     private Integer movie_id;
+    private String ab_title;
     private Movie searched_movie;
 
     private Button hider_top;
@@ -76,10 +79,11 @@ public class OneMovieFragment extends Fragment {
     public OneMovieFragment() {
     }
 
-    public static OneMovieFragment newInstance(Integer movie_id) {
+    public static OneMovieFragment newInstance(Integer movie_id,String ab_title) {
         OneMovieFragment fragment = new OneMovieFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, movie_id);
+        args.putInt(MOVIE_ID, movie_id);
+        args.putString(AB_TITLE, ab_title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,7 +92,8 @@ public class OneMovieFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            movie_id = getArguments().getInt(ARG_PARAM1);
+            movie_id = getArguments().getInt(MOVIE_ID);
+            ab_title = getArguments().getString(AB_TITLE);
         }
     }
 
@@ -96,6 +101,10 @@ public class OneMovieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_one_movie, container, false);
+
+        BlindtestMovieActivity activity = (BlindtestMovieActivity)getActivity();
+        ActionBar ab = activity.getSupportActionBar();
+        ab.setTitle(ab_title);
 
         movie_title = root.findViewById(R.id.movie_title);
         hider_top = root.findViewById(R.id.hider_top);
