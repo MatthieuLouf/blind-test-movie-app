@@ -28,17 +28,21 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
     private TextView theme_title;
     private ImageView theme_image;
     private Context context;
+    private TextView theme_movie_number;
 
     public ThemeViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
         this.theme_title = itemView.findViewById(R.id.theme_title);
         this.theme_image = itemView.findViewById(R.id.theme_image);
+        this.theme_movie_number = itemView.findViewById(R.id.theme_movie_number);
         this.context = context;
     }
 
     public void bind(final BlindtestParameters parameters) {
         theme_title.setText(context.getResources().getString(parameters.getIdName()));
         theme_image.setImageResource(parameters.getIdImage());
+        Integer movie_number = parameters.getMaximumPage()*20;
+        theme_movie_number.setText(movie_number.toString());
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

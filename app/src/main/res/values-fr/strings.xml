@@ -13,9 +13,9 @@
     <string name="language_is">Langage</string>
     <string name="good_response">Bonne réponse !</string>
     <string name="not_good_movie">Ce n\'est pas le bon film</string>
-    <string name="top_rated_cardname">Films les mieux notés</string>
-    <string name="heigthies_cardname">Films des années 80</string>
-    <string name="japanese_animation_cardname">Films d\'animation japonais</string>
-    <string name="french_2010_cardname">Films français 2010-2020</string>
+    <string name="top_rated_cardname">Mieux notés</string>
+    <string name="heigthies_cardname">Années 80</string>
+    <string name="japanese_animation_cardname">Animation japonaise</string>
+    <string name="french_2010_cardname">Français 2010-2020</string>
     <string name="param">Test personnalisé</string>
 </resources>
