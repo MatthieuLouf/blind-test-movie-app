@@ -36,6 +36,7 @@ public class ParamFragment extends Fragment {
 
     String[] sort_by_array = new String[]{"vote_average.desc", "popularity.desc", "revenue.desc"};
     String[] sort_by_display;
+    String[] numberMoviesDisplay = new String[10];
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,10 +58,11 @@ public class ParamFragment extends Fragment {
                 String releaseDateGTE = numberPickerMinYear.getValue() + "0-01-01";
                 String releaseDateLTE = numberPickerMaxYear.getValue() + "0-12-31";
                 String sort_by = sort_by_array[sortBySpinner.getSelectedItemPosition()];
+                Integer maximumPage = Integer.parseInt(numberMoviesDisplay[numberMoviesSpinner.getSelectedItemPosition()+1])/20;
 
                 BlindtestParameters blindtestParameters = new BlindtestParameters(R.string.param,
                         R.mipmap.infiltres,
-                        5,
+                        maximumPage,
                         sort_by,
                         releaseDateGTE,
                         releaseDateLTE,
@@ -103,13 +105,13 @@ public class ParamFragment extends Fragment {
 
     private void setSpinners()
     {
-        String[] numberMoviesDisplay = new String[10];
         for(int i =0;i<numberMoviesDisplay.length;i++)
         {
             numberMoviesDisplay[i]= String.valueOf((i+1)*20);
         }
         ArrayAdapter<String> adapterNumber = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, numberMoviesDisplay);
         numberMoviesSpinner.setAdapter(adapterNumber);
+        numberMoviesSpinner.setSelection(1);
 
         sort_by_display= new String[] {getString(R.string.average_rate),
                 getString(R.string.popularity),
