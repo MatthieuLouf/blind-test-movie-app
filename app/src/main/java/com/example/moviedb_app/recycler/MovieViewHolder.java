@@ -26,9 +26,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     private ProgressBar progressBar;
     private ImageView image;
     private TextView original_title;
-    private TextView rate;
-    private TextView release_date;
-    private TextView language;
     private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
     private ImageView background_image;
 
@@ -39,15 +36,11 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         this.progressBar = itemView.findViewById(R.id.progress_circular);
         this.image = itemView.findViewById(R.id.image);
         this.original_title = itemView.findViewById(R.id.original_title);
-        this.rate = itemView.findViewById(R.id.rating);
-        this.release_date = itemView.findViewById(R.id.release_date);
+
         this.background_image = itemView.findViewById(R.id.background_preview);
         background_image.setImageAlpha(75);
         background_image.setScaleType(ImageView.ScaleType.FIT_XY);
         this.viewType = viewType;
-        if (this.viewType.equals("horizontal_view")) {
-            this.language = itemView.findViewById(R.id.language);
-        }
     }
 
     public void bind(final Movie movie) {
@@ -71,16 +64,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
             }
         }).into(image);
 
-        if (this.viewType.equals("vertical_view")) {
-            rate.setText("Rating : " + movie.getVoteAverage().toString());
-            release_date.setText("Release date : " + movie.getReleaseDate().replace('-', '/'));
-        } else if (this.viewType.equals("horizontal_view")) {
-            rate.setText("Rating : " + movie.getVoteAverage().toString());
-            if (movie.getReleaseDate() != null) {
-                release_date.setText("Release date :\n" + movie.getReleaseDate().replace('-', '/'));
-            }
-            language.setText("Language : " + movie.getOriginalLanguage());
-        }
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
