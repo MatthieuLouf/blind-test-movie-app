@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_top"
-        android:name="com.example.moviedb_app.ui.Top.TopFragment"
+        android:name="com.example.moviedb_app.ui.Param.ParamFragment"
         android:label="@string/top_movies"
-        tools:layout="@layout/fragment_top" />
+        tools:layout="@layout/fragment_param" />
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.moviedb_app.ui.home.HomeFragment"

@@ -17,4 +17,5 @@
     <string name="heigthies_cardname">Films des années 80</string>
     <string name="japanese_animation_cardname">Films d\'animation japonais</string>
     <string name="french_2010_cardname">Films français 2010-2020</string>
+    <string name="param">Test personnalisé</string>
 </resources>
