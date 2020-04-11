@@ -20,7 +20,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
+import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.ResponseBody;
+import okio.BufferedSource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -120,7 +125,7 @@ public class MovieAPIHelper extends AppCompatActivity {
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 if (response.body() != null) {
                     List<Movie> movieList = response.body().getResults();
-                    chooseMovieInList(movieList, movieCallback);
+                        chooseMovieInList(movieList, movieCallback);
                 }
             }
 
@@ -133,8 +138,14 @@ public class MovieAPIHelper extends AppCompatActivity {
 
     public void chooseMovieInList(List<Movie> movies, Callback<Movie> movieCallback) {
         int random = rnd.nextInt(20);
-        Movie movie = movies.get(random);
-        movieCallback.onResponse(newCall(movie), Response.success(movie));
+        if(movies.size()>random)
+        {
+            Movie movie = movies.get(random);
+            movieCallback.onResponse(newCall(movie), Response.success(movie));
+        }
+        else{
+            movieCallback.onResponse(newCall(null), Response.error(404, newResponseBody()));
+        }
     }
 
     private <T> Call<T> newCall(T tes) {
@@ -171,6 +182,26 @@ public class MovieAPIHelper extends AppCompatActivity {
 
             @Override
             public Request request() {
+                return null;
+            }
+        };
+    }
+
+    private ResponseBody newResponseBody() {
+        return new ResponseBody() {
+            @Nullable
+            @Override
+            public MediaType contentType() {
+                return null;
+            }
+
+            @Override
+            public long contentLength() {
+                return 0;
+            }
+
+            @Override
+            public BufferedSource source() {
                 return null;
             }
         };

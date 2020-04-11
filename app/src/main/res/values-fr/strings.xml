@@ -20,4 +20,6 @@
     <string name="param">Test personnalisé</string>
     <string name="horror_cardname">Horreur</string>
     <string name="science_fiction_cardname">Science Fiction</string>
+    <string name="from">De</string>
+    <string name="to">à</string>
 </resources>

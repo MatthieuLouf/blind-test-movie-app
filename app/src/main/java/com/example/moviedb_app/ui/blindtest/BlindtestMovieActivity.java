@@ -74,7 +74,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-
+                getRandomMovie();
             }
         });
     }

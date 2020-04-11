@@ -6,6 +6,66 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/params_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/params_date_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/from"
+            android:textSize="@dimen/activity_textsize_title"
+            app:layout_constraintBottom_toBottomOf="@+id/number_picker_min_year"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/number_picker_min_year" />
+
+        <NumberPicker
+            android:id="@+id/number_picker_min_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            app:layout_constraintStart_toEndOf="@+id/params_date_from"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/params_date_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="@string/to"
+            android:textSize="@dimen/activity_textsize_title"
+            app:layout_constraintBottom_toBottomOf="@+id/number_picker_max_year"
+            app:layout_constraintStart_toEndOf="@id/number_picker_min_year"
+            app:layout_constraintTop_toTopOf="@+id/number_picker_max_year" />
+
+        <NumberPicker
+            android:id="@+id/number_picker_max_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            app:layout_constraintStart_toEndOf="@+id/params_date_to"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/params_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:background="@color/colorPrimary"
+        android:text="@string/start_blindtest"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
