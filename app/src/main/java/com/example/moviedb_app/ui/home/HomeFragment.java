@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
             new BlindtestParameters(R.string.heigthies_cardname, R.mipmap.indiana_jones, 3, "vote_average.desc", "1980-01-01", "1989-12-31", "", "en"),
             new BlindtestParameters(R.string.japanese_animation_cardname, R.mipmap.your_name, 1, "vote_average.desc", "", "", "16", "ja"),
             new BlindtestParameters(R.string.french_2010_cardname, R.mipmap.grand_bain, 2, "vote_average.desc", "2010-01-01", "", "", "fr"),
-            new BlindtestParameters(R.string.horror_cardname, R.mipmap.halloween, 3, "vote_average.desc", "1980-01-01", "", "9648", ""),
+            new BlindtestParameters(R.string.horror_cardname, R.mipmap.halloween, 3, "vote_average.desc", "1980-01-01", "", "27", ""),
             new BlindtestParameters(R.string.science_fiction_cardname, R.mipmap.star_wars, 4, "vote_average.desc", "1980-01-01", "", "878", "")
     };
 
