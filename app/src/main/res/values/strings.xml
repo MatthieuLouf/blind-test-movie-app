@@ -43,4 +43,6 @@
     <string name="japanese_animation_cardname">Japanese Animation</string>
     <string name="french_2010_cardname">French 2010-2020</string>
     <string name="param">Personalized Test</string>
+    <string name="horror_cardname">Horror</string>
+    <string name="science_fiction_cardname">Science Fiction</string>
 </resources>
