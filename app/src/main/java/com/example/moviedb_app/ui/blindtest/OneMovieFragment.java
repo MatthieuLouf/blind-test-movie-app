@@ -251,14 +251,17 @@ public class OneMovieFragment extends Fragment {
         movieCardView.setVisibility(View.VISIBLE);
         picker.setVisibility(View.INVISIBLE);
 
-        TextView result_sentence = root.findViewById(R.id.result_sentence);
+        if(listSimilarTitles.size()!=0)
+        {
+            TextView result_sentence = root.findViewById(R.id.result_sentence);
 
-        if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
-            result_sentence.setText(R.string.good_response);
-            result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
-        } else {
-            result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
-            result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
+            if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
+                result_sentence.setText(R.string.good_response);
+                result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
+            } else {
+                result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
+                result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
+            }
         }
 
     }
