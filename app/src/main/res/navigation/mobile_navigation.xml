@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_top"
         android:name="com.example.moviedb_app.ui.Param.ParamFragment"
-        android:label="@string/top_movies"
+        android:label="@string/param"
         tools:layout="@layout/fragment_param" />
     <fragment
         android:id="@+id/navigation_home"

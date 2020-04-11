@@ -16,6 +16,66 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/params_number_spinner_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="@string/in_the"
+            android:textSize="@dimen/activity_textsize_title"
+            app:layout_constraintTop_toTopOf="@+id/params_number_spinner"
+            app:layout_constraintBottom_toBottomOf="@+id/params_number_spinner"
+            app:layout_constraintEnd_toStartOf="@+id/params_number_spinner"
+            />
+
+        <Spinner
+            android:id="@+id/params_number_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/params_order_spinner_text"/>
+
+        <TextView
+            android:id="@+id/params_number_spinner_text_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="@string/movies"
+            android:textSize="@dimen/activity_textsize_title"
+            app:layout_constraintTop_toTopOf="@+id/params_number_spinner"
+            app:layout_constraintBottom_toBottomOf="@+id/params_number_spinner"
+            app:layout_constraintStart_toEndOf="@+id/params_number_spinner"
+            />
+
+        <TextView
+            android:id="@+id/params_order_spinner_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="@string/most"
+            android:textSize="@dimen/activity_textsize_title"
+            app:layout_constraintTop_toTopOf="@+id/params_order_spinner"
+            app:layout_constraintBottom_toBottomOf="@+id/params_order_spinner"
+            app:layout_constraintEnd_toStartOf="@+id/params_order_spinner"
+            />
+
+        <Spinner
+            android:id="@+id/params_order_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toBottomOf="@+id/params_number_spinner"
+            app:layout_constraintStart_toEndOf="@+id/params_order_spinner_text"/>
+
+        <TextView
             android:id="@+id/params_date_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +84,7 @@
             android:text="@string/from"
             android:textSize="@dimen/activity_textsize_title"
             app:layout_constraintBottom_toBottomOf="@+id/number_picker_min_year"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/number_picker_min_year"
             app:layout_constraintTop_toTopOf="@+id/number_picker_min_year" />
 
         <NumberPicker
@@ -33,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             app:layout_constraintStart_toEndOf="@+id/params_date_from"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/params_order_spinner" />
 
         <TextView
             android:id="@+id/params_date_to"
@@ -53,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             app:layout_constraintStart_toEndOf="@+id/params_date_to"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/params_order_spinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

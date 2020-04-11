@@ -47,4 +47,8 @@
     <string name="science_fiction_cardname">Science Fiction</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="popularity">Popularity</string>
+    <string name="most">With the most</string>
+    <string name="in_the">In the</string>
+    <string name="movies">movies</string>
 </resources>
