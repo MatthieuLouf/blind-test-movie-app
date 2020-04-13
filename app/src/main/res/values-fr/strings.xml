@@ -26,4 +26,6 @@
     <string name="most">Avec la meilleure</string>
     <string name="in_the">Parmi les</string>
     <string name="movies">films</string>
+    <string name="with_genres">Genres :</string>
+    <string name="with_language">Langage :</string>
 </resources>

@@ -51,4 +51,6 @@
     <string name="most">With the most</string>
     <string name="in_the">In the</string>
     <string name="movies">movies</string>
+    <string name="with_genres">Genres :</string>
+    <string name="with_language">Language :</string>
 </resources>

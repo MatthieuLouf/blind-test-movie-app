@@ -9,12 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.BlindtestParameters;
+import com.example.moviedb_app.model.Genre;
+import com.example.moviedb_app.model.GenrePageResult;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.MoviePageResult;
 import com.example.moviedb_app.model.Video;
 import com.example.moviedb_app.model.VideoPageResult;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -125,7 +128,7 @@ public class MovieAPIHelper extends AppCompatActivity {
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 if (response.body() != null) {
                     List<Movie> movieList = response.body().getResults();
-                        chooseMovieInList(movieList, movieCallback);
+                    chooseMovieInList(movieList, movieCallback);
                 }
             }
 
@@ -138,14 +141,37 @@ public class MovieAPIHelper extends AppCompatActivity {
 
     public void chooseMovieInList(List<Movie> movies, Callback<Movie> movieCallback) {
         int random = rnd.nextInt(20);
-        if(movies.size()>random)
-        {
+        if (movies.size() > random) {
             Movie movie = movies.get(random);
             movieCallback.onResponse(newCall(movie), Response.success(movie));
-        }
-        else{
+        } else {
             movieCallback.onResponse(newCall(null), Response.error(404, newResponseBody()));
         }
+    }
+
+    public void scrapGenres(Context context,  Callback<List<Genre>> helperCallback) {
+        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
+        GetMovieService retrofitService = retrofit.create(GetMovieService.class);
+        retrofitService.getGenres(context.getResources().getString(R.string.tmdb_api_key), context.getResources().getString(R.string.api_language_key)).enqueue(getGenrePageCallback(helperCallback));
+    }
+
+    private Callback<GenrePageResult> getGenrePageCallback(Callback<List<Genre>> helperCallback) {
+        Callback<GenrePageResult> callback = new Callback<GenrePageResult>() {
+            @Override
+            public void onResponse(@NonNull Call<GenrePageResult> call, @NonNull Response<GenrePageResult> response) {
+                GenrePageResult res = response.body();
+                if (res != null) {
+                    List<Genre> list = res.getGenres();
+                    helperCallback.onResponse(newCall(list),Response.success(list));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenrePageResult> call, Throwable t) {
+            }
+
+        };
+        return callback;
     }
 
     private <T> Call<T> newCall(T tes) {

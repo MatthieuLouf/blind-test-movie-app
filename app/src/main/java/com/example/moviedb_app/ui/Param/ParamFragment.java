@@ -19,11 +19,22 @@ import androidx.fragment.app.Fragment;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.BlindtestParameters;
+import com.example.moviedb_app.model.Genre;
+import com.example.moviedb_app.network.MovieAPIHelper;
 import com.example.moviedb_app.ui.blindtest.BlindtestMovieActivity;
 import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipDrawable;
+import com.google.android.material.chip.ChipGroup;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ParamFragment extends Fragment {
 
@@ -31,12 +42,17 @@ public class ParamFragment extends Fragment {
     private NumberPicker numberPickerMaxYear;
     private Spinner sortBySpinner;
     private Spinner numberMoviesSpinner;
+    private ChipGroup genresChipGroup;
+    private ChipGroup languagesChipGroup;
 
     private Button startBlindtestButton;
 
-    String[] sort_by_array = new String[]{"vote_average.desc", "popularity.desc", "revenue.desc"};
-    String[] sort_by_display;
-    String[] numberMoviesDisplay = new String[10];
+    private String[] sort_by_array = new String[]{"vote_average.desc", "popularity.desc", "revenue.desc"};
+    private String[] sort_by_display;
+    private String[] numberMoviesDisplay = new String[10];
+    private List<Genre> genreList = new ArrayList<Genre>();
+    private String[] languageKeyArray = new String[]{"en","fr","ja","sp"};
+    private String[] languageNameArray = new String[]{"English","French","Japanese","Spanish"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,9 +64,13 @@ public class ParamFragment extends Fragment {
         numberPickerMaxYear = root.findViewById(R.id.number_picker_max_year);
         sortBySpinner = root.findViewById(R.id.params_order_spinner);
         numberMoviesSpinner = root.findViewById(R.id.params_number_spinner);
+        genresChipGroup = root.findViewById(R.id.params_genres_chip_group);
+        languagesChipGroup = root.findViewById(R.id.params_language_chip_group);
 
         setSpinners();
         setNumberPickers();
+        setGenresChipGroup();
+        setLanguagesChipGroup();
 
         startBlindtestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,14 +80,37 @@ public class ParamFragment extends Fragment {
                 String sort_by = sort_by_array[sortBySpinner.getSelectedItemPosition()];
                 Integer maximumPage = Integer.parseInt(numberMoviesDisplay[numberMoviesSpinner.getSelectedItemPosition()+1])/20;
 
+                String genres="";
+                for(int i =0;i<genresChipGroup.getChildCount();i++)
+                {
+                    Chip chip = (Chip)genresChipGroup.getChildAt(i);
+                    if (chip.isChecked()){
+                        genres+=genreList.get(i).getId();
+                        if(i!=genresChipGroup.getChildCount()-1)
+                        {
+                            genres+=",";
+                        }
+                    }
+                }
+
+                String language ="";
+                for(int i =0;i<genresChipGroup.getChildCount();i++)
+                {
+                    Chip chip = (Chip)genresChipGroup.getChildAt(i);
+                    if (chip.isChecked()){
+                        language = languageKeyArray[i];
+                        break;
+                    }
+                }
+
                 BlindtestParameters blindtestParameters = new BlindtestParameters(R.string.param,
                         R.mipmap.infiltres,
                         maximumPage,
                         sort_by,
                         releaseDateGTE,
                         releaseDateLTE,
-                        "",
-                        "");
+                        genres,
+                        language);
 
                 BlindtestMovieActivity.start(getContext(), blindtestParameters);
             }
@@ -118,6 +161,44 @@ public class ParamFragment extends Fragment {
                 getString(R.string.revenue)};
         ArrayAdapter<String> adapterOrder = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, sort_by_display);
         sortBySpinner.setAdapter(adapterOrder);
+    }
+
+    private void setGenresChipGroup()
+    {
+        MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
+        movieAPIHelper.scrapGenres(getContext(), new Callback<List<Genre>>() {
+            @Override
+            public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
+                genreList.addAll(response.body());
+                for(Genre genre : genreList)
+                {
+                    if(genre.getId()!=99)
+                    {
+                        Chip chip = new Chip(getContext());
+                        ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),null,0,R.style.Widget_MaterialComponents_Chip_Choice);
+                        chip.setChipDrawable(chipDrawable);
+                        chip.setText(genre.getName());
+                        genresChipGroup.addView(chip);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Genre>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setLanguagesChipGroup() {
+        for(int i=0;i<languageKeyArray.length;i++)
+        {
+            Chip chip = new Chip(getContext());
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),null,0,R.style.Widget_MaterialComponents_Chip_Choice);
+            chip.setChipDrawable(chipDrawable);
+            chip.setText(languageNameArray[i]);
+            languagesChipGroup.addView(chip);
+        }
     }
 }
 
