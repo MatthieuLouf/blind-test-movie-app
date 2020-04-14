@@ -6,12 +6,12 @@
         android:title="@string/param" />
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_video_library_black_24dp"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_user"
-        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:icon="@drawable/ic_star_black_24dp"
         android:title="@string/user" />
 
 </menu>

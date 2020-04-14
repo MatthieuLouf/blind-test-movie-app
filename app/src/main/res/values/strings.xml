@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">BlindMovies</string>
-    <string name="title_activity_home">Home</string>
-    <string name="title_home">Home</string>
+    <string name="title_activity_home">Themes</string>
+    <string name="title_home">Themes</string>
     <string name="USER_LIKE_KEY">Text</string>
-    <string name="user">User</string>
+    <string name="user">Stared</string>
     <string name="user_movies">User Liked Movies</string>
     <string name="top">Top</string>
     <string name="top_movies">Top Movies</string>
@@ -40,7 +40,7 @@
     <string name="heigthies_cardname">80\'s Movies</string>
     <string name="japanese_animation_cardname">Japanese Animation</string>
     <string name="french_2010_cardname">French 2010-2020</string>
-    <string name="param">Personalized Test</string>
+    <string name="param">Personalize</string>
     <string name="horror_cardname">Horror</string>
     <string name="science_fiction_cardname">Science Fiction</string>
     <string name="from">From</string>
