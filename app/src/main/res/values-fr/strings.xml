@@ -28,4 +28,11 @@
     <string name="movies">films</string>
     <string name="with_genres">Genres :</string>
     <string name="with_language">Langage :</string>
+
+    <string-array name="language_array">
+        <item>Anglais</item>
+        <item>Français</item>
+        <item>Japonais</item>
+        <item>Espagnol</item>
+    </string-array>
 </resources>

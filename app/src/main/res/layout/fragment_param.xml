@@ -135,10 +135,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/params_genres_chip_group_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_from_to">
@@ -146,23 +147,17 @@
             <TextView
                 android:id="@+id/params_genres_chip_group_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_height="match_parent"
                 android:gravity="center"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:text="@string/with_genres"
-                android:textSize="@dimen/activity_textsize_title"
-                app:layout_constraintBottom_toBottomOf="@+id/params_genres_chip_group_container"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/params_genres_chip_group_container" />
+                android:textSize="@dimen/activity_textsize_title" />
 
             <HorizontalScrollView
                 android:id="@+id/params_genres_chip_group_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/params_genres_chip_group_text"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/params_genres_chip_group"
@@ -171,11 +166,13 @@
                     app:chipSpacingVertical="0.1dp"
                     app:singleLine="true" />
             </HorizontalScrollView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/params_language_chip_group_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/params_genres_chip_group_layout">
@@ -183,23 +180,17 @@
             <TextView
                 android:id="@+id/params_language_chip_group_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:gravity="center"
                 android:text="@string/with_language"
-                android:textSize="@dimen/activity_textsize_title"
-                app:layout_constraintBottom_toBottomOf="@+id/params_language_chip_group_container"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/params_language_chip_group_container" />
+                android:textSize="@dimen/activity_textsize_title"/>
 
             <HorizontalScrollView
                 android:id="@+id/params_language_chip_group_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/params_language_chip_group_text"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/params_language_chip_group"
@@ -209,7 +200,7 @@
                     app:singleLine="true"
                     app:singleSelection="true" />
             </HorizontalScrollView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button

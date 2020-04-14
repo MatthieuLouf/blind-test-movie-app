@@ -1,6 +1,7 @@
 package com.example.moviedb_app.ui.Param;
 
 import android.app.DatePickerDialog;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.moviedb_app.R;
@@ -51,8 +55,7 @@ public class ParamFragment extends Fragment {
     private String[] sort_by_display;
     private String[] numberMoviesDisplay = new String[10];
     private List<Genre> genreList = new ArrayList<Genre>();
-    private String[] languageKeyArray = new String[]{"en","fr","ja","sp"};
-    private String[] languageNameArray = new String[]{"English","French","Japanese","Spanish"};
+    private String[] languageKeyArray = new String[]{"en", "fr", "ja", "sp"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -78,26 +81,23 @@ public class ParamFragment extends Fragment {
                 String releaseDateGTE = numberPickerMinYear.getValue() + "0-01-01";
                 String releaseDateLTE = numberPickerMaxYear.getValue() + "0-12-31";
                 String sort_by = sort_by_array[sortBySpinner.getSelectedItemPosition()];
-                Integer maximumPage = Integer.parseInt(numberMoviesDisplay[numberMoviesSpinner.getSelectedItemPosition()+1])/20;
+                Integer maximumPage = Integer.parseInt(numberMoviesDisplay[numberMoviesSpinner.getSelectedItemPosition() + 1]) / 20;
 
-                String genres="";
-                for(int i =0;i<genresChipGroup.getChildCount();i++)
-                {
-                    Chip chip = (Chip)genresChipGroup.getChildAt(i);
-                    if (chip.isChecked()){
-                        genres+=genreList.get(i).getId();
-                        if(i!=genresChipGroup.getChildCount()-1)
-                        {
-                            genres+=",";
+                String genres = "";
+                for (int i = 0; i < genresChipGroup.getChildCount(); i++) {
+                    Chip chip = (Chip) genresChipGroup.getChildAt(i);
+                    if (chip.isChecked()) {
+                        genres += genreList.get(i).getId();
+                        if (i != genresChipGroup.getChildCount() - 1) {
+                            genres += ",";
                         }
                     }
                 }
 
-                String language ="";
-                for(int i =0;i<genresChipGroup.getChildCount();i++)
-                {
-                    Chip chip = (Chip)genresChipGroup.getChildAt(i);
-                    if (chip.isChecked()){
+                String language = "";
+                for (int i = 0; i < languagesChipGroup.getChildCount(); i++) {
+                    Chip chip = (Chip) languagesChipGroup.getChildAt(i);
+                    if (chip.isChecked()) {
                         language = languageKeyArray[i];
                         break;
                     }
@@ -146,38 +146,35 @@ public class ParamFragment extends Fragment {
         numberPickerMaxYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
     }
 
-    private void setSpinners()
-    {
-        for(int i =0;i<numberMoviesDisplay.length;i++)
-        {
-            numberMoviesDisplay[i]= String.valueOf((i+1)*20);
+    private void setSpinners() {
+        for (int i = 0; i < numberMoviesDisplay.length; i++) {
+            numberMoviesDisplay[i] = String.valueOf((i + 1) * 20);
         }
         ArrayAdapter<String> adapterNumber = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, numberMoviesDisplay);
         numberMoviesSpinner.setAdapter(adapterNumber);
         numberMoviesSpinner.setSelection(1);
 
-        sort_by_display= new String[] {getString(R.string.average_rate),
+        sort_by_display = new String[]{getString(R.string.average_rate),
                 getString(R.string.popularity),
                 getString(R.string.revenue)};
         ArrayAdapter<String> adapterOrder = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, sort_by_display);
         sortBySpinner.setAdapter(adapterOrder);
     }
 
-    private void setGenresChipGroup()
-    {
+    private void setGenresChipGroup() {
         MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
         movieAPIHelper.scrapGenres(getContext(), new Callback<List<Genre>>() {
             @Override
             public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
                 genreList.addAll(response.body());
-                for(Genre genre : genreList)
-                {
-                    if(genre.getId()!=99)
-                    {
+                for (Genre genre : genreList) {
+                    if (genre.getId() != 99) {
                         Chip chip = new Chip(getContext());
-                        ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),null,0,R.style.Widget_MaterialComponents_Chip_Choice);
+                        ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                         chip.setChipDrawable(chipDrawable);
                         chip.setText(genre.getName());
+                        setOnCheckedChangeListener(chip,R.color.colorPrimary);
+
                         genresChipGroup.addView(chip);
                     }
                 }
@@ -191,14 +188,34 @@ public class ParamFragment extends Fragment {
     }
 
     private void setLanguagesChipGroup() {
-        for(int i=0;i<languageKeyArray.length;i++)
-        {
+        String[] language_array = getResources().getStringArray(R.array.language_array);
+        for (int i = 0; i < languageKeyArray.length; i++) {
+
             Chip chip = new Chip(getContext());
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),null,0,R.style.Widget_MaterialComponents_Chip_Choice);
+
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
             chip.setChipDrawable(chipDrawable);
-            chip.setText(languageNameArray[i]);
+            chip.setText(language_array[i]);
+
+            setOnCheckedChangeListener(chip,R.color.colorAccent);
+
             languagesChipGroup.addView(chip);
         }
+    }
+
+    private void setOnCheckedChangeListener(Chip chip, int color) {
+        chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    chip.setChipBackgroundColorResource(color);
+                    chip.setTextColor(Color.WHITE);
+                } else {
+                    chip.setChipBackgroundColorResource(R.color.lt_grey);
+                    chip.setTextColor(Color.BLACK);
+                }
+            }
+        });
     }
 }
 

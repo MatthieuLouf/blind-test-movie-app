@@ -30,8 +30,6 @@
     <string name="logout">Logout</string>
     <string name="delete_user">Delete Account</string>
     <string name="login_failed">Login Failed</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="api_region_key">US</string>
     <string name="validate_movie">Validate</string>
     <string name="next_movie">Next</string>
@@ -53,4 +51,11 @@
     <string name="movies">movies</string>
     <string name="with_genres">Genres :</string>
     <string name="with_language">Language :</string>
+
+    <string-array name="language_array">
+        <item>English</item>
+        <item>French</item>
+        <item>Japanese</item>
+        <item>Spanish</item>
+    </string-array>
 </resources>
