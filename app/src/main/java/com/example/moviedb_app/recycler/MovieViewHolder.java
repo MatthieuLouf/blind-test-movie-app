@@ -27,7 +27,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     private ImageView image;
     private TextView original_title;
     private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
-    private ImageView background_image;
 
     private final String viewType;
 
@@ -36,17 +35,12 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         this.progressBar = itemView.findViewById(R.id.progress_circular);
         this.image = itemView.findViewById(R.id.image);
         this.original_title = itemView.findViewById(R.id.original_title);
-
-        this.background_image = itemView.findViewById(R.id.background_preview);
-        background_image.setImageAlpha(75);
-        background_image.setScaleType(ImageView.ScaleType.FIT_XY);
         this.viewType = viewType;
     }
 
     public void bind(final Movie movie) {
         original_title.setText(movie.getTitle());
         progressBar.setVisibility(View.VISIBLE);
-        Glide.with(itemView).load("https://image.tmdb.org/t/p/w1280/" + movie.getBackdropPath()).into(background_image);
 
         Glide.with(itemView).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.drawable.ic_dashboard_black_24dp))

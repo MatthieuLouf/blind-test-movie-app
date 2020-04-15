@@ -76,8 +76,9 @@ public class UserFragment extends Fragment {
         UserLikeService userLikeService = new UserLikeService(this.getActivity());
         List<Integer> userLikesIds = userLikeService.getLikes();
         if (userLikesIds.size() > 0) {
-            for (int id : userLikesIds) {
-                loadOneMovie(id);
+            for(int i =userLikesIds.size()-1;i>=0;i--)
+            {
+                loadOneMovie(userLikesIds.get(i));
             }
         } else {
             Toast.makeText(getActivity(), "There is no liked Movies", Toast.LENGTH_LONG).show();
