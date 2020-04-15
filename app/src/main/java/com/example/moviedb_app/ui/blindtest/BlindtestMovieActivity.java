@@ -60,29 +60,32 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         }
 
         //rnd.setSeed(700363);
-        getRandomMovie();
+        getRandomMovie(false);
 
     }
 
-    public void getRandomMovie() {
+    public void getRandomMovie(boolean loadingFail) {
         movieAPIHelper.loadList(this,blindtestParameters, new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if(response.body()!=null)
                 {
-                    startFragment(response.body());
+                    startFragment(response.body(),loadingFail);
                 }
             }
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-                getRandomMovie();
+                getRandomMovie(false);
             }
         });
     }
 
-    public void startFragment(Movie movie) {
-        movie_count++;
+    public void startFragment(Movie movie,boolean loadingFail) {
+        if(!loadingFail)
+        {
+            movie_count++;
+        }
         OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId(),
                 getString(blindtestParameters.getIdName())+" : " +movie_count);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

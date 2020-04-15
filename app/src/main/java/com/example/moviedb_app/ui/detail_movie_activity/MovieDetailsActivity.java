@@ -47,7 +47,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView collection_name;
     private TextView collection_separator;
     private ImageView collection_image;
-    private ImageView background_image;
     private TextView production_separator;
     private RecyclerView recyclerView_production_company;
 
@@ -81,9 +80,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.collection_name = findViewById(R.id.collection_details_name);
         this.collection_separator = findViewById(R.id.collection_details_separator);
         this.production_separator = findViewById(R.id.production_details_separator);
-        background_image = findViewById(R.id.background_details);
-        background_image.setImageAlpha(75);
-        background_image.setScaleType(ImageView.ScaleType.FIT_XY);
         startSearch(movieId);
 
 
@@ -110,7 +106,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 MovieDetails res = response.body();
-                Glide.with(MovieDetailsActivity.this).load("https://image.tmdb.org/t/p/original/" + res.getBackdropPath()).into(background_image);
 
                 Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE + res.getPosterPath()).into(image);
                 original_title.setText(res.getOriginalTitle());

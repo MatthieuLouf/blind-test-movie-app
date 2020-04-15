@@ -130,7 +130,7 @@ public class OneMovieFragment extends Fragment {
                 if (!next) {
                     showResult();
                 } else {
-                    changeFragment();
+                    changeFragment(false);
                 }
             }
         });
@@ -208,7 +208,7 @@ public class OneMovieFragment extends Fragment {
 
             @Override
             public void onError(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerError error) {
-                changeFragment();
+                changeFragment(true);
             }
         });
     }
@@ -221,7 +221,7 @@ public class OneMovieFragment extends Fragment {
                 if (video != null) {
                     initVideo(video.getKey());
                 } else {
-                    changeFragment();
+                    changeFragment(true);
                 }
             }
 
@@ -259,9 +259,9 @@ public class OneMovieFragment extends Fragment {
         youTubePlayerView.release();
     }
 
-    private void changeFragment() {
+    private void changeFragment(boolean loadingFail) {
         BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
-        blindtestMovieActivity.getRandomMovie();
+        blindtestMovieActivity.getRandomMovie(loadingFail);
     }
 
     private void showResult() {
