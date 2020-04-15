@@ -1,5 +1,6 @@
 package com.example.moviedb_app.ui.blindtest;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -7,8 +8,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -31,6 +34,8 @@ import com.example.moviedb_app.network.GetMovieService;
 import com.example.moviedb_app.network.MovieAPIHelper;
 import com.example.moviedb_app.network.RetrofitInstance;
 import com.example.moviedb_app.ui.detail_movie_activity.MovieDetailsActivity;
+import com.example.moviedb_app.userdata.UserLikeService;
+import com.firebase.ui.auth.data.model.User;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -66,6 +71,10 @@ public class OneMovieFragment extends Fragment {
     private TextView movie_title;
     private YouTubePlayerView youTubePlayerView;
     private CardView movieCardView;
+
+    private ImageView isLikedIcon;
+    private boolean isLiked;
+    private UserLikeService userLikeService;
 
     private boolean next = false;
     private List<String> listSimilarTitles = new ArrayList<String>();
@@ -128,6 +137,8 @@ public class OneMovieFragment extends Fragment {
 
         youTubePlayerView = root.findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
+
+        setIsLikedIcon();
 
         fetchMovieDetails();
 
@@ -286,6 +297,43 @@ public class OneMovieFragment extends Fragment {
         movie_rating.setText(getString(R.string.average_rate) + " : " + searched_movie.getVoteAverage().toString() + "/10");
         movie_release_date.setText(getString(R.string.release_date) + " : " + searched_movie.getReleaseDate().replace('-', '/'));
         movie_language.setText(getString(R.string.language_is) + " : " + searched_movie.getOriginalLanguage().toUpperCase());
+    }
+
+    private void setIsLikedIcon()
+    {
+        userLikeService = new UserLikeService(getActivity());
+        isLikedIcon = root.findViewById(R.id.movie_is_liked_icon);
+
+        isLiked = userLikeService.isLiked(movie_id);
+
+        if (isLiked) {
+            setLikedIconFromDrawable(R.drawable.ic_star_black_24dp,getResources().getColor(R.color.colorAccent));
+        } else {
+            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp,Color.GRAY);
+        }
+
+        isLikedIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isLiked)
+                {
+                    userLikeService.removeLike(movie_id);
+                    setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp,Color.GRAY);
+                }else {
+                    userLikeService.addLike(movie_id);
+                    setLikedIconFromDrawable(R.drawable.ic_star_black_24dp,getResources().getColor(R.color.colorAccent));
+                }
+                isLiked=!isLiked;
+            }
+        });
+    }
+
+    private void setLikedIconFromDrawable(int drawable,int color)
+    {
+        Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), drawable);
+        Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+        DrawableCompat.setTint(wrappedDrawable, color);
+        isLikedIcon.setImageDrawable(wrappedDrawable);
     }
 
 }

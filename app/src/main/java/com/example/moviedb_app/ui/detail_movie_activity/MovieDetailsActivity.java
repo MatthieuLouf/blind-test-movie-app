@@ -67,7 +67,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         userLikeService = new UserLikeService(this);
         isLiked = userLikeService.isLiked(Integer.parseInt(movieId));
         this.likeButton = findViewById(R.id.button_like);
-        likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked ? R.drawable.ic_liked : R.drawable.ic_not_like, 0, 0, 0);
+        likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp, 0, 0, 0);
         likeButton.setText(isLiked ? R.string.unlike : R.string.like);
 
         this.image = findViewById(R.id.image_details);
@@ -87,6 +87,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         startSearch(movieId);
 
 
+
         this.likeButton.setOnClickListener(v -> {
             if (isLiked) {
                 userLikeService.removeLike(Integer.parseInt(movieId));
@@ -94,7 +95,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 userLikeService.addLike(Integer.parseInt(movieId));
             }
             isLiked = !isLiked;
-            likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked ? R.drawable.ic_liked : R.drawable.ic_not_like, 0, 0, 0);
+            likeButton.setCompoundDrawablesWithIntrinsicBounds(isLiked ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp, 0, 0, 0);
             likeButton.setText(isLiked ? R.string.unlike : R.string.like);
         });
     }
