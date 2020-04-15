@@ -284,6 +284,13 @@ public class OneMovieFragment extends Fragment {
             }
         }
 
+        movieCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieDetailsActivity.start(getContext(), movie_id.toString());
+            }
+        });
+
     }
 
     private void setMovieViewComponents() {
