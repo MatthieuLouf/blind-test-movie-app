@@ -15,6 +15,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ import retrofit2.Retrofit;
  * create an instance of this fragment.
  */
 public class OneMovieFragment extends Fragment {
+    private static final String TAG = "OneMovieFragment";
     private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
     private static final String MOVIE_ID = "movie_id";
     private static final String AB_TITLE = "ab_title";
@@ -94,6 +96,8 @@ public class OneMovieFragment extends Fragment {
         args.putInt(MOVIE_ID, movie_id);
         args.putString(AB_TITLE, ab_title);
         fragment.setArguments(args);
+        Log.d(TAG, "Instantiate OneMovieFragment");
+
         return fragment;
     }
 
@@ -128,8 +132,10 @@ public class OneMovieFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!next) {
+                    Log.d(TAG, "Ask to show test movie on valid");
                     showResult();
                 } else {
+                    Log.d(TAG, "Ask to change movie on next");
                     changeFragment(false);
                 }
             }
@@ -151,6 +157,7 @@ public class OneMovieFragment extends Fragment {
         retrofitService.getMovie(movie_id.toString(), getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
+                Log.d(TAG, "Retrieve Test Movie infos");
                 searched_movie = response.body();
                 getBestTrailer(searched_movie.getId().toString());
                 setSimilarMovies();
@@ -183,12 +190,14 @@ public class OneMovieFragment extends Fragment {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                Log.d(TAG, "Start video loading");
                 youTubePlayer.loadVideo(video_id, 0f);
             }
 
             @Override
             public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
                 if (state == PlayerConstants.PlayerState.PLAYING) {
+                    Log.d(TAG, "Start of the video, set timer to hide the bar on title");
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -208,6 +217,7 @@ public class OneMovieFragment extends Fragment {
 
             @Override
             public void onError(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerError error) {
+                Log.d(TAG, "Error while loading the video, changing fragment");
                 changeFragment(true);
             }
         });
@@ -219,8 +229,10 @@ public class OneMovieFragment extends Fragment {
             public void onResponse(Call<Video> call, Response<Video> response) {
                 Video video = response.body();
                 if (video != null) {
+                    Log.d(TAG, "Got best trailer not null, ask to start the video");
                     initVideo(video.getKey());
                 } else {
+                    Log.d(TAG, "Null video, ask to restart the fragment");
                     changeFragment(true);
                 }
             }
@@ -237,13 +249,21 @@ public class OneMovieFragment extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 listSimilarTitles = response.body();
-                listSimilarTitles.add(searched_movie.getTitle());
-                Collections.sort(listSimilarTitles);
-                picker.setMinValue(0);
-                picker.setMaxValue(listSimilarTitles.size() - 1);
-                picker.setDisplayedValues(listSimilarTitles.toArray(new String[listSimilarTitles.size()]));
-                picker.setValue(listSimilarTitles.size() / 2);
-                picker.setVisibility(View.VISIBLE);
+                if(listSimilarTitles!=null)
+                {
+                    Log.d(TAG, "Retrieve not null list of similar movies");
+                    listSimilarTitles.add(searched_movie.getTitle());
+                    Collections.sort(listSimilarTitles);
+                    picker.setMinValue(0);
+                    picker.setMaxValue(listSimilarTitles.size() - 1);
+                    picker.setDisplayedValues(listSimilarTitles.toArray(new String[listSimilarTitles.size()]));
+                    picker.setValue(listSimilarTitles.size() / 2);
+                    picker.setVisibility(View.VISIBLE);
+                }
+                else {
+                    Log.d(TAG, "Retrieve null list of similar movies, change fragment");
+                    changeFragment(true);
+                }
             }
 
             @Override
@@ -260,11 +280,14 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void changeFragment(boolean loadingFail) {
+        Log.d(TAG, "Change Fragment method");
         BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
         blindtestMovieActivity.getRandomMovie(loadingFail);
     }
 
     private void showResult() {
+        Log.d(TAG, "Show result card !");
+
         next = true;
         next_movie.setText(R.string.next_movie);
         next_movie.setBackgroundColor(getResources().getColor(R.color.colorAccent));
@@ -294,6 +317,8 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void setMovieViewComponents() {
+        Log.d(TAG, "Set movie view components");
+
         ImageView movie_image = root.findViewById(R.id.movie_image);
         TextView movie_rating = root.findViewById(R.id.movie_rating);
         TextView movie_release_date = root.findViewById(R.id.movie_release_date);
@@ -308,6 +333,8 @@ public class OneMovieFragment extends Fragment {
 
     private void setIsLikedIcon()
     {
+        Log.d(TAG, "Set is liked icon");
+
         userLikeService = new UserLikeService(getActivity());
         isLikedIcon = root.findViewById(R.id.movie_is_liked_icon);
 

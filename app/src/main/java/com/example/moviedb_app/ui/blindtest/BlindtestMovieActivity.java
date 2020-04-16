@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.moviedb_app.R;
 
@@ -31,7 +32,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class BlindtestMovieActivity extends AppCompatActivity {
-    private String TAG = "create movie";
+    private String TAG = "BlindtestMovieActivity";
 
     private static final String PARAMETERS_KEY = "PARAMETERS_KEY";
 
@@ -59,7 +60,6 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             blindtestParameters = (BlindtestParameters) intent.getSerializableExtra(PARAMETERS_KEY);
         }
 
-        //rnd.setSeed(700363);
         getRandomMovie(false);
 
     }
@@ -70,18 +70,21 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if(response.body()!=null)
                 {
+                    Log.d(TAG, "Got a random movie not null : "+response.body().getId() +" - " +response.body().getTitle());
                     startFragment(response.body(),loadingFail);
                 }
             }
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
+                Log.d(TAG, "Error while getting a random movie");
                 getRandomMovie(false);
             }
         });
     }
 
     public void startFragment(Movie movie,boolean loadingFail) {
+        Log.d(TAG, "Starting a new OneMovieFragment, firstTime = " + firstTime);
         if(!loadingFail)
         {
             movie_count++;
