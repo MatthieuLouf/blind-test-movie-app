@@ -12,17 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.moviedb_app.MainActivity;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.network.GetMovieService;
 import com.example.moviedb_app.network.RetrofitInstance;
 import com.example.moviedb_app.recycler.MovieAdapter;
 import com.example.moviedb_app.userdata.UserLikeService;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;

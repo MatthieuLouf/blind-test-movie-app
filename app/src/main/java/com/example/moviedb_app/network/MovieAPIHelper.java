@@ -24,8 +24,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -245,7 +243,6 @@ public class MovieAPIHelper extends AppCompatActivity {
 
     private ResponseBody newResponseBody() {
         return new ResponseBody() {
-            @Nullable
             @Override
             public MediaType contentType() {
                 return null;

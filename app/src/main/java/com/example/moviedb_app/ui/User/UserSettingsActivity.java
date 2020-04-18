@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 import com.example.moviedb_app.MainActivity;
 import com.example.moviedb_app.R;
-import com.firebase.ui.auth.AuthUI;
+/*import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Task;*/
 
 public class UserSettingsActivity extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     Button logout_button;
 
     Activity userSettingsActivity;
-
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,5 +75,5 @@ public class UserSettingsActivity extends AppCompatActivity {
                         NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));
                     }
                 });
-    }
+    }*/
 }

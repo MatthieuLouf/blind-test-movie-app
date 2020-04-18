@@ -1,6 +1,5 @@
 package com.example.moviedb_app.ui.blindtest;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,17 +13,9 @@ import com.example.moviedb_app.R;
 
 import com.example.moviedb_app.model.BlindtestParameters;
 import com.example.moviedb_app.model.Movie;
-import com.example.moviedb_app.model.MoviePageResult;
-import com.example.moviedb_app.network.GetMovieService;
+
 import com.example.moviedb_app.network.MovieAPIHelper;
-import com.example.moviedb_app.network.RetrofitInstance;
 
-import com.example.moviedb_app.ui.detail_movie_activity.MovieDetailsActivity;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-
-import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +33,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     Integer movie_count=0;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
