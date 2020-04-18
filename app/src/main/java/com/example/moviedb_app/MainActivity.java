@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    //private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
     @Override
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -61,6 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, UserSettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 }

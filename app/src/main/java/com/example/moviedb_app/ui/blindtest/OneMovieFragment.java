@@ -234,7 +234,7 @@ public class OneMovieFragment extends Fragment {
     }
 
     public void getBestTrailer(String movie_id) {
-        movieAPIHelper.getBestTrailer(getContext(), movie_id, new Callback<Video>() {
+        movieAPIHelper.getBestTrailer(getActivity(), movie_id, new Callback<Video>() {
             @Override
             public void onResponse(Call<Video> call, Response<Video> response) {
                 Video video = response.body();

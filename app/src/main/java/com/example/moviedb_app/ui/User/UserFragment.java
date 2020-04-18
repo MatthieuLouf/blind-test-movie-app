@@ -39,7 +39,7 @@ public class UserFragment extends Fragment {
 
     private String API_KEY = "5b061cba26b441ddec657d88428cc9fc";
     private static final int RC_SIGN_IN = 123;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    //private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private List<Movie> movieList = new ArrayList<>();
     private MovieAdapter movieAdapter;
@@ -48,13 +48,15 @@ public class UserFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        /*FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             login();
         } else {
             movieList = new ArrayList<>();
             loadMovies();
-        }
+        }*/
+        movieList = new ArrayList<>();
+        loadMovies();
     }
 
 
@@ -112,7 +114,7 @@ public class UserFragment extends Fragment {
         });
     }
 
-    private void login() {
+    /*private void login() {
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -143,6 +145,6 @@ public class UserFragment extends Fragment {
                 Toast.makeText(getActivity(), R.string.login_failed, Toast.LENGTH_LONG).show();
             }
         }
-    }
+    }*/
 
 }
