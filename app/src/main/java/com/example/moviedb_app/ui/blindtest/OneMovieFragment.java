@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ import com.firebase.ui.auth.data.model.User;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerTracker;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
@@ -71,8 +73,11 @@ public class OneMovieFragment extends Fragment {
     private Button next_movie;
     private NumberPicker picker;
     private TextView movie_title;
-    private YouTubePlayerView youTubePlayerView;
     private CardView movieCardView;
+    private ProgressBar progressBar;
+
+    private YouTubePlayerView youTubePlayerView;
+    private YouTubePlayerTracker youTubePlayerTracker;
 
     private ImageView isLikedIcon;
     private boolean isLiked;
@@ -80,7 +85,6 @@ public class OneMovieFragment extends Fragment {
 
     private boolean next = false;
     private List<String> listSimilarTitles = new ArrayList<String>();
-
 
     private View root;
     private Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
@@ -90,7 +94,7 @@ public class OneMovieFragment extends Fragment {
     public OneMovieFragment() {
     }
 
-    public static OneMovieFragment newInstance(Integer movie_id,String ab_title) {
+    public static OneMovieFragment newInstance(Integer movie_id, String ab_title) {
         OneMovieFragment fragment = new OneMovieFragment();
         Bundle args = new Bundle();
         args.putInt(MOVIE_ID, movie_id);
@@ -115,7 +119,7 @@ public class OneMovieFragment extends Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_one_movie, container, false);
 
-        BlindtestMovieActivity activity = (BlindtestMovieActivity)getActivity();
+        BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
         ActionBar ab = activity.getSupportActionBar();
         ab.setTitle(ab_title);
 
@@ -127,6 +131,7 @@ public class OneMovieFragment extends Fragment {
         picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         movieCardView = root.findViewById(R.id.card_movie_view);
         movieCardView.setVisibility(View.INVISIBLE);
+        progressBar = root.findViewById(R.id.test_progress_bar);
 
         next_movie.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,6 +189,7 @@ public class OneMovieFragment extends Fragment {
         playerUiController.showCustomAction1(false);
         playerUiController.showCustomAction2(false);
         playerUiController.showSeekBar(false);
+
     }
 
     private void initVideo(String video_id) {
@@ -192,6 +198,8 @@ public class OneMovieFragment extends Fragment {
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                 Log.d(TAG, "Start video loading");
                 youTubePlayer.loadVideo(video_id, 0f);
+                youTubePlayerTracker = new YouTubePlayerTracker();
+                youTubePlayer.addListener(youTubePlayerTracker);
             }
 
             @Override
@@ -204,6 +212,8 @@ public class OneMovieFragment extends Fragment {
                             hider_top.setVisibility(View.INVISIBLE);
                         }
                     }, 5000);
+
+                    setProgressBar();
                 }
                 if (state == PlayerConstants.PlayerState.PAUSED) {
                     hider_top.setVisibility(View.VISIBLE);
@@ -249,8 +259,7 @@ public class OneMovieFragment extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 listSimilarTitles = response.body();
-                if(listSimilarTitles!=null)
-                {
+                if (listSimilarTitles != null) {
                     Log.d(TAG, "Retrieve not null list of similar movies");
                     listSimilarTitles.add(searched_movie.getTitle());
                     Collections.sort(listSimilarTitles);
@@ -259,8 +268,7 @@ public class OneMovieFragment extends Fragment {
                     picker.setDisplayedValues(listSimilarTitles.toArray(new String[listSimilarTitles.size()]));
                     picker.setValue(listSimilarTitles.size() / 2);
                     picker.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     Log.d(TAG, "Retrieve null list of similar movies, change fragment");
                     changeFragment(true);
                 }
@@ -294,8 +302,7 @@ public class OneMovieFragment extends Fragment {
         movieCardView.setVisibility(View.VISIBLE);
         picker.setVisibility(View.INVISIBLE);
 
-        if(listSimilarTitles.size()!=0)
-        {
+        if (listSimilarTitles.size() != 0) {
             TextView result_sentence = root.findViewById(R.id.result_sentence);
 
             if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
@@ -331,8 +338,7 @@ public class OneMovieFragment extends Fragment {
         movie_language.setText(getString(R.string.language_is) + " : " + searched_movie.getOriginalLanguage().toUpperCase());
     }
 
-    private void setIsLikedIcon()
-    {
+    private void setIsLikedIcon() {
         Log.d(TAG, "Set is liked icon");
 
         userLikeService = new UserLikeService(getActivity());
@@ -341,33 +347,59 @@ public class OneMovieFragment extends Fragment {
         isLiked = userLikeService.isLiked(movie_id);
 
         if (isLiked) {
-            setLikedIconFromDrawable(R.drawable.ic_star_black_24dp,getResources().getColor(R.color.colorAccent));
+            setLikedIconFromDrawable(R.drawable.ic_star_black_24dp, getResources().getColor(R.color.colorAccent));
         } else {
-            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp,Color.GRAY);
+            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, Color.GRAY);
         }
 
         isLikedIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isLiked)
-                {
+                if (isLiked) {
                     userLikeService.removeLike(movie_id);
-                    setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp,Color.GRAY);
-                }else {
+                    setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, Color.GRAY);
+                } else {
                     userLikeService.addLike(movie_id);
-                    setLikedIconFromDrawable(R.drawable.ic_star_black_24dp,getResources().getColor(R.color.colorAccent));
+                    setLikedIconFromDrawable(R.drawable.ic_star_black_24dp, getResources().getColor(R.color.colorAccent));
                 }
-                isLiked=!isLiked;
+                isLiked = !isLiked;
             }
         });
     }
 
-    private void setLikedIconFromDrawable(int drawable,int color)
-    {
+    private void setLikedIconFromDrawable(int drawable, int color) {
         Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), drawable);
         Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
         DrawableCompat.setTint(wrappedDrawable, color);
         isLikedIcon.setImageDrawable(wrappedDrawable);
+    }
+
+    private void setProgressBar() {
+        Log.d(TAG, "Set ProgressBar Loader Thread " + youTubePlayerTracker.getVideoDuration());
+
+        int progressBarMax = 10000;
+        progressBar.setMax(progressBarMax);
+        progressBar.setProgress(progressBarMax);
+
+        new Thread(new Runnable() {
+            public void run() {
+
+                while ((youTubePlayerTracker.getVideoDuration() / 2) - youTubePlayerTracker.getCurrentSecond() >= 0f) {
+
+                    progressBar.setProgress(progressBarMax - (int) ((youTubePlayerTracker.getCurrentSecond() * progressBarMax) / (youTubePlayerTracker.getVideoDuration() / 2)));
+
+                    if ((youTubePlayerTracker.getVideoDuration() / 6) - youTubePlayerTracker.getCurrentSecond() <= 0f) {
+                        //Log.d(TAG, "Set ProgressBar Error");
+                        //ProgressBar progressBar1 = root.findViewById(R.id.test_progress_bar);
+                    }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
 }
