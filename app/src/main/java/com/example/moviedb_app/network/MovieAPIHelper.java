@@ -135,7 +135,7 @@ public class MovieAPIHelper extends AppCompatActivity {
     public void loadList(Context context, BlindtestParameters parameters, Callback<Movie> movieCallback) {
         Log.d(TAG, "enter loadList");
 
-        int random_page = rnd.nextInt(parameters.getMaximumPage());
+        int random_page = rnd.nextInt(parameters.getMaximumPage())+1;
         retrofitService.getParametersMovies(random_page,
                 context.getResources().getString(R.string.tmdb_api_key),
                 context.getResources().getString(R.string.api_language_key),
