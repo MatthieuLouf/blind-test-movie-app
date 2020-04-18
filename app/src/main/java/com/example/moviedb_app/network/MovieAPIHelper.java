@@ -133,6 +133,8 @@ public class MovieAPIHelper extends AppCompatActivity {
     }
 
     public void loadList(Context context, BlindtestParameters parameters, Callback<Movie> movieCallback) {
+        Log.d(TAG, "enter loadList");
+
         int random_page = rnd.nextInt(parameters.getMaximumPage());
         retrofitService.getParametersMovies(random_page,
                 context.getResources().getString(R.string.tmdb_api_key),
@@ -172,7 +174,8 @@ public class MovieAPIHelper extends AppCompatActivity {
             Log.d(TAG, "return random movie in list");
             movieCallback.onResponse(newCall(movie), Response.success(movie));
         } else {
-            movieCallback.onResponse(newCall(null), Response.error(404, newResponseBody()));
+            Log.d(TAG, "return error on random movie in list");
+            movieCallback.onFailure(newCall(null),new Throwable());
         }
     }
 

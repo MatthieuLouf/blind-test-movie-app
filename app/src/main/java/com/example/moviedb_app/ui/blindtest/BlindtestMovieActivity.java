@@ -32,6 +32,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     boolean firstTime= true;
 
     Integer movie_count=0;
+    Integer error_count = 0;
 
     //private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -54,6 +55,8 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     }
 
     public void getRandomMovie(boolean loadingFail) {
+        Log.d(TAG, "enter getRandomMovie");
+
         movieAPIHelper.loadList(this,blindtestParameters, new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
@@ -66,8 +69,19 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-                Log.d(TAG, "Error while getting a random movie");
-                getRandomMovie(false);
+                Log.d(TAG, "Error while getting a random movie, error count : "+error_count);
+                if(error_count<5)
+                {
+                    Log.d(TAG, "Restart getRandom Movie");
+                    int numberPage = blindtestParameters.getMaximumPage() ==1 ? 1 : blindtestParameters.getMaximumPage()-1;
+                    blindtestParameters.setMaximumPage(numberPage);
+                    error_count++;
+                    getRandomMovie(false);
+                }
+                else{
+                    Log.d(TAG, "Finish activity: ");
+                    finish();
+                }
             }
         });
     }
@@ -97,4 +111,5 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         intent.putExtra(PARAMETERS_KEY, parameters);
         context.startActivity(intent);
     }
+
 }
