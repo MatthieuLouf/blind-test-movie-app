@@ -384,11 +384,11 @@ public class OneMovieFragment extends Fragment {
         new Thread(new Runnable() {
             public void run() {
 
-                while ((youTubePlayerTracker.getVideoDuration() / 2) - youTubePlayerTracker.getCurrentSecond() >= 0f) {
+                while ((youTubePlayerTracker.getVideoDuration()) - youTubePlayerTracker.getCurrentSecond() >= 0f) {
 
                     progressBar.setProgress(progressBarMax - (int) ((youTubePlayerTracker.getCurrentSecond() * progressBarMax) / (youTubePlayerTracker.getVideoDuration() / 2)));
 
-                    if ((youTubePlayerTracker.getVideoDuration() / 6) - youTubePlayerTracker.getCurrentSecond() <= 0f) {
+                    if ((youTubePlayerTracker.getVideoDuration() / 3) - youTubePlayerTracker.getCurrentSecond() <= 0f) {
                         //Log.d(TAG, "Set ProgressBar Error");
                         //ProgressBar progressBar1 = root.findViewById(R.id.test_progress_bar);
                     }
