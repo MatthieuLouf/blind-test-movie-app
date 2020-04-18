@@ -2,6 +2,7 @@ package com.example.moviedb_app.network;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MovieAPIHelper extends AppCompatActivity {
+    private static final String TAG = "MovieAPIHelper";
 
     Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
     GetMovieService retrofitService = retrofit.create(GetMovieService.class);
@@ -42,7 +44,6 @@ public class MovieAPIHelper extends AppCompatActivity {
     Random rnd = new Random();
 
     public MovieAPIHelper() {
-
     }
 
     public void getSimilarMovies(Context context, Integer movie_id, Callback<List<String>> callback) {
@@ -60,6 +61,8 @@ public class MovieAPIHelper extends AppCompatActivity {
                         }
                     }
                 }
+                Log.d(TAG, "Return similar movies");
+
                 callback.onResponse(newCall(listSimilarTitles), Response.success(listSimilarTitles));
             }
 
@@ -70,19 +73,42 @@ public class MovieAPIHelper extends AppCompatActivity {
         });
     }
 
-    public void getBestTrailer(Context context, String movie_id, Callback<Video> callback) {
+    public void getBestTrailer(Context context, String movie_id, String originalLanguage, Callback<Video> callback) {
         retrofitService.getVideos(movie_id, context.getResources().getString(R.string.tmdb_api_key), context.getResources().getString(R.string.api_language_key)).enqueue(new Callback<VideoPageResult>() {
             @Override
             public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
                 if (response.body() != null) {
                     List<Video> videoList = response.body().getResults();
                     Video video = selectBestTrailer(context, videoList);
-                    callback.onResponse(newCall(video), Response.success(video));
+                    if(video!=null)
+                    {
+                        Log.d(TAG, "return best trailer in language area");
+                        callback.onResponse(newCall(video), Response.success(video));
+                    }
+                    else{
+                        retrofitService.getVideos(movie_id,context.getResources().getString(R.string.tmdb_api_key),originalLanguage).enqueue(new Callback<VideoPageResult>() {
+                            @Override
+                            public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
+                                if (response.body() != null) {
+                                    List<Video> videoList = response.body().getResults();
+                                    Video video = selectBestTrailer(context, videoList);
+                                    Log.d(TAG, "return best trailer in original language");
+                                    callback.onResponse(newCall(video), Response.success(video));
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<VideoPageResult> call, Throwable t) {
+                                callback.onResponse(newCall(null), Response.success(null));
+                            }
+                        });
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<VideoPageResult> call, Throwable t) {
+                callback.onResponse(newCall(null), Response.success(null));
             }
         });
     }
@@ -104,6 +130,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                 }
             }
         }
+        Log.d(TAG, "return selected best trailer");
         return videoSelected;
     }
 
@@ -128,6 +155,7 @@ public class MovieAPIHelper extends AppCompatActivity {
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
                 if (response.body() != null) {
                     List<Movie> movieList = response.body().getResults();
+                    Log.d(TAG, "receive list of movies to random choose");
                     chooseMovieInList(movieList, movieCallback);
                 }
             }
@@ -143,6 +171,7 @@ public class MovieAPIHelper extends AppCompatActivity {
         int random = rnd.nextInt(20);
         if (movies.size() > random) {
             Movie movie = movies.get(random);
+            Log.d(TAG, "return random movie in list");
             movieCallback.onResponse(newCall(movie), Response.success(movie));
         } else {
             movieCallback.onResponse(newCall(null), Response.error(404, newResponseBody()));
@@ -162,6 +191,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                 GenrePageResult res = response.body();
                 if (res != null) {
                     List<Genre> list = res.getGenres();
+                    Log.d(TAG, "return genre list");
                     helperCallback.onResponse(newCall(list),Response.success(list));
                 }
             }

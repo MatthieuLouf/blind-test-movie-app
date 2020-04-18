@@ -38,8 +38,6 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     private BlindtestParameters blindtestParameters;
 
-    Random rnd = new Random();
-
     boolean firstTime= true;
 
     Integer movie_count=0;

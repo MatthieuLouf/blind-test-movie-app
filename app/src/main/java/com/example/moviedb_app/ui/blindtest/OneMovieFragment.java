@@ -89,7 +89,7 @@ public class OneMovieFragment extends Fragment {
     private View root;
     private Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
     private GetMovieService retrofitService = retrofit.create(GetMovieService.class);
-    MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
+    private MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
 
     public OneMovieFragment() {
     }
@@ -234,7 +234,7 @@ public class OneMovieFragment extends Fragment {
     }
 
     public void getBestTrailer(String movie_id) {
-        movieAPIHelper.getBestTrailer(getActivity(), movie_id, new Callback<Video>() {
+        movieAPIHelper.getBestTrailer(getActivity(), movie_id, searched_movie.getOriginalLanguage(), new Callback<Video>() {
             @Override
             public void onResponse(Call<Video> call, Response<Video> response) {
                 Video video = response.body();
@@ -386,7 +386,7 @@ public class OneMovieFragment extends Fragment {
 
                 while ((youTubePlayerTracker.getVideoDuration()) - youTubePlayerTracker.getCurrentSecond() >= 0f) {
 
-                    progressBar.setProgress(progressBarMax - (int) ((youTubePlayerTracker.getCurrentSecond() * progressBarMax) / (youTubePlayerTracker.getVideoDuration() / 2)));
+                    progressBar.setProgress(progressBarMax - (int) ((youTubePlayerTracker.getCurrentSecond() * progressBarMax) / (youTubePlayerTracker.getVideoDuration())));
 
                     if ((youTubePlayerTracker.getVideoDuration() / 3) - youTubePlayerTracker.getCurrentSecond() <= 0f) {
                         //Log.d(TAG, "Set ProgressBar Error");
