@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     app:chipSpacingVertical="0.1dp"
                     app:singleLine="true"
-                    /><!--app:singleSelection="true"-->
+                    app:singleSelection="true"/>
             </HorizontalScrollView>
         </LinearLayout>
 

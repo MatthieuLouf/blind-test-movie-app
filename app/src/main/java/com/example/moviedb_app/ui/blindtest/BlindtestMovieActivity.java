@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.moviedb_app.R;
 
@@ -73,13 +74,12 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                 if(error_count<5)
                 {
                     Log.d(TAG, "Restart getRandom Movie");
-                    int numberPage = blindtestParameters.getMaximumPage() ==1 ? 1 : blindtestParameters.getMaximumPage()-1;
-                    blindtestParameters.setMaximumPage(numberPage);
                     error_count++;
                     getRandomMovie(false);
                 }
                 else{
-                    Log.d(TAG, "Finish activity: ");
+                    Log.d(TAG, "Finish activity");
+                    Toast.makeText(getBaseContext(), getString(R.string.load_error_not_enough_movies), 3).show();
                     finish();
                 }
             }

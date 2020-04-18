@@ -58,4 +58,5 @@
         <item>Japanese</item>
         <item>Spanish</item>
     </string-array>
+    <string name="load_error_not_enough_movies">Not enough movies selected</string>
 </resources>

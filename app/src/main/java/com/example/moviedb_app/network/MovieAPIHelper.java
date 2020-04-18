@@ -153,11 +153,18 @@ public class MovieAPIHelper extends AppCompatActivity {
         return new Callback<MoviePageResult>() {
             @Override
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
-                if (response.body() != null) {
-                    List<Movie> movieList = response.body().getResults();
-                    Log.d(TAG, "receive list of movies to random choose");
-                    chooseMovieInList(movieList, movieCallback);
+                if(response.isSuccessful())
+                {
+                    if (response.body() != null) {
+                        List<Movie> movieList = response.body().getResults();
+                        Log.d(TAG, "receive list of movies to random choose");
+                        chooseMovieInList(movieList, movieCallback);
+                    }
+                }else {
+                    Log.d(TAG, "response not successful");
+                    movieCallback.onFailure(newCall(null),new Throwable());
                 }
+
             }
 
             @Override
