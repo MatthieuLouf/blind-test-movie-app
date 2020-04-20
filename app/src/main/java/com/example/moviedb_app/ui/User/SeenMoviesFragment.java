@@ -1,6 +1,7 @@
 package com.example.moviedb_app.ui.User;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,22 +35,26 @@ public class SeenMoviesFragment extends Fragment {
     private MovieAdapter movieAdapter;
     private RecyclerView recyclerView;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public void onStart() {
+        super.onStart();
 
-        return inflater.inflate(R.layout.fragment_stared_movies, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        recyclerView = view.findViewById(R.id.recycler_view_user);
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(gridLayoutManager);
         movieList = new ArrayList<>();
         loadMovies();
     }
 
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+
+        View root = inflater.inflate(R.layout.fragment_stared_movies, container, false);
+
+        recyclerView = root.findViewById(R.id.recycler_view_user);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        return root;
+    }
 
     private void loadMovies() {
         SeenMoviesService seenMoviesService = new SeenMoviesService(this.getActivity());
@@ -60,7 +65,7 @@ public class SeenMoviesFragment extends Fragment {
                 loadOneMovie(userLikesIds.get(i));
             }
         } else {
-            Toast.makeText(getActivity(), "There is no liked Movies", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "There is no seen Movies", Toast.LENGTH_LONG).show();
         }
     }
 

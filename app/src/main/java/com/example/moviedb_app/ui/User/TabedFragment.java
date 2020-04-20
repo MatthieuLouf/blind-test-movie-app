@@ -8,20 +8,26 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.moviedb_app.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TabedFragment extends Fragment {
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private ViewPager2 viewPager;
+
+    private String TAG = "TabedFragment";
 
     @Nullable
     @Override
@@ -32,47 +38,44 @@ public class TabedFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPagerAdapter.addFragment(new StaredMoviesFragment(), getContext().getResources().getString(R.string.stared));
+        viewPagerAdapter.addFragment(new SeenMoviesFragment(), getContext().getResources().getString(R.string.seen));
         viewPager = view.findViewById(R.id.viewpager);
-        setViewPager(viewPager);
+        viewPager.setAdapter(viewPagerAdapter);
 
-        tabLayout = view.findViewById(R.id.mytabs);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout = view.findViewById(R.id.tab_layout);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(new String[]{getContext().getResources().getString(R.string.stared),
+                        getContext().getResources().getString(R.string.seen)}[position])
+        ).attach();
+
     }
 
-
-    private void setViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter((FragmentManager) getActivity().getSupportFragmentManager());
-        adapter.addFragment(new StaredMoviesFragment(), getContext().getResources().getString(R.string.stared));
-        adapter.addFragment(new SeenMoviesFragment(),getContext().getResources().getString(R.string.seen));
-        viewPager.setAdapter(adapter);
-    }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    class ViewPagerAdapter extends FragmentStateAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
+        public ViewPagerAdapter(Fragment fragment) {
+            super(fragment);
         }
 
+        public void addFragment(Fragment fragment, String fragmentTitle) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(fragmentTitle);
+        }
+
+        @NonNull
         @Override
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             return mFragmentList.get(position);
         }
 
+
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
     }
 }

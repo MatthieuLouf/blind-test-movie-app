@@ -1,6 +1,7 @@
 package com.example.moviedb_app.ui.User;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class StaredMoviesFragment extends Fragment {
+    private static final String TAG = "StaredMoviesFragment";
 
     //private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -45,10 +47,10 @@ public class StaredMoviesFragment extends Fragment {
             movieList = new ArrayList<>();
             loadMovies();
         }*/
+        Log.d(TAG, "onStart()");
         movieList = new ArrayList<>();
         loadMovies();
     }
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,6 +59,7 @@ public class StaredMoviesFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_stared_movies, container, false);
 
         recyclerView = root.findViewById(R.id.recycler_view_user);
+        Log.d(TAG, "onCreateView()");
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -65,6 +68,8 @@ public class StaredMoviesFragment extends Fragment {
     }
 
     private void loadMovies() {
+        Log.d(TAG, "loadMovies()");
+
         UserLikeService userLikeService = new UserLikeService(this.getActivity());
         List<Integer> userLikesIds = userLikeService.getLikes();
         if (userLikesIds.size() > 0) {
