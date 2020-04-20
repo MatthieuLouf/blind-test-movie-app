@@ -1,6 +1,9 @@
 package com.example.moviedb_app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.moviedb_app.ui.User.UserSettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -32,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
+        /*if (currentUser != null) {*/
             getMenuInflater().inflate(R.menu.menu_user_actionbar, menu);
-        }
+        //}
         return true;
     }
 
@@ -51,6 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, UserSettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
 }

@@ -36,4 +36,6 @@
         <item>Espagnol</item>
     </string-array>
     <string name="load_error_not_enough_movies">Pas assez de films sélectionnés</string>
+    <string name="remove_all_seen_movies">Oublier les films déjà vus</string>
+    <string name="all_seen_movies_removed">Films déjà vu oubliés !</string>
 </resources>

@@ -45,6 +45,12 @@ public class SeenMoviesService {
         }
     }
 
+    public void removeAllSeenMovies()
+    {
+        List<Integer> list = new ArrayList<Integer>();
+        saveSeenMovies(list);
+    }
+
     public List<Integer> getSeenMovies() {
         String json = sharedPreferences.getString(this.moviesDataString, "");
 

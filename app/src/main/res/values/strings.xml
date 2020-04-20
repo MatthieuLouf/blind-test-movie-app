@@ -60,4 +60,6 @@
         <item>Spanish</item>
     </string-array>
     <string name="load_error_not_enough_movies">Not enough movies selected</string>
+    <string name="remove_all_seen_movies">Forget all seen movies</string>
+    <string name="all_seen_movies_removed">All seen movies forgotten !</string>
 </resources>
