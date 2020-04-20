@@ -16,11 +16,11 @@
     <string name="top_textview_discover">Découverte des années 80</string>
     <string name="collection">Collection :</string>
     <string name="production_companies">"Companies Productrices "</string>
-    <string name="synopsis">Synopsis</string>
+    <string name="synopsis">Synopsis :</string>
     <string name="budget">Budget</string>
     <string name="revenue">Recette</string>
     <string name="average_rate">Note</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Genres :</string>
     <string name="release_date">Sortie</string>
     <string name="research_empty">Ecrivez avant de valider !</string>
 </resources>

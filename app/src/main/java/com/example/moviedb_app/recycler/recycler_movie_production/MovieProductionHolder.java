@@ -33,10 +33,8 @@ public class MovieProductionHolder extends RecyclerView.ViewHolder {
     }
     public void bind(final ProductionCompany productionCompany) {
         production_name.setText(productionCompany.getName());
-        Glide.with(itemView).load(BASE_IMAGE_URL+productionCompany.getLogoPath()).into(production_logo);
 
-        Glide.with(itemView).applyDefaultRequestOptions(new RequestOptions()
-                .error(R.drawable.ic_dashboard_black_24dp))
+        Glide.with(itemView)
                 .load(BASE_IMAGE_URL + productionCompany.getLogoPath()).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
