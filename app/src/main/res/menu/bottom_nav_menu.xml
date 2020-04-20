@@ -10,8 +10,8 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_user"
-        android:icon="@drawable/ic_star_black_24dp"
-        android:title="@string/user" />
+        android:id="@+id/navigation_movies"
+        android:icon="@drawable/ic_movie_black_24dp"
+        android:title="@string/movies" />
 
 </menu>

@@ -27,10 +27,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class UserFragment extends Fragment {
+public class StaredMoviesFragment extends Fragment {
 
-    private String API_KEY = "5b061cba26b441ddec657d88428cc9fc";
-    private static final int RC_SIGN_IN = 123;
     //private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private List<Movie> movieList = new ArrayList<>();
@@ -56,7 +54,7 @@ public class UserFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_user, container, false);
+        View root = inflater.inflate(R.layout.fragment_stared_movies, container, false);
 
         recyclerView = root.findViewById(R.id.recycler_view_user);
 
@@ -84,7 +82,7 @@ public class UserFragment extends Fragment {
 
         GetMovieService retrofitService = retrofit.create(GetMovieService.class);
 
-        retrofitService.getMovie(String.valueOf(movieId), API_KEY, getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
+        retrofitService.getMovie(String.valueOf(movieId), getContext().getResources().getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
                 Movie res = response.body();

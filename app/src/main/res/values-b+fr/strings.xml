@@ -3,7 +3,7 @@
     <string name="title_activity_home">Thèmes</string>
     <string name="title_home">Thèmes</string>
     <string name="USER_LIKE_KEY">Text</string>
-    <string name="user">Favoris</string>
+    <string name="stared">Favoris</string>
     <string name="user_movies">Films likés</string>
     <string name="top">Top</string>
     <string name="top_movies">Top Films</string>

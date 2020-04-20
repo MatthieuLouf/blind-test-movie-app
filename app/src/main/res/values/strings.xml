@@ -4,7 +4,7 @@
     <string name="title_home">Themes</string>
     <string name="USER_LIKE_KEY">USER_LIKE_KEY</string>
     <string name="SEEN_MOVIES_KEY" translatable="false">SEEN_MOVIES_KEY</string>
-    <string name="user">Stared</string>
+    <string name="stared">Stared</string>
     <string name="user_movies">User Liked Movies</string>
     <string name="top">Top</string>
     <string name="top_movies">Top Movies</string>
@@ -49,7 +49,7 @@
     <string name="popularity">Popularity</string>
     <string name="most">With the most</string>
     <string name="in_the">In the</string>
-    <string name="movies">movies</string>
+    <string name="movies">Movies</string>
     <string name="with_genres">Genres :</string>
     <string name="with_language">Language :</string>
 
@@ -62,4 +62,7 @@
     <string name="load_error_not_enough_movies">Not enough movies selected</string>
     <string name="remove_all_seen_movies">Forget all seen movies</string>
     <string name="all_seen_movies_removed">All seen movies forgotten !</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="seen">Seen</string>
 </resources>

@@ -25,7 +25,7 @@
     <string name="popularity">Popularité</string>
     <string name="most">Avec la meilleure</string>
     <string name="in_the">Parmi les</string>
-    <string name="movies">films</string>
+    <string name="movies">Films</string>
     <string name="with_genres">Genres :</string>
     <string name="with_language">Langage :</string>
 
@@ -38,4 +38,5 @@
     <string name="load_error_not_enough_movies">Pas assez de films sélectionnés</string>
     <string name="remove_all_seen_movies">Oublier les films déjà vus</string>
     <string name="all_seen_movies_removed">Films déjà vu oubliés !</string>
+    <string name="seen">Vus</string>
 </resources>
