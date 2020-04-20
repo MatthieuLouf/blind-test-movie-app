@@ -1,6 +1,5 @@
-package com.example.moviedb_app.network;
+package com.example.moviedb_app.data;
 
-import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.GenrePageResult;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.MoviePageResult;

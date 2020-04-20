@@ -1,6 +1,5 @@
-package com.example.moviedb_app.network;
+package com.example.moviedb_app.data;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

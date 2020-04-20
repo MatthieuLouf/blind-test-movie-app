@@ -1,8 +1,6 @@
 package com.example.moviedb_app.ui.blindtest;
 
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -10,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
@@ -24,17 +21,16 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.Video;
-import com.example.moviedb_app.network.GetMovieService;
-import com.example.moviedb_app.network.MovieAPIHelper;
-import com.example.moviedb_app.network.RetrofitInstance;
+import com.example.moviedb_app.data.GetMovieService;
+import com.example.moviedb_app.data.MovieAPIHelper;
+import com.example.moviedb_app.data.RetrofitInstance;
 import com.example.moviedb_app.ui.detail_movie_activity.MovieDetailsActivity;
-import com.example.moviedb_app.userdata.UserLikeService;
+import com.example.moviedb_app.data.UserLikeService;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -86,7 +82,7 @@ public class OneMovieFragment extends Fragment {
     private View root;
     private Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
     private GetMovieService retrofitService = retrofit.create(GetMovieService.class);
-    private MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
+    private MovieAPIHelper movieAPIHelper;
 
     public OneMovieFragment() {
     }
@@ -109,6 +105,8 @@ public class OneMovieFragment extends Fragment {
             movie_id = getArguments().getInt(MOVIE_ID);
             ab_title = getArguments().getString(AB_TITLE);
         }
+
+        movieAPIHelper= new MovieAPIHelper(getContext());
     }
 
     @Override

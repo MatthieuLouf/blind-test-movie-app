@@ -15,13 +15,12 @@ import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.BlindtestParameters;
 import com.example.moviedb_app.model.Movie;
 
-import com.example.moviedb_app.network.MovieAPIHelper;
+import com.example.moviedb_app.data.MovieAPIHelper;
 
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class BlindtestMovieActivity extends AppCompatActivity {
     private String TAG = "BlindtestMovieActivity";
@@ -39,12 +38,13 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
-    MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
+    MovieAPIHelper movieAPIHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blindtest_movie_page);
+        movieAPIHelper = new MovieAPIHelper(this);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -52,6 +52,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         }
 
         getRandomMovie(false);
+
 
     }
 
@@ -65,6 +66,9 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                 {
                     Log.d(TAG, "Got a random movie not null : "+response.body().getId() +" - " +response.body().getTitle());
                     startFragment(response.body(),loadingFail);
+                }
+                else{
+                    getRandomMovie(false);
                 }
             }
 

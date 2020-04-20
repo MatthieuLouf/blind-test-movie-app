@@ -1,9 +1,6 @@
 package com.example.moviedb_app.ui.Param;
 
-import android.app.DatePickerDialog;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,29 +8,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.BlindtestParameters;
 import com.example.moviedb_app.model.Genre;
-import com.example.moviedb_app.network.MovieAPIHelper;
+import com.example.moviedb_app.data.MovieAPIHelper;
 import com.example.moviedb_app.ui.blindtest.BlindtestMovieActivity;
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -162,7 +152,7 @@ public class ParamFragment extends Fragment {
     }
 
     private void setGenresChipGroup() {
-        MovieAPIHelper movieAPIHelper = new MovieAPIHelper();
+        MovieAPIHelper movieAPIHelper = new MovieAPIHelper(getContext());
         movieAPIHelper.scrapGenres(getContext(), new Callback<List<Genre>>() {
             @Override
             public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {

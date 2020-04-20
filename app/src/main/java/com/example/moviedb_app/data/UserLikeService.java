@@ -1,4 +1,4 @@
-package com.example.moviedb_app.userdata;
+package com.example.moviedb_app.data;
 
 import android.app.Activity;
 import android.content.Context;

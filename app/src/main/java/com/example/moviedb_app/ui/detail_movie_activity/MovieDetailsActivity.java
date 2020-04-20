@@ -2,27 +2,22 @@ package com.example.moviedb_app.ui.detail_movie_activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.moviedb_app.R;
-import com.example.moviedb_app.network.GetMovieService;
-import com.example.moviedb_app.network.RetrofitInstance;
+import com.example.moviedb_app.data.GetMovieService;
+import com.example.moviedb_app.data.RetrofitInstance;
 import com.example.moviedb_app.recycler.recycler_movie_production.MovieProductionAdapter;
 import com.example.moviedb_app.ui.detail_movie_activity.model.Genre;
 import com.example.moviedb_app.ui.detail_movie_activity.model.MovieDetails;
-import com.example.moviedb_app.userdata.UserLikeService;
+import com.example.moviedb_app.data.UserLikeService;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;

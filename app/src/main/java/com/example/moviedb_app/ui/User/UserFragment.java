@@ -1,6 +1,5 @@
 package com.example.moviedb_app.ui.User;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,22 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.Movie;
-import com.example.moviedb_app.network.GetMovieService;
-import com.example.moviedb_app.network.RetrofitInstance;
+import com.example.moviedb_app.data.GetMovieService;
+import com.example.moviedb_app.data.RetrofitInstance;
 import com.example.moviedb_app.recycler.MovieAdapter;
-import com.example.moviedb_app.userdata.UserLikeService;
+import com.example.moviedb_app.data.UserLikeService;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
-import static android.app.Activity.RESULT_OK;
 
 public class UserFragment extends Fragment {
 

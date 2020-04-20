@@ -1,9 +1,7 @@
-package com.example.moviedb_app.network;
+package com.example.moviedb_app.data;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +16,7 @@ import com.example.moviedb_app.model.Video;
 import com.example.moviedb_app.model.VideoPageResult;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -41,7 +37,12 @@ public class MovieAPIHelper extends AppCompatActivity {
 
     Random rnd = new Random();
 
-    public MovieAPIHelper() {
+    Context context;
+    SeenMoviesService seenMoviesService;
+
+    public MovieAPIHelper(Context ctx) {
+        this.context = ctx;
+        seenMoviesService = new SeenMoviesService(context);
     }
 
     public void getSimilarMovies(Context context, Integer movie_id, Callback<List<String>> callback) {
@@ -178,8 +179,17 @@ public class MovieAPIHelper extends AppCompatActivity {
         int random = rnd.nextInt(20);
         if (movies.size() > random) {
             Movie movie = movies.get(random);
-            Log.d(TAG, "return random movie in list");
-            movieCallback.onResponse(newCall(movie), Response.success(movie));
+            if(seenMoviesService.isSeen(movie.getId()))
+            {
+                Log.d(TAG, "Already seen movie");
+                movieCallback.onResponse(newCall(null), Response.success(null));
+            }
+            else {
+                Log.d(TAG, "return random movie in list");
+                seenMoviesService.addSeenMovies(movie.getId());
+                movieCallback.onResponse(newCall(movie), Response.success(movie));
+            }
+
         } else {
             Log.d(TAG, "return error on random movie in list");
             movieCallback.onFailure(newCall(null),new Throwable());
