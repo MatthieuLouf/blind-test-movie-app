@@ -1,16 +1,14 @@
 package com.example.moviedb_app.ui.User;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.example.moviedb_app.MainActivity;
 import com.example.moviedb_app.R;
@@ -25,7 +23,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     Button delete_button;
     Button logout_button;
 
-    Activity userSettingsActivity;
+    AppCompatActivity userSettingsActivity;
     SeenMoviesService seenMoviesService;
 
     @Override
@@ -37,8 +35,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         userSettingsActivity = this;
-        logout_button = findViewById(R.id.user_settings_logout);
-        delete_button = findViewById(R.id.user_settings_delete);
+        //logout_button = findViewById(R.id.user_settings_logout);
+        //delete_button = findViewById(R.id.user_settings_delete);
         remove_seen_movies_button = findViewById(R.id.user_settings_remove_seen_movies);
 
         remove_seen_movies_button.setOnClickListener(new View.OnClickListener() {

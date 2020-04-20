@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -336,7 +337,7 @@ public class OneMovieFragment extends Fragment {
     private void setIsLikedIcon() {
         Log.d(TAG, "Set is liked icon");
 
-        userLikeService = new UserLikeService(getActivity());
+        userLikeService = new UserLikeService((AppCompatActivity)getActivity());
         isLikedIcon = root.findViewById(R.id.movie_is_liked_icon);
 
         isLiked = userLikeService.isLiked(movie_id);

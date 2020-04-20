@@ -52,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
-                android:src="@mipmap/default_poster"
+                app:srcCompat="@mipmap/default_poster"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

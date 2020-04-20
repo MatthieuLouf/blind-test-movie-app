@@ -1,8 +1,9 @@
 package com.example.moviedb_app.data;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviedb_app.R;
 import com.google.gson.Gson;
@@ -17,7 +18,7 @@ public class UserLikeService {
     private Gson gson;
     private String userDataString = String.valueOf(R.string.USER_LIKE_KEY);
 
-    public UserLikeService(Activity activity) {
+    public UserLikeService(AppCompatActivity activity) {
         Context context = activity;
         this.sharedPreferences = context.getSharedPreferences("USER", Context.MODE_PRIVATE);
         gson = new Gson();

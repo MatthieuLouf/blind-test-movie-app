@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,7 +71,7 @@ public class StaredMoviesFragment extends Fragment {
     private void loadMovies() {
         Log.d(TAG, "loadMovies()");
 
-        UserLikeService userLikeService = new UserLikeService(this.getActivity());
+        UserLikeService userLikeService = new UserLikeService((AppCompatActivity)this.getActivity());
         List<Integer> userLikesIds = userLikeService.getLikes();
         if (userLikesIds.size() > 0) {
             for(int i =userLikesIds.size()-1;i>=0;i--)
