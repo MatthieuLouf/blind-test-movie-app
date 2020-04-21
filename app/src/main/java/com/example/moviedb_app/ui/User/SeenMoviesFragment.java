@@ -31,14 +31,14 @@ import retrofit2.Retrofit;
 
 public class SeenMoviesFragment extends Fragment {
 
-    private List<Movie> movieList = new ArrayList<>();
+    private List<Integer> movieIdsList = new ArrayList<>();
     private MovieAdapter movieAdapter;
     private RecyclerView recyclerView;
 
     public void onStart() {
         super.onStart();
 
-        movieList = new ArrayList<>();
+        movieIdsList = new ArrayList<>();
         loadMovies();
     }
 
@@ -70,30 +70,15 @@ public class SeenMoviesFragment extends Fragment {
     }
 
     private void loadOneMovie(int movieId) {
-        Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
+        movieIdsList.add(movieId);
 
-        GetMovieService retrofitService = retrofit.create(GetMovieService.class);
+        if (movieIdsList.size() == 1) {
+            movieAdapter = new MovieAdapter(movieIdsList, R.layout.preview_movie_user, "grid_view",getContext());
 
-        retrofitService.getMovie(String.valueOf(movieId), getContext().getResources().getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
-            @Override
-            public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
-                Movie res = response.body();
-                movieList.add(res);
-                if (movieList.size() == 1) {
-                    movieAdapter = new MovieAdapter(movieList, R.layout.preview_movie_user, "grid_view");
-
-                    recyclerView.setAdapter(movieAdapter);
-                } else {
-                    movieAdapter.notifyItemInserted(movieList.size() - 1);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-
-            }
-
-        });
+            recyclerView.setAdapter(movieAdapter);
+        } else {
+            movieAdapter.notifyItemInserted(movieIdsList.size() - 1);
+        }
     }
 
 }

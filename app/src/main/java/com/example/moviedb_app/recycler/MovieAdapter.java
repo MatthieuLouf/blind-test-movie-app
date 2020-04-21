@@ -1,5 +1,6 @@
 package com.example.moviedb_app.recycler;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,17 @@ import com.example.moviedb_app.model.Movie;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
-    private final List<Movie> movies;
+    private final List<Integer> moviesId;
     private final int layout;
     private final String viewType;
 
-    public MovieAdapter(List<Movie> movies,int layout, String viewType) {
-        this.movies = movies;
+    private final Context context;
+
+    public MovieAdapter(List<Integer> moviesId,int layout, String viewType,Context context) {
+        this.moviesId = moviesId;
         this.layout = layout;
         this.viewType = viewType;
+        this.context = context;
     }
 
     @NonNull
@@ -31,11 +35,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder viewHolder, int i) {
-        viewHolder.bind(movies.get(i));
+        viewHolder.bind(moviesId.get(i),context);
     }
 
     @Override
     public int getItemCount() {
-        return this.movies == null ? 0 : this.movies.size();
+        return this.moviesId == null ? 0 : this.moviesId.size();
     }
 }
