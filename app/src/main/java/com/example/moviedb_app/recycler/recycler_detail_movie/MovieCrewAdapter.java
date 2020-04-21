@@ -10,14 +10,43 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.moviedb_app.model.model_detail_movie.Cast;
 import com.example.moviedb_app.model.model_detail_movie.Crew;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class MovieCrewAdapter extends RecyclerView.Adapter<MovieCrewHolder> {
     private final List<Crew> crewList;
     private final int layout;
 
     public MovieCrewAdapter(List<Crew> crewList, int layout) {
-        this.crewList = crewList;
+        Predicate<Crew> byOrder = person -> person.getJob().equals("Screenplay") ||
+                person.getJob().equals("Director") ||
+                person.getJob().equals("Producer") ||
+                person.getJob().equals("Director of Photography") ||
+                person.getJob().equals("Story") ||
+                person.getJob().equals("Music") ||
+                person.getJob().equals("Executive Producer");
+        List<Crew> filteredCrewList = crewList.stream().filter(byOrder)
+                .collect(Collectors.toList());
+
+        this.crewList = new ArrayList<Crew>();
+        for(Crew crew : filteredCrewList)
+        {
+            Crew crewInList = this.crewList.stream()
+                    .filter(person -> crew.getId().equals(person.getId()))
+                    .findFirst()
+                    .orElse(null);
+            if(crewInList==null)
+            {
+                this.crewList.add(crew);
+            }
+            else{
+                crew.setJob(crewInList.getJob()+", " +crew.getJob());
+                this.crewList.remove(crewInList);
+                this.crewList.add(crew);
+            }
+        }
         this.layout=layout;
     }
 

@@ -11,13 +11,17 @@ import com.example.moviedb_app.model.model_detail_movie.Cast;
 import com.example.moviedb_app.model.model_detail_movie.ProductionCompany;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class MovieCastAdapter extends RecyclerView.Adapter<MovieCastHolder> {
     private final List<Cast> castList;
     private final int layout;
 
     public MovieCastAdapter(List<Cast> castList, int layout) {
-        this.castList = castList;
+        Predicate<Cast> byOrder = person -> person.getOrder() <15;
+        this.castList = castList.stream().filter(byOrder)
+                .collect(Collectors.toList());
         this.layout=layout;
     }
 

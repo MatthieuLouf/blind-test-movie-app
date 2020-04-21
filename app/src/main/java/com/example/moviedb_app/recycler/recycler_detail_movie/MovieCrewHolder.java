@@ -14,13 +14,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.model.model_detail_movie.Cast;
 import com.example.moviedb_app.model.model_detail_movie.Crew;
 
 public class MovieCrewHolder extends RecyclerView.ViewHolder {
-    private final String BASE_IMAGE_URL="https://image.tmdb.org/t/p/w92/";
+    private final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w92/";
     private TextView crewName;
     private TextView crewRole;
     private ImageView crewImage;
@@ -28,18 +29,20 @@ public class MovieCrewHolder extends RecyclerView.ViewHolder {
 
     MovieCrewHolder(@NonNull View itemView) {
         super(itemView);
-        crewImage=itemView.findViewById(R.id.movie_details_person_image);
-        crewName=itemView.findViewById(R.id.movie_details_person_name);
-        crewRole=itemView.findViewById(R.id.movie_details_person_role);
-        progressBar=itemView.findViewById(R.id.movie_details_progress_circular);
+        crewImage = itemView.findViewById(R.id.movie_details_person_image);
+        crewName = itemView.findViewById(R.id.movie_details_person_name);
+        crewRole = itemView.findViewById(R.id.movie_details_person_role);
+        progressBar = itemView.findViewById(R.id.movie_details_progress_circular);
     }
 
     public void bind(final Crew crew) {
         crewName.setText(crew.getName());
-        crewRole.setText("-> "+crew.getJob());
+        crewRole.setText("-> " + crew.getJob());
 
-        if (crew.getProfilePath() != null) {
+        if (crew.getProfilePath() != "null") {
             Glide.with(itemView)
+                    .applyDefaultRequestOptions(new RequestOptions()
+                            .error(R.drawable.default_cast_or_crew))
                     .load(BASE_IMAGE_URL + crew.getProfilePath()).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -53,9 +56,7 @@ public class MovieCrewHolder extends RecyclerView.ViewHolder {
                     return false;
                 }
             }).into(crewImage);
-        }
-        else
-        {
+        } else {
             progressBar.setVisibility(View.GONE);
         }
 

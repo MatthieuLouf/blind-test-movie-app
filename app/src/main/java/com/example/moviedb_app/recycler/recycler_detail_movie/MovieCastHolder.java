@@ -36,7 +36,7 @@ public class MovieCastHolder extends RecyclerView.ViewHolder {
 
     public void bind(final Cast cast) {
         castName.setText(cast.getName());
-        castRole.setText("-> "+cast.getCharacter());
+        castRole.setText("("+cast.getCharacter()+")");
 
         if (cast.getProfilePath() != null) {
             Glide.with(itemView)
