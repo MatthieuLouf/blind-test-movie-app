@@ -1,23 +1,23 @@
-package com.example.moviedb_app.ui.detail_movie_activity.model;
+package com.example.moviedb_app.model.model_detail_movie;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Genre {
+public class ProductionCountry {
 
-    @SerializedName("id")
+    @SerializedName("iso_3166_1")
     @Expose
-    private Integer id;
+    private String iso31661;
     @SerializedName("name")
     @Expose
     private String name;
 
-    public Integer getId() {
-        return id;
+    public String getIso31661() {
+        return iso31661;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIso31661(String iso31661) {
+        this.iso31661 = iso31661;
     }
 
     public String getName() {

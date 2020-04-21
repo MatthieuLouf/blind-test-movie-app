@@ -90,7 +90,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -101,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:text="@string/with_genres"
                 android:textSize="@dimen/activity_textsize_title"
                 android:textStyle="bold" />
@@ -109,28 +109,45 @@
                 android:id="@+id/genre_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/activity_textsize_normal" />
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:textSize="@dimen/activity_textsize_title" />
 
             <TextView
-                android:id="@+id/synopsis_details_title"
+                android:id="@+id/cast_details_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
-                android:text="@string/synopsis"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:text="@string/cast"
                 android:textSize="@dimen/activity_textsize_title"
                 android:textStyle="bold" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_cast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <TextView
-                android:id="@+id/synopsis_details"
+                android:id="@+id/crew_details_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/activity_textsize_normal" />
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:text="@string/crew"
+                android:textSize="@dimen/activity_textsize_title"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_crew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/trailer_details_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:text="@string/trailer"
                 android:textSize="@dimen/activity_textsize_title"
                 android:textStyle="bold" />
@@ -138,12 +155,31 @@
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view"
                 android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/synopsis_details_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:text="@string/synopsis"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:textSize="@dimen/activity_textsize_title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/synopsis_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:textSize="@dimen/activity_textsize_normal" />
 
             <TextView
                 android:id="@+id/production_details_separator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:textSize="@dimen/activity_textsize_title"
                 android:textStyle="bold" />
@@ -157,6 +193,7 @@
                 android:id="@+id/collection_details_separator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:textSize="@dimen/activity_textsize_title"
                 android:textStyle="bold" />
@@ -173,6 +210,7 @@
                 android:id="@+id/collection_details_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_gravity="center"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:textSize="@dimen/activity_textsize_title"

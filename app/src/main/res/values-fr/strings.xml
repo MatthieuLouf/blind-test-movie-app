@@ -44,4 +44,6 @@
     <string name="developped_by">Développé par :</string>
     <string name="user">Utilisateur</string>
     <string name="application">Application</string>
+    <string name="cast">Acteurs :</string>
+    <string name="crew">Equipe :</string>
 </resources>

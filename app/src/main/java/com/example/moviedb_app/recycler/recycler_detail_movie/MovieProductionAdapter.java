@@ -1,11 +1,10 @@
-package com.example.moviedb_app.recycler.recycler_movie_production;
+package com.example.moviedb_app.recycler.recycler_detail_movie;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.moviedb_app.recycler.MovieViewHolder;
-import com.example.moviedb_app.ui.detail_movie_activity.model.ProductionCompany;
+import com.example.moviedb_app.model.model_detail_movie.ProductionCompany;
 
 import java.util.List;
 

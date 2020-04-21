@@ -70,4 +70,6 @@
     <string name="developped_by">Developped by :</string>
     <string name="user">User</string>
     <string name="application">Application</string>
+    <string name="cast">Cast :</string>
+    <string name="crew">Crew :</string>
 </resources>

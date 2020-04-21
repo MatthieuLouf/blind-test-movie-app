@@ -1,4 +1,4 @@
-package com.example.moviedb_app.recycler.recycler_movie_production;
+package com.example.moviedb_app.recycler.recycler_detail_movie;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -10,10 +10,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.moviedb_app.R;
-import com.example.moviedb_app.ui.detail_movie_activity.model.ProductionCompany;
+import com.example.moviedb_app.model.model_detail_movie.ProductionCompany;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

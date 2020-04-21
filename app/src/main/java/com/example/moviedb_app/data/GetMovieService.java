@@ -4,7 +4,8 @@ import com.example.moviedb_app.model.GenrePageResult;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.MoviePageResult;
 import com.example.moviedb_app.model.VideoPageResult;
-import com.example.moviedb_app.ui.detail_movie_activity.model.MovieDetails;
+import com.example.moviedb_app.model.model_detail_movie.Credits;
+import com.example.moviedb_app.model.model_detail_movie.MovieDetails;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -45,6 +46,10 @@ public interface GetMovieService {
     Call<MovieDetails> getMovieDetails(@Path("id") String id,
                                        @Query("api_key") String api_key,
                                        @Query("language") String language);
+
+    @GET("movie/{id}/credits")
+    Call<Credits> getMovieCredits(@Path("id") String id,
+                                  @Query("api_key") String api_key);
 
     @GET("movie/{id}")
     Call<Movie> getMovie(@Path("id") String id,

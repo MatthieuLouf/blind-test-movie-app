@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,21 +18,24 @@ import com.example.moviedb_app.R;
 import com.example.moviedb_app.data.GetMovieService;
 import com.example.moviedb_app.data.MovieAPIHelper;
 import com.example.moviedb_app.data.RetrofitInstance;
-import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.Video;
-import com.example.moviedb_app.recycler.recycler_movie_production.MovieProductionAdapter;
-import com.example.moviedb_app.ui.detail_movie_activity.model.Genre;
-import com.example.moviedb_app.ui.detail_movie_activity.model.MovieDetails;
+import com.example.moviedb_app.model.model_detail_movie.Credits;
+import com.example.moviedb_app.recycler.recycler_detail_movie.MovieCastAdapter;
+import com.example.moviedb_app.recycler.recycler_detail_movie.MovieCrewAdapter;
+import com.example.moviedb_app.recycler.recycler_detail_movie.MovieCrewHolder;
+import com.example.moviedb_app.recycler.recycler_detail_movie.MovieProductionAdapter;
+import com.example.moviedb_app.model.model_detail_movie.Genre;
+import com.example.moviedb_app.model.model_detail_movie.MovieDetails;
 import com.example.moviedb_app.data.UserLikeService;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerTracker;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import retrofit2.Call;
@@ -58,6 +60,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private ImageView collection_image;
     private TextView production_separator;
     private RecyclerView recyclerView_production_company;
+    private RecyclerView recyclerView_cast;
+    private RecyclerView recyclerView_crew;
+
 
     private ImageView isLikedIcon;
     private UserLikeService userLikeService;
@@ -95,6 +100,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.collection_name = findViewById(R.id.collection_details_name);
         this.collection_separator = findViewById(R.id.collection_details_separator);
         this.production_separator = findViewById(R.id.production_details_separator);
+
+        recyclerView_production_company = findViewById(R.id.recycler_view_details_production);
+        recyclerView_crew = findViewById(R.id.recycler_view_crew);
+        recyclerView_cast = findViewById(R.id.recycler_view_cast);
+
         startSearch(movieId);
 
         this.isLikedIcon.setOnClickListener(v -> {
@@ -159,9 +169,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 }
                 if (res.getProductionCompanies() != null) {
                     production_separator.setText(getString(R.string.production_companies) + " :");
-                    recyclerView_production_company = findViewById(R.id.recycler_view_details_production);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(MovieDetailsActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
-                    recyclerView_production_company.setLayoutManager(gridLayoutManager);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this,  LinearLayoutManager.HORIZONTAL, false);
+                    recyclerView_production_company.setLayoutManager(linearLayoutManager);
                     MovieProductionAdapter movieProductionAdapter = new MovieProductionAdapter(res.getProductionCompanies(), R.layout.preview_movie_details_production);
                     recyclerView_production_company.setAdapter(movieProductionAdapter);
                 } else {
@@ -176,6 +185,36 @@ public class MovieDetailsActivity extends AppCompatActivity {
             public void onFailure(Call<MovieDetails> call, Throwable t) {
             }
 
+        });
+
+        retrofitService.getMovieCredits(movieId,getString(R.string.tmdb_api_key)).enqueue(new Callback<Credits>() {
+            @Override
+            public void onResponse(Call<Credits> call, Response<Credits> response) {
+                if(response.isSuccessful()&&response.body()!=null)
+                {
+                    Credits res = response.body();
+                    if(res.getCast()!=null)
+                    {
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this,  LinearLayoutManager.HORIZONTAL, false);
+                        recyclerView_cast.setLayoutManager(linearLayoutManager);
+                        MovieCastAdapter movieCastAdapter = new MovieCastAdapter(res.getCast(), R.layout.preview_cast_or_crew);
+                        recyclerView_cast.setAdapter(movieCastAdapter);
+                    }
+                    if(res.getCrew()!=null)
+                    {
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this,  LinearLayoutManager.HORIZONTAL, false);
+                        recyclerView_crew.setLayoutManager(linearLayoutManager);
+                        MovieCrewAdapter movieCrewAdapter = new MovieCrewAdapter(res.getCrew(), R.layout.preview_cast_or_crew);
+                        recyclerView_crew.setAdapter(movieCrewAdapter);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Credits> call, Throwable t) {
+
+            }
         });
 
     }
