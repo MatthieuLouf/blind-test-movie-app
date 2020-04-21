@@ -58,12 +58,11 @@
         <item>French</item>
         <item>Japanese</item>
         <item>Spanish</item>
+        <item>Italian</item>
     </string-array>
     <string name="load_error_not_enough_movies">Not enough movies selected</string>
     <string name="remove_all_seen_movies">Forget all seen movies</string>
     <string name="all_seen_movies_removed">All seen movies forgotten !</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="seen">Seen</string>
     <string name="trailer">Trailer :</string>
     <string name="provided_by">Service provided by :</string>

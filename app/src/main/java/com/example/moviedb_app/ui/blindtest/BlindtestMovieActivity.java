@@ -83,7 +83,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                 }
                 else{
                     Log.d(TAG, "Finish activity");
-                    Toast.makeText(getBaseContext(), getString(R.string.load_error_not_enough_movies), 3).show();
+                    Toast.makeText(getBaseContext(), getString(R.string.load_error_not_enough_movies), Toast.LENGTH_LONG).show();
                     finish();
                 }
             }

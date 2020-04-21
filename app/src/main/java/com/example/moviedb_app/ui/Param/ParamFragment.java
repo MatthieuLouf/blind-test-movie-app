@@ -46,7 +46,7 @@ public class ParamFragment extends Fragment {
     private String[] sort_by_display;
     private String[] numberMoviesDisplay = new String[10];
     private List<Genre> genreList = new ArrayList<Genre>();
-    private String[] languageKeyArray = new String[]{"en", "fr", "ja", "sp"};
+    private String[] languageKeyArray = new String[]{"en", "fr", "ja", "es","it"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
