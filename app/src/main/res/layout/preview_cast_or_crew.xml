@@ -28,7 +28,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
-                android:minWidth="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintBottom_toBottomOf="parent" />
@@ -55,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:maxWidth="100dp"
+                    android:maxWidth="150dp"
                     android:singleLine="false"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:maxWidth="100dp"
+                    android:maxWidth="150dp"
                     android:singleLine="false"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toBottomOf="@+id/movie_details_person_name" />

@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:backgroundTint="@color/black"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,6 +18,8 @@
         android:id="@+id/youtube_player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
