@@ -33,10 +33,12 @@
         </LinearLayout>
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/user_settings_remove_seen_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="?attr/materialButtonOutlinedStyle"
+            app:strokeColor="@color/colorPrimary"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:text="@string/remove_all_seen_movies" />
 

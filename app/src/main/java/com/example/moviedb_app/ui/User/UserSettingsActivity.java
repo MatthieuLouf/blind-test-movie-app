@@ -13,13 +13,14 @@ import androidx.core.app.NavUtils;
 import com.example.moviedb_app.MainActivity;
 import com.example.moviedb_app.R;
 import com.example.moviedb_app.data.SeenMoviesService;
+import com.google.android.material.button.MaterialButton;
 /*import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;*/
 
 public class UserSettingsActivity extends AppCompatActivity {
 
-    Button remove_seen_movies_button;
+    MaterialButton remove_seen_movies_button;
     Button delete_button;
     Button logout_button;
 

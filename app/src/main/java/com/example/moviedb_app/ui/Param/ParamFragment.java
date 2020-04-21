@@ -19,6 +19,7 @@ import com.example.moviedb_app.model.BlindtestParameters;
 import com.example.moviedb_app.model.Genre;
 import com.example.moviedb_app.data.MovieAPIHelper;
 import com.example.moviedb_app.ui.blindtest.BlindtestMovieActivity;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -39,7 +40,7 @@ public class ParamFragment extends Fragment {
     private ChipGroup genresChipGroup;
     private ChipGroup languagesChipGroup;
 
-    private Button startBlindtestButton;
+    private MaterialButton startBlindtestButton;
 
     private String[] sort_by_array = new String[]{"vote_average.desc", "popularity.desc", "revenue.desc"};
     private String[] sort_by_display;

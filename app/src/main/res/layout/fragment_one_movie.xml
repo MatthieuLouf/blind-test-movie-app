@@ -141,13 +141,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_picker" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/next_movie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:background="@color/colorPrimary"
+        style="?attr/materialButtonOutlinedStyle"
+        android:textColor="@color/colorAccent"
+        android:textColorHighlight="@color/colorAccent"
+        app:strokeColor="@color/colorAccent"
         android:gravity="center"
         android:text="@string/validate_movie"
         app:layout_constraintBottom_toTopOf="@+id/test_progress_bar"

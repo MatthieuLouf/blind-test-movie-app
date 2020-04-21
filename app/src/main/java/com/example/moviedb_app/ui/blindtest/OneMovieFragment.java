@@ -32,6 +32,7 @@ import com.example.moviedb_app.data.MovieAPIHelper;
 import com.example.moviedb_app.data.RetrofitInstance;
 import com.example.moviedb_app.ui.detail_movie_activity.MovieDetailsActivity;
 import com.example.moviedb_app.data.UserLikeService;
+import com.google.android.material.button.MaterialButton;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -64,7 +65,7 @@ public class OneMovieFragment extends Fragment {
     private Movie searched_movie;
 
     private Button hider_top;
-    private Button next_movie;
+    private MaterialButton next_movie;
     private NumberPicker picker;
     private TextView movie_title;
     private CardView movieCardView;
@@ -294,7 +295,9 @@ public class OneMovieFragment extends Fragment {
 
         next = true;
         next_movie.setText(R.string.next_movie);
-        next_movie.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        next_movie.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+        next_movie.setTextColor(getResources().getColor(R.color.colorPrimary));
+        next_movie.setStrokeColorResource(R.color.colorPrimary);
         movieCardView.setVisibility(View.VISIBLE);
         picker.setVisibility(View.INVISIBLE);
 
