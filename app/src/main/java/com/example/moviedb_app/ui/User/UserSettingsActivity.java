@@ -63,6 +63,12 @@ public class UserSettingsActivity extends AppCompatActivity {
         });*/
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     /*private void logout()
     {
         AuthUI.getInstance()
