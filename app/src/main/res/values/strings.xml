@@ -66,4 +66,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="seen">Seen</string>
     <string name="trailer">Trailer :</string>
+    <string name="provided_by">Service provided by :</string>
+    <string name="developped_by">Developped by :</string>
+    <string name="user">User</string>
+    <string name="application">Application</string>
 </resources>

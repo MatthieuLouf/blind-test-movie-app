@@ -40,4 +40,8 @@
     <string name="all_seen_movies_removed">Films déjà vu oubliés !</string>
     <string name="seen">Vus</string>
     <string name="trailer">Trailer :</string>
+    <string name="provided_by">Service géré avec :</string>
+    <string name="developped_by">Développé par :</string>
+    <string name="user">Utilisateur</string>
+    <string name="application">Application</string>
 </resources>
