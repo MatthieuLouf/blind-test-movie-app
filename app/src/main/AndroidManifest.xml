@@ -17,7 +17,7 @@
             android:label="@string/user_settings_title" />
         <activity
             android:name=".ui.blindtest.BlindtestMovieActivity"
-            android:label="@string/blindtest_page_title" />
+            android:label="" />
         <activity
             android:name=".ui.detail_movie_activity.MovieDetailsActivity"
             android:label="@string/movie_details" />

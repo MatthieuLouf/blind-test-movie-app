@@ -22,6 +22,9 @@ import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.data.MovieAPIHelper;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,9 +36,11 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     private BlindtestParameters blindtestParameters;
 
-    boolean firstTime= true;
+    private List<Movie> movieList = new ArrayList<Movie>();
 
-    Integer movie_count=0;
+    boolean firstTime = true;
+
+    Integer movie_count = 0;
     Integer error_count = 0;
 
     FragmentContainerView fragmentContainerView;
@@ -62,64 +67,64 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         if (intent != null) {
             blindtestParameters = (BlindtestParameters) intent.getSerializableExtra(PARAMETERS_KEY);
         }
+        showLoading();
 
-        getRandomMovie(false);
+        loadList();
 
     }
 
-    public void getRandomMovie(boolean loadingFail) {
+    public void loadList() {
         Log.d(TAG, "enter getRandomMovie");
-        if(!loadingFail)
-        {
-            showLoading();
-        }
 
-        movieAPIHelper.loadList(this,blindtestParameters, new Callback<Movie>() {
+        movieAPIHelper.loadList(this, blindtestParameters, new Callback<List<Movie>>() {
             @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                if(response.body()!=null)
-                {
-                    Log.d(TAG, "Got a random movie not null : "+response.body().getId() +" - " +response.body().getTitle());
-                    startFragment(response.body(),loadingFail);
-                }
-                else{
+            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                if (response.body() != null) {
+                    Log.d(TAG, "Got a sub list of movies, movieList as length :" + movieList.size());
+                    movieList.addAll(response.body());
                     getRandomMovie(false);
                 }
             }
 
             @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-                Log.d(TAG, "Error while getting a random movie, error count : "+error_count);
-                if(error_count<5)
-                {
-                    Log.d(TAG, "Restart getRandom Movie");
-                    error_count++;
-                    getRandomMovie(false);
-                }
-                else{
-                    Log.d(TAG, "Finish activity");
-                    Toast.makeText(getBaseContext(), getString(R.string.load_error_not_enough_movies), Toast.LENGTH_LONG).show();
-                    finish();
-                }
+            public void onFailure(Call<List<Movie>> call, Throwable t) {
+
             }
         });
     }
 
-    public void startFragment(Movie movie,boolean loadingFail) {
+    public void getRandomMovie(boolean loadingFail) {
+        showLoading();
+        Movie movie = movieAPIHelper.chooseMovieInList(movieList);
+        if (movie == null) {
+            Log.d(TAG, "Error while getting a random movie, error count : " + error_count);
+            if (error_count < 10) {
+                Log.d(TAG, "Restart getRandom Movie");
+                error_count++;
+                getRandomMovie(false);
+            } else {
+                Log.d(TAG, "Finish activity");
+                Toast.makeText(getBaseContext(), getString(R.string.load_error_not_enough_movies), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        } else {
+            startFragment(movie, loadingFail);
+        }
+
+    }
+
+    public void startFragment(Movie movie, boolean loadingFail) {
         Log.d(TAG, "Starting a new OneMovieFragment, firstTime = " + firstTime);
-        if(!loadingFail)
-        {
+        if (!loadingFail) {
             movie_count++;
         }
         OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId(),
-                getString(blindtestParameters.getIdName())+" : " +movie_count);
+                getString(blindtestParameters.getIdName()) + " : " + movie_count);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if(firstTime)
-        {
+        if (firstTime) {
             fragmentTransaction.add(R.id.one_movie_fragment_container, fragment);
             firstTime = false;
-        }
-        else {
+        } else {
             fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
         }
         fragmentTransaction.commit();
@@ -131,18 +136,17 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-    public void showLoading()
-    {
+    public void showLoading() {
         loadingText.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         fragmentContainerView.setVisibility(View.INVISIBLE);
     }
 
-    public void hideLoading()
-    {
+    public void hideLoading() {
         loadingText.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
-        fragmentContainerView.setVisibility(View.VISIBLE);    }
+        fragmentContainerView.setVisibility(View.VISIBLE);
+    }
 
     @Override
     protected void onDestroy() {

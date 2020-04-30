@@ -48,4 +48,5 @@
     <string name="cast">Acteurs :</string>
     <string name="crew">Equipe :</string>
     <string name="loading">Chargement ...</string>
+    <string name="no_response">Pas de réponse</string>
 </resources>

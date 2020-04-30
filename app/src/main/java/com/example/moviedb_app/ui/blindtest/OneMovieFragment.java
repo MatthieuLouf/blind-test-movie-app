@@ -108,7 +108,7 @@ public class OneMovieFragment extends Fragment {
             ab_title = getArguments().getString(AB_TITLE);
         }
 
-        movieAPIHelper= new MovieAPIHelper(getContext());
+        movieAPIHelper = new MovieAPIHelper(getContext());
     }
 
     @Override
@@ -135,7 +135,7 @@ public class OneMovieFragment extends Fragment {
             public void onClick(View v) {
                 if (!next) {
                     Log.d(TAG, "Ask to show test movie on valid");
-                    showResult();
+                    showResult(true);
                 } else {
                     Log.d(TAG, "Ask to change movie on next");
                     changeFragment(false);
@@ -216,6 +216,9 @@ public class OneMovieFragment extends Fragment {
                 if (state == PlayerConstants.PlayerState.PAUSED) {
                     hider_top.setVisibility(View.VISIBLE);
                 }
+                if (state == PlayerConstants.PlayerState.ENDED) {
+                    showResult(false);
+                }
             }
 
             @Override
@@ -231,8 +234,8 @@ public class OneMovieFragment extends Fragment {
         });
     }
 
-    public void getBestTrailer(String movie_id) {
-        movieAPIHelper.getBestTrailer(getActivity(), movie_id, searched_movie.getOriginalLanguage(), new Callback<Video>() {
+    private void getBestTrailer(String movie_id) {
+        movieAPIHelper.getBestTrailer(getContext(), movie_id, searched_movie.getOriginalLanguage(), new Callback<Video>() {
             @Override
             public void onResponse(Call<Video> call, Response<Video> response) {
                 Video video = response.body();
@@ -274,7 +277,6 @@ public class OneMovieFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-
             }
         });
     }
@@ -284,20 +286,24 @@ public class OneMovieFragment extends Fragment {
         super.onDestroy();
         youTubePlayerView.release();
     }
-    private void dismissLoadingDialog()
-    {
+
+    private void dismissLoadingDialog() {
         Log.d(TAG, "Dismiss Dialog");
         BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
         blindtestMovieActivity.hideLoading();
     }
 
     private void changeFragment(boolean loadingFail) {
+        onDestroy();
         Log.d(TAG, "Change Fragment method");
         BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
-        blindtestMovieActivity.getRandomMovie(loadingFail);
+        if(blindtestMovieActivity!=null)
+        {
+            blindtestMovieActivity.getRandomMovie(loadingFail);
+        }
     }
 
-    private void showResult() {
+    private void showResult(boolean isGuessed) {
         Log.d(TAG, "Show result card !");
 
         next = true;
@@ -310,14 +316,18 @@ public class OneMovieFragment extends Fragment {
 
         if (listSimilarTitles.size() != 0) {
             TextView result_sentence = root.findViewById(R.id.result_sentence);
-
-            if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
-                result_sentence.setText(R.string.good_response);
-                result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
+            if (isGuessed) {
+                if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
+                    result_sentence.setText(R.string.good_response);
+                    result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
+                } else {
+                    result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
+                    result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
+                }
             } else {
-                result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
-                result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
+                result_sentence.setText(getString(R.string.no_response));
             }
+
         }
 
         movieCardView.setOnClickListener(new View.OnClickListener() {
@@ -330,24 +340,26 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void setMovieViewComponents() {
-        Log.d(TAG, "Set movie view components");
+        if(getContext()!=null) {
+            Log.d(TAG, "Set movie view components");
 
-        ImageView movie_image = root.findViewById(R.id.movie_image);
-        TextView movie_rating = root.findViewById(R.id.movie_rating);
-        TextView movie_release_date = root.findViewById(R.id.movie_release_date);
-        TextView movie_language = root.findViewById(R.id.movie_language);
+            ImageView movie_image = root.findViewById(R.id.movie_image);
+            TextView movie_rating = root.findViewById(R.id.movie_rating);
+            TextView movie_release_date = root.findViewById(R.id.movie_release_date);
+            TextView movie_language = root.findViewById(R.id.movie_language);
 
-        Glide.with(this).load(BASE_URL_IMAGE + searched_movie.getPosterPath()).into(movie_image);
-        movie_title.setText(searched_movie.getTitle());
-        movie_rating.setText(getString(R.string.average_rate) + " : " + searched_movie.getVoteAverage().toString() + "/10");
-        movie_release_date.setText(getString(R.string.release_date) + " : " + searched_movie.getReleaseDate().replace('-', '/'));
-        movie_language.setText(getString(R.string.language_is) + " : " + searched_movie.getOriginalLanguage().toUpperCase());
+            Glide.with(this).load(BASE_URL_IMAGE + searched_movie.getPosterPath()).into(movie_image);
+            movie_title.setText(searched_movie.getTitle());
+            movie_rating.setText(getString(R.string.average_rate) + " : " + searched_movie.getVoteAverage().toString() + "/10");
+            movie_release_date.setText(getString(R.string.release_date) + " : " + searched_movie.getReleaseDate().replace('-', '/'));
+            movie_language.setText(getString(R.string.language_is) + " : " + searched_movie.getOriginalLanguage().toUpperCase());
+        }
     }
 
     private void setIsLikedIcon() {
         Log.d(TAG, "Set is liked icon");
 
-        userLikeService = new UserLikeService((AppCompatActivity)getActivity());
+        userLikeService = new UserLikeService((AppCompatActivity) getActivity());
         isLikedIcon = root.findViewById(R.id.movie_is_liked_icon);
 
         isLiked = userLikeService.isLiked(movie_id);
