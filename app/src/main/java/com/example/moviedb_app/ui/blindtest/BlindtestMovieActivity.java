@@ -1,6 +1,7 @@
 package com.example.moviedb_app.ui.blindtest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -8,6 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moviedb_app.R;
@@ -34,6 +38,10 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     Integer movie_count=0;
     Integer error_count = 0;
 
+    FragmentContainerView fragmentContainerView;
+    ProgressBar progressBar;
+    TextView loadingText;
+
     //private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -46,6 +54,10 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_blindtest_movie_page);
         movieAPIHelper = new MovieAPIHelper(this);
 
+        fragmentContainerView = findViewById(R.id.one_movie_fragment_container);
+        progressBar = findViewById(R.id.loading_progress);
+        loadingText = findViewById(R.id.loading_textview);
+
         Intent intent = getIntent();
         if (intent != null) {
             blindtestParameters = (BlindtestParameters) intent.getSerializableExtra(PARAMETERS_KEY);
@@ -53,11 +65,14 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
         getRandomMovie(false);
 
-
     }
 
     public void getRandomMovie(boolean loadingFail) {
         Log.d(TAG, "enter getRandomMovie");
+        if(!loadingFail)
+        {
+            showLoading();
+        }
 
         movieAPIHelper.loadList(this,blindtestParameters, new Callback<Movie>() {
             @Override
@@ -116,4 +131,22 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
+    public void showLoading()
+    {
+        loadingText.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        fragmentContainerView.setVisibility(View.INVISIBLE);
+    }
+
+    public void hideLoading()
+    {
+        loadingText.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        fragmentContainerView.setVisibility(View.VISIBLE);    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        hideLoading();
+    }
 }

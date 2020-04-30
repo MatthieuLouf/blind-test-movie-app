@@ -210,6 +210,7 @@ public class OneMovieFragment extends Fragment {
                         }
                     }, 5000);
 
+                    dismissLoadingDialog();
                     setProgressBar();
                 }
                 if (state == PlayerConstants.PlayerState.PAUSED) {
@@ -282,6 +283,12 @@ public class OneMovieFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         youTubePlayerView.release();
+    }
+    private void dismissLoadingDialog()
+    {
+        Log.d(TAG, "Dismiss Dialog");
+        BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
+        blindtestMovieActivity.hideLoading();
     }
 
     private void changeFragment(boolean loadingFail) {
@@ -399,6 +406,11 @@ public class OneMovieFragment extends Fragment {
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
 }
