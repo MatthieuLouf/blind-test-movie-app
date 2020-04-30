@@ -44,11 +44,13 @@ public class TabedFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewpager);
         viewPager.setAdapter(viewPagerAdapter);
 
+
         tabLayout = view.findViewById(R.id.tab_layout);
-        new TabLayoutMediator(tabLayout, viewPager,
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(new String[]{getContext().getResources().getString(R.string.stared),
                         getContext().getResources().getString(R.string.seen)}[position])
-        ).attach();
+        );
+        tabLayoutMediator.attach();
 
     }
 

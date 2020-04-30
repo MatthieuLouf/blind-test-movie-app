@@ -1,5 +1,6 @@
 package com.example.moviedb_app.ui.User;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviedb_app.R;
@@ -62,7 +64,12 @@ public class StaredMoviesFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recycler_view_user);
         Log.d(TAG, "onCreateView()");
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
+        LinearLayoutManager gridLayoutManager = null;
+        if (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
+            gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
+        } else {
+            gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
+        }
         recyclerView.setLayoutManager(gridLayoutManager);
 
         return root;
@@ -71,11 +78,10 @@ public class StaredMoviesFragment extends Fragment {
     private void loadMovies() {
         Log.d(TAG, "loadMovies()");
 
-        UserLikeService userLikeService = new UserLikeService((AppCompatActivity)this.getActivity());
+        UserLikeService userLikeService = new UserLikeService((AppCompatActivity) this.getActivity());
         List<Integer> userLikesIds = userLikeService.getLikes();
         if (userLikesIds.size() > 0) {
-            for(int i =userLikesIds.size()-1;i>=0;i--)
-            {
+            for (int i = userLikesIds.size() - 1; i >= 0; i--) {
                 loadOneMovie(userLikesIds.get(i));
             }
         } else {
@@ -87,7 +93,7 @@ public class StaredMoviesFragment extends Fragment {
         movieIdsList.add(movieId);
 
         if (movieIdsList.size() == 1) {
-            movieAdapter = new MovieAdapter(movieIdsList, R.layout.preview_movie_user, "grid_view",getContext());
+            movieAdapter = new MovieAdapter(movieIdsList, R.layout.preview_movie_user, "grid_view", getContext());
 
             recyclerView.setAdapter(movieAdapter);
         } else {
