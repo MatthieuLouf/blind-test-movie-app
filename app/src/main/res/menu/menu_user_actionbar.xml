@@ -6,7 +6,7 @@
     <item
         android:title="test"
         android:id="@+id/menu_user_appbar_settings"
-        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:icon="@drawable/ic_settings_black_24dp"
         app:showAsAction="always"/>
 
 </menu>
