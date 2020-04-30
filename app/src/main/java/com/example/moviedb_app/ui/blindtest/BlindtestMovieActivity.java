@@ -118,16 +118,21 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         if (!loadingFail) {
             movie_count++;
         }
-        OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId(),
-                getString(blindtestParameters.getIdName()) + " : " + movie_count);
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (firstTime) {
-            fragmentTransaction.add(R.id.one_movie_fragment_container, fragment);
-            firstTime = false;
-        } else {
-            fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
+        if (movie_count < 10) {
+            OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId(),
+                    getString(blindtestParameters.getIdName()) + " : " + movie_count+"/10");
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if (firstTime) {
+                fragmentTransaction.add(R.id.one_movie_fragment_container, fragment);
+                firstTime = false;
+            } else {
+                fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
+            }
+            fragmentTransaction.commit();
         }
-        fragmentTransaction.commit();
+        else{
+            finish();
+        }
     }
 
     public static void start(Context context, BlindtestParameters parameters) {
