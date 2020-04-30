@@ -73,6 +73,7 @@ public class OneMovieFragment extends Fragment {
 
     private YouTubePlayerView youTubePlayerView;
     private YouTubePlayerTracker youTubePlayerTracker;
+    private YouTubePlayer youTubePlayer;
 
     private ImageView isLikedIcon;
     private boolean isLiked;
@@ -85,6 +86,8 @@ public class OneMovieFragment extends Fragment {
     private Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
     private GetMovieService retrofitService = retrofit.create(GetMovieService.class);
     private MovieAPIHelper movieAPIHelper;
+
+    private boolean hasBeenPaused = false;
 
     public OneMovieFragment() {
     }
@@ -192,7 +195,8 @@ public class OneMovieFragment extends Fragment {
     private void initVideo(String video_id) {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+            public void onReady(@NonNull YouTubePlayer youTubePlayerOnReady) {
+                youTubePlayer = youTubePlayerOnReady;
                 Log.d(TAG, "Start video loading");
                 youTubePlayer.loadVideo(video_id, 0f);
                 youTubePlayerTracker = new YouTubePlayerTracker();
@@ -254,6 +258,20 @@ public class OneMovieFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        hasBeenPaused = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(hasBeenPaused)
+        {
+            youTubePlayer.play();
+        }
+    }
 
     private void setSimilarMovies() {
         movieAPIHelper.getSimilarMovies(getContext(), movie_id, new Callback<List<String>>() {
