@@ -218,6 +218,14 @@ public class OneMovieFragment extends Fragment {
                     dismissLoadingDialog();
                     setProgressBar();
                 }
+                if(state== PlayerConstants.PlayerState.BUFFERING)
+                {
+                    BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
+                    if(blindtestMovieActivity!=null)
+                    {
+                        blindtestMovieActivity.changeLoadingText(true);
+                    }
+                }
                 if (state == PlayerConstants.PlayerState.PAUSED) {
                     hider_top.setVisibility(View.VISIBLE);
                 }

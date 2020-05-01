@@ -98,7 +98,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         Movie movie = movieAPIHelper.chooseMovieInList(movieList);
         if (movie == null) {
             Log.d(TAG, "Error while getting a random movie, error count : " + error_count);
-            if (error_count < (blindtestParameters.getMaximumPage()*20)/2) {
+            if (error_count < (blindtestParameters.getMaximumPage() * 20) / 2) {
                 Log.d(TAG, "Restart getRandom Movie");
                 error_count++;
                 getRandomMovie(loadingFail);
@@ -109,7 +109,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             }
         } else {
             startFragment(movie, loadingFail);
-            error_count =0;
+            error_count = 0;
         }
 
     }
@@ -121,7 +121,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         }
         if (movie_count < 10) {
             OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId(),
-                    getString(blindtestParameters.getIdName()) + " : " + movie_count+"/10");
+                    getString(blindtestParameters.getIdName()) + " : " + movie_count + "/10");
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if (firstTime) {
                 fragmentTransaction.add(R.id.one_movie_fragment_container, fragment);
@@ -130,8 +130,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
             }
             fragmentTransaction.commit();
-        }
-        else{
+        } else {
             finish();
         }
     }
@@ -143,6 +142,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     }
 
     public void showLoading() {
+        changeLoadingText(false);
         loadingText.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         fragmentContainerView.setVisibility(View.INVISIBLE);
@@ -152,6 +152,14 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         loadingText.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         fragmentContainerView.setVisibility(View.VISIBLE);
+    }
+
+    public void changeLoadingText(boolean isVideoLoading) {
+        if (isVideoLoading) {
+            loadingText.setText(R.string.loading_trailer);
+        } else {
+            loadingText.setText(R.string.loading);
+        }
     }
 
     @Override

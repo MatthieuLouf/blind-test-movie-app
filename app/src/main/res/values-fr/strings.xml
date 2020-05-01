@@ -47,7 +47,7 @@
     <string name="application">Application</string>
     <string name="cast">Acteurs :</string>
     <string name="crew">Equipe :</string>
-    <string name="loading">Chargement ...</string>
+    <string name="loading">Recherche d\'un film adapté ...</string>
     <string name="no_response">Pas de réponse</string>
     <string name="war_cardname">Guerre</string>
     <string name="crime_thriller_cardname">Thriller Policier</string>
@@ -58,4 +58,5 @@
     <string name="action_movies_90s_cardname">Action des années 90</string>
     <string name="american_movies_30_60_cardname">Américain 1930-1960</string>
     <string name="worst_movies_cardname">Pire notes</string>
+    <string name="loading_trailer">Chargement du trailer ...</string>
 </resources>
