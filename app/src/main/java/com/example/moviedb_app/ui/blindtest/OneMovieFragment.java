@@ -280,7 +280,10 @@ public class OneMovieFragment extends Fragment {
                 listSimilarTitles = response.body();
                 if (listSimilarTitles != null) {
                     Log.d(TAG, "Retrieve not null list of similar movies");
-                    listSimilarTitles.add(searched_movie.getTitle());
+                    if(!listSimilarTitles.contains(searched_movie.getTitle()))
+                    {
+                        listSimilarTitles.add(searched_movie.getTitle());
+                    }
                     Collections.sort(listSimilarTitles);
                     picker.setMinValue(0);
                     picker.setMaxValue(listSimilarTitles.size() - 1);
