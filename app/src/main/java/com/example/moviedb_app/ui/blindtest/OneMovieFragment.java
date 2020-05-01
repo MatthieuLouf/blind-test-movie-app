@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.moviedb_app.R;
+import com.example.moviedb_app.data.BugMoviesService;
 import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.Video;
 import com.example.moviedb_app.data.GetMovieService;
@@ -325,6 +326,10 @@ public class OneMovieFragment extends Fragment {
 
     private void changeFragment(boolean loadingFail) {
         onDestroy();
+        if(loadingFail)
+        {
+            movieAPIHelper.setBugMovie(searched_movie);
+        }
         Log.d(TAG, "Change Fragment method");
         BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
         if(blindtestMovieActivity!=null)

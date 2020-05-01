@@ -39,12 +39,14 @@ public class MovieAPIHelper extends AppCompatActivity {
 
     Context context;
     SeenMoviesService seenMoviesService;
+    BugMoviesService bugMoviesService;
 
     List<Movie> movieList = new ArrayList<Movie>();
 
     public MovieAPIHelper(Context ctx) {
         this.context = ctx;
         seenMoviesService = new SeenMoviesService(context);
+        bugMoviesService  = new BugMoviesService(context);
     }
 
     public void getSimilarMovies(Context context, Integer movie_id, Callback<List<String>> callback) {
@@ -190,7 +192,7 @@ public class MovieAPIHelper extends AppCompatActivity {
         int random = rnd.nextInt(movies.size());
 
         Movie movie = movies.get(random);
-        if (seenMoviesService.isSeen(movie.getId())) {
+        if (seenMoviesService.isSeen(movie.getId()) ||bugMoviesService.isBug(movie.getId())) {
             Log.d(TAG, "Already seen movie");
             return null;
         } else {
@@ -224,6 +226,12 @@ public class MovieAPIHelper extends AppCompatActivity {
 
         };
         return callback;
+    }
+
+    public void setBugMovie(Movie movie)
+    {
+        seenMoviesService.removeSeenMovies(movie.getId());
+        bugMoviesService.addBugMovies(movie.getId());
     }
 
     private <T> Call<T> newCall(T tes) {
