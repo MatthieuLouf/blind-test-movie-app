@@ -73,4 +73,12 @@
     <string name="crew">Crew :</string>
     <string name="loading">Loading ...</string>
     <string name="no_response">No response</string>
+    <string name="war_cardname">War</string>
+    <string name="crime_thriller_cardname">Crime Thriller</string>
+    <string name="american_comedy_cardname">American Comedy</string>
+    <string name="western_cardname">Western</string>
+    <string name="american_animation_cardname">American Animation</string>
+    <string name="romance_cardname">Romance</string>
+    <string name="american_movies_30_60_cardname">American 1930-1960</string>
+    <string name="action_movies_90s_cardname">90\'s Action Movies</string>
 </resources>

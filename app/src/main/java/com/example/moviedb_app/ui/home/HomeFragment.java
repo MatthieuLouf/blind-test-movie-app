@@ -2,7 +2,6 @@ package com.example.moviedb_app.ui.home;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,15 @@ public class HomeFragment extends Fragment {
             new BlindtestParameters(R.string.japanese_animation_cardname, R.mipmap.your_name, 1, "vote_average.desc", "", "", "16", "ja"),
             new BlindtestParameters(R.string.french_2010_cardname, R.mipmap.grand_bain, 2, "vote_average.desc", "2010-01-01", "", "", "fr"),
             new BlindtestParameters(R.string.horror_cardname, R.mipmap.halloween, 3, "vote_average.desc", "1980-01-01", "", "27", ""),
-            new BlindtestParameters(R.string.science_fiction_cardname, R.mipmap.star_wars, 4, "vote_average.desc", "1980-01-01", "", "878", "")
+            new BlindtestParameters(R.string.science_fiction_cardname, R.mipmap.star_wars, 4, "vote_average.desc", "1980-01-01", "", "878", ""),
+            new BlindtestParameters(R.string.war_cardname, R.mipmap.war, 4, "vote_average.desc", "1960-01-01", "", "10752", ""),
+            new BlindtestParameters(R.string.crime_thriller_cardname, R.mipmap.thriller_crime, 5, "vote_average.desc", "1960-01-01", "", "80,53", ""),
+            new BlindtestParameters(R.string.american_comedy_cardname, R.mipmap.comedy, 3, "vote_average.desc", "1980-01-01", "", "35", "en"),
+            new BlindtestParameters(R.string.western_cardname, R.mipmap.western, 1, "vote_average.desc", "1960-01-01", "", "37", ""),
+            new BlindtestParameters(R.string.american_animation_cardname, R.mipmap.american_animation, 4, "vote_average.desc", "1930-01-01", "", "16", "en"),
+            new BlindtestParameters(R.string.romance_cardname, R.mipmap.romance, 3, "vote_average.desc", "1980-01-01", "", "10749", ""),
+            new BlindtestParameters(R.string.american_movies_30_60_cardname, R.mipmap.american_30_60, 3, "vote_average.desc", "1930-01-01", "1959-12-31", "", "en"),
+            new BlindtestParameters(R.string.action_movies_90s_cardname, R.mipmap.action_90s, 2, "vote_average.desc", "1990-01-01", "1999-12-31", "28", "")
     };
 
     private ThemeAdapter themeAdapter;
