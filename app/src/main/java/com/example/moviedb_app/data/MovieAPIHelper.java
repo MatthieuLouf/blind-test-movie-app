@@ -155,7 +155,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                     parameters.getWithGenres(),
                     parameters.getWithOriginalLanguage(),
                     "300",
-                    "99").enqueue(movieListCallback(movieCallback,parameters.getMaximumPage(),i));
+                    "99"+ (!parameters.getWithOutGenres().equals("") ? ","+parameters.getWithOutGenres() :"")).enqueue(movieListCallback(movieCallback,parameters.getMaximumPage(),i));
         }
     }
 

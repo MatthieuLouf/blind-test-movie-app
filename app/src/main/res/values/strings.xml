@@ -81,4 +81,5 @@
     <string name="romance_cardname">Romance</string>
     <string name="american_movies_30_60_cardname">American 1930-1960</string>
     <string name="action_movies_90s_cardname">90\'s Action Movies</string>
+    <string name="worst_movies_cardname">Worst Rated</string>
 </resources>

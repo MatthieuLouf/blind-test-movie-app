@@ -57,4 +57,5 @@
     <string name="romance_cardname">Romances</string>
     <string name="action_movies_90s_cardname">Action des années 90</string>
     <string name="american_movies_30_60_cardname">Américain 1930-1960</string>
+    <string name="worst_movies_cardname">Pire notes</string>
 </resources>

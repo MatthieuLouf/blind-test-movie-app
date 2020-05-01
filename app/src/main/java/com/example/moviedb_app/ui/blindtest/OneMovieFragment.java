@@ -205,6 +205,7 @@ public class OneMovieFragment extends Fragment {
 
             @Override
             public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
+                Log.d(TAG, "Video change of state : " +state.toString());
                 if (state == PlayerConstants.PlayerState.PLAYING) {
                     Log.d(TAG, "Start of the video, set timer to hide the bar on title");
                     Handler handler = new Handler();

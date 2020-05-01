@@ -101,6 +101,7 @@ public class ParamFragment extends Fragment {
                         releaseDateGTE,
                         releaseDateLTE,
                         genres,
+                        "",
                         language);
 
                 BlindtestMovieActivity.start(getContext(), blindtestParameters);

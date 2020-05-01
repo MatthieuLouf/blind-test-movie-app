@@ -10,9 +10,10 @@ public class BlindtestParameters implements Serializable {
     private String releaseDateGTE;
     private String releaseDateLTE;
     private String withGenres;
+    private String withOutGenres;
     private String withOriginalLanguage;
 
-    public BlindtestParameters(Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOriginalLanguage) {
+    public BlindtestParameters(Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOutGenres, String withOriginalLanguage) {
         this.idName = idName;
         this.idImage = idImage;
         this.maximumPage = maximumPage;
@@ -20,6 +21,7 @@ public class BlindtestParameters implements Serializable {
         this.releaseDateGTE = releaseDateGTE;
         this.releaseDateLTE = releaseDateLTE;
         this.withGenres = withGenres;
+        this.withOutGenres = withOutGenres;
         this.withOriginalLanguage = withOriginalLanguage;
     }
 
@@ -77,6 +79,14 @@ public class BlindtestParameters implements Serializable {
 
     public void setWithGenres(String withGenres) {
         this.withGenres = withGenres;
+    }
+
+    public String getWithOutGenres() {
+        return withOutGenres;
+    }
+
+    public void setWithOutGenres(String withOutGenres) {
+        this.withOutGenres = withOutGenres;
     }
 
     public String getWithOriginalLanguage() {
