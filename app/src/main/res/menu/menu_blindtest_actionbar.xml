@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.moviedb_app.MainActivity">
     <item
-        android:title="user_params_item"
-        android:id="@+id/menu_user_appbar_settings"
-        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="blindtest_notify"
+        android:id="@+id/menu_blindtest_notify"
+        android:icon="@drawable/ic_flag_black_24dp"
         app:showAsAction="always"/>
 
 </menu>

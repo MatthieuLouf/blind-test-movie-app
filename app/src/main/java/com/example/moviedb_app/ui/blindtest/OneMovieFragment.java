@@ -1,5 +1,7 @@
 package com.example.moviedb_app.ui.blindtest;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,6 +17,9 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -31,6 +36,7 @@ import com.example.moviedb_app.model.Video;
 import com.example.moviedb_app.data.GetMovieService;
 import com.example.moviedb_app.data.MovieAPIHelper;
 import com.example.moviedb_app.data.RetrofitInstance;
+import com.example.moviedb_app.ui.User.UserSettingsActivity;
 import com.example.moviedb_app.ui.detail_movie_activity.MovieDetailsActivity;
 import com.example.moviedb_app.data.UserLikeService;
 import com.google.android.material.button.MaterialButton;
@@ -64,6 +70,7 @@ public class OneMovieFragment extends Fragment {
     private Integer movie_id;
     private String ab_title;
     private Movie searched_movie;
+    private Video video_movie;
 
     private Button hider_top;
     private MaterialButton next_movie;
@@ -159,6 +166,22 @@ public class OneMovieFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.menu_blindtest_actionbar, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.menu_blindtest_notify:
+                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie);
+                newFragment.show(getActivity().getSupportFragmentManager(), "notify");
+        }
+        return super.onOptionsItemSelected(item);    }
+
     private void fetchMovieDetails() {
         retrofitService.getMovie(movie_id.toString(), getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
             @Override
@@ -218,6 +241,7 @@ public class OneMovieFragment extends Fragment {
 
                     dismissLoadingDialog();
                     setProgressBar();
+                    setHasOptionsMenu(true);
                 }
                 if(state== PlayerConstants.PlayerState.BUFFERING)
                 {
@@ -252,10 +276,10 @@ public class OneMovieFragment extends Fragment {
         movieAPIHelper.getBestTrailer(getContext(), movie_id, searched_movie.getOriginalLanguage(), new Callback<Video>() {
             @Override
             public void onResponse(Call<Video> call, Response<Video> response) {
-                Video video = response.body();
-                if (video != null) {
+                video_movie = response.body();
+                if (video_movie != null) {
                     Log.d(TAG, "Got best trailer not null, ask to start the video");
-                    initVideo(video.getKey());
+                    initVideo(video_movie.getKey());
                 } else {
                     Log.d(TAG, "Null video, ask to restart the fragment");
                     changeFragment(true);
