@@ -278,7 +278,7 @@ public class OneMovieFragment extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 listSimilarTitles = response.body();
-                if (listSimilarTitles != null && listSimilarTitles.size()<5) {
+                if (listSimilarTitles != null && listSimilarTitles.size()>5) {
                     Log.d(TAG, "Retrieve not null list of similar movies");
                     if(!listSimilarTitles.contains(searched_movie.getTitle()))
                     {

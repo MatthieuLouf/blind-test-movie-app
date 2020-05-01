@@ -101,7 +101,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             if (error_count < (blindtestParameters.getMaximumPage()*20)/2) {
                 Log.d(TAG, "Restart getRandom Movie");
                 error_count++;
-                getRandomMovie(false);
+                getRandomMovie(loadingFail);
             } else {
                 Log.d(TAG, "Finish activity");
                 Toast.makeText(getBaseContext(), getString(R.string.load_error_not_enough_movies), Toast.LENGTH_LONG).show();
@@ -109,6 +109,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             }
         } else {
             startFragment(movie, loadingFail);
+            error_count =0;
         }
 
     }
