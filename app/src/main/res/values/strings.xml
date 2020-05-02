@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BlindMovies</string>
+    <string name="app_name">PopMovie</string>
     <string name="title_activity_home">Themes</string>
     <string name="title_home">Themes</string>
     <string name="USER_LIKE_KEY" translatable="false">USER_LIKE_KEY</string>
