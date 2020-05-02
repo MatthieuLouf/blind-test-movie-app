@@ -88,5 +88,5 @@
     <string name="action_movies_90s_cardname">90\'s Action Movies</string>
     <string name="worst_movies_cardname">Worst Rated</string>
     <string name="loading_trailer">Trailer Loading ...</string>
-    <string name="notify_trailer_bug">Notify Trailer Errors</string>
+    <string name="notify_trailer_bug">Notify Issue</string>
 </resources>

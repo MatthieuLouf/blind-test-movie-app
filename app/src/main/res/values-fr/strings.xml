@@ -85,5 +85,5 @@
     <string name="american_movies_30_60_cardname">Américain 1930-1960</string>
     <string name="worst_movies_cardname">Pire notes</string>
     <string name="loading_trailer">Chargement du trailer ...</string>
-    <string name="notify_trailer_bug">Notifier d\'un problème de Trailer</string>
+    <string name="notify_trailer_bug">Notifier un problème</string>
 </resources>
