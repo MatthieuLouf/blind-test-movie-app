@@ -150,6 +150,11 @@ public class MovieAPIHelper extends AppCompatActivity {
     }
 
     private void checkStartTime(Video video, Callback<Video> callback) {
+        if(video==null)
+        {
+            callback.onResponse(newCall(null), Response.success(null));
+            return;
+        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         DocumentReference docRef = db.collection(video_db_table).document(video.getId());
