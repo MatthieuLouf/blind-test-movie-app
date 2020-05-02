@@ -216,13 +216,13 @@ public class OneMovieFragment extends Fragment {
 
     }
 
-    private void initVideo(String video_id) {
+    private void initVideo() {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayerOnReady) {
                 youTubePlayer = youTubePlayerOnReady;
                 Log.d(TAG, "Start video loading");
-                youTubePlayer.loadVideo(video_id, 0f);
+                youTubePlayer.loadVideo(video_movie.getKey(), video_movie.getStart_time());
                 youTubePlayerTracker = new YouTubePlayerTracker();
                 youTubePlayer.addListener(youTubePlayerTracker);
             }
@@ -279,7 +279,7 @@ public class OneMovieFragment extends Fragment {
                 video_movie = response.body();
                 if (video_movie != null) {
                     Log.d(TAG, "Got best trailer not null, ask to start the video");
-                    initVideo(video_movie.getKey());
+                    initVideo();
                 } else {
                     Log.d(TAG, "Null video, ask to restart the fragment");
                     changeFragment(true);

@@ -14,6 +14,11 @@ import com.example.moviedb_app.model.Movie;
 import com.example.moviedb_app.model.MoviePageResult;
 import com.example.moviedb_app.model.Video;
 import com.example.moviedb_app.model.VideoPageResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +36,7 @@ import retrofit2.Retrofit;
 
 public class MovieAPIHelper extends AppCompatActivity {
     private static final String TAG = "MovieAPIHelper";
+    private String video_db_table = "videos";
 
     Retrofit retrofit = RetrofitInstance.getRetrofitInstance();
     GetMovieService retrofitService = retrofit.create(GetMovieService.class);
@@ -46,7 +52,7 @@ public class MovieAPIHelper extends AppCompatActivity {
     public MovieAPIHelper(Context ctx) {
         this.context = ctx;
         seenMoviesService = new SeenMoviesService(context);
-        bugMoviesService  = new BugMoviesService(context);
+        bugMoviesService = new BugMoviesService(context);
     }
 
     public void getSimilarMovies(Context context, Integer movie_id, Callback<List<String>> callback) {
@@ -92,7 +98,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                         Video video = selectBestTrailer(context, videoList);
                         if (video != null) {
                             Log.d(TAG, "return best trailer in language area");
-                            callback.onResponse(newCall(video), Response.success(video));
+                            checkStartTime(video, callback);
                         } else {
                             retrofitService.getVideos(movie_id, context.getResources().getString(R.string.tmdb_api_key), originalLanguage).enqueue(new Callback<VideoPageResult>() {
                                 @Override
@@ -100,8 +106,8 @@ public class MovieAPIHelper extends AppCompatActivity {
                                     if (response.body() != null) {
                                         List<Video> videoList = response.body().getResults();
                                         Video video = selectBestTrailer(context, videoList);
+                                        checkStartTime(video, callback);
                                         Log.d(TAG, "return best trailer in original language");
-                                        callback.onResponse(newCall(video), Response.success(video));
                                     }
                                 }
 
@@ -143,6 +149,32 @@ public class MovieAPIHelper extends AppCompatActivity {
         return videoSelected;
     }
 
+    private void checkStartTime(Video video, Callback<Video> callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection(video_db_table).document(video.getId());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "add start_time");
+                        video.setStart_time((Long) document.get("start_time"));
+                        callback.onResponse(newCall(video), Response.success(video));
+                    } else {
+                        Log.d(TAG, "no start time");
+                        video.setStart_time(0L);
+                        callback.onResponse(newCall(video), Response.success(video));
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                    callback.onResponse(newCall(null), Response.success(null));
+                }
+            }
+        });
+    }
+
     public void loadList(Context context, BlindtestParameters parameters, Callback<List<Movie>> movieCallback) {
         Log.d(TAG, "enter loadList");
 
@@ -157,11 +189,11 @@ public class MovieAPIHelper extends AppCompatActivity {
                     parameters.getWithGenres(),
                     parameters.getWithOriginalLanguage(),
                     "300",
-                    "99"+ (!parameters.getWithOutGenres().equals("") ? ","+parameters.getWithOutGenres() :"")).enqueue(movieListCallback(movieCallback,parameters.getMaximumPage(),i));
+                    "99" + (!parameters.getWithOutGenres().equals("") ? "," + parameters.getWithOutGenres() : "")).enqueue(movieListCallback(movieCallback, parameters.getMaximumPage(), i));
         }
     }
 
-    public Callback<MoviePageResult> movieListCallback(Callback<List<Movie>> movieCallback,int maxPage,int page) {
+    public Callback<MoviePageResult> movieListCallback(Callback<List<Movie>> movieCallback, int maxPage, int page) {
         return new Callback<MoviePageResult>() {
             @Override
             public void onResponse(@NonNull Call<MoviePageResult> call, @NonNull Response<MoviePageResult> response) {
@@ -169,8 +201,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                     if (response.body() != null) {
                         movieList.addAll(response.body().getResults());
                         Log.d(TAG, "receive a sub list of movies");
-                        if(page==maxPage)
-                        {
+                        if (page == maxPage) {
                             movieCallback.onResponse(newCall(movieList), Response.success(movieList));
                         }
                     }
@@ -192,7 +223,7 @@ public class MovieAPIHelper extends AppCompatActivity {
         int random = rnd.nextInt(movies.size());
 
         Movie movie = movies.get(random);
-        if (seenMoviesService.isSeen(movie.getId()) ||bugMoviesService.isBug(movie.getId())) {
+        if (seenMoviesService.isSeen(movie.getId()) || bugMoviesService.isBug(movie.getId())) {
             Log.d(TAG, "Already seen movie");
             return null;
         } else {
@@ -228,8 +259,7 @@ public class MovieAPIHelper extends AppCompatActivity {
         return callback;
     }
 
-    public void setBugMovie(Movie movie)
-    {
+    public void setBugMovie(Movie movie) {
         seenMoviesService.removeSeenMovies(movie.getId());
         bugMoviesService.addBugMovies(movie.getId());
     }

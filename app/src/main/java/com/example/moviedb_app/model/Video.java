@@ -22,6 +22,7 @@ public class Video implements Serializable {
     private Integer size;
     @SerializedName("type")
     private String type;
+    private Long start_time;
 
     public String getId() {
         return id;
@@ -87,4 +88,11 @@ public class Video implements Serializable {
         this.type = type;
     }
 
+    public Long getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(Long start_time) {
+        this.start_time = start_time;
+    }
 }
