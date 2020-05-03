@@ -1,5 +1,6 @@
 package com.matthieu_louf.movie_blindtest_app.recycler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,24 +16,26 @@ import java.util.List;
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeViewHolder> {
     private final List<BlindtestParameters> parameters;
     private final int layout;
-    private final Context context;
+    private final Activity activity;
+    private final boolean finish_activity;
 
-    public ThemeAdapter(List<BlindtestParameters> parameters, int layout, Context context) {
+    public ThemeAdapter(List<BlindtestParameters> parameters, int layout, Activity activity,boolean finish_activity) {
         this.parameters = parameters;
         this.layout = layout;
-        this.context = context;
+        this.activity = activity;
+        this.finish_activity = finish_activity;
     }
 
     @NonNull
     @Override
     public ThemeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup, false);
-        return new ThemeViewHolder(view,context);
+        return new ThemeViewHolder(view,activity);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ThemeViewHolder viewHolder, int i) {
-        viewHolder.bind(parameters.get(i));
+        viewHolder.bind(parameters.get(i),activity, finish_activity);
     }
 
     @Override

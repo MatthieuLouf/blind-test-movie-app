@@ -1,5 +1,6 @@
 package com.matthieu_louf.movie_blindtest_app.recycler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,7 +28,7 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
         this.context = context;
     }
 
-    public void bind(final BlindtestParameters parameters) {
+    public void bind(final BlindtestParameters parameters,Activity activity,boolean finish_activity) {
         theme_title.setText(context.getResources().getString(parameters.getIdName()));
         theme_image.setImageResource(parameters.getIdImage());
         Integer movie_number = parameters.getMaximumPage()*20;
@@ -36,6 +37,10 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(finish_activity)
+                {
+                    activity.finish();
+                }
                 BlindtestMovieActivity.start(view.getContext(),parameters);
             }
 

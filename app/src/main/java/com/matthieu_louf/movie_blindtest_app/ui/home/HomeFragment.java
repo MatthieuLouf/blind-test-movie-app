@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
             parametersList.add(blindtestParameters[i]);
         }
 
-        themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getContext());
+        themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getActivity(),false);
         recyclerView.setAdapter(themeAdapter);
 
         return root;

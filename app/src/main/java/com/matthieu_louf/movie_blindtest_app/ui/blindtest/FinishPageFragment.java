@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,6 +67,10 @@ public class FinishPageFragment extends Fragment {
         resultSentenceTextView = root.findViewById(R.id.finish_result_text);
         resultSentenceTextView.setText(getText(R.string.result_text_beginning)+" "+number_guesses+"/10 "+getText(R.string.result_text_end));
 
+        BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
+        ActionBar ab = activity.getSupportActionBar();
+        ab.setTitle(getString(blindtestParameters.getIdName()));
+
         LinearLayoutManager linearLayoutManager = null;
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
@@ -75,17 +80,17 @@ public class FinishPageFragment extends Fragment {
         List<BlindtestParameters> parametersList = new ArrayList<BlindtestParameters>();
         parametersList.add(this.blindtestParameters);
 
-        RecyclerView.Adapter themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getContext());
+        RecyclerView.Adapter themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getActivity(),true);
         recyclerView.setAdapter(themeAdapter);
 
         exitButton = root.findViewById(R.id.finish_exit_button);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Activity activity =getActivity();
+                BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
                 if(activity!=null)
                 {
-                    activity.onBackPressed();
+                    activity.finish();
                 }
             }
         });
