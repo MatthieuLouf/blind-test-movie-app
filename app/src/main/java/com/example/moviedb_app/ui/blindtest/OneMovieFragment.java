@@ -323,6 +323,10 @@ public class OneMovieFragment extends Fragment {
                     picker.setMaxValue(listSimilarTitles.size() - 1);
                     picker.setDisplayedValues(listSimilarTitles.toArray(new String[listSimilarTitles.size()]));
                     picker.setValue(listSimilarTitles.size() / 2);
+                    if(listSimilarTitles.get(listSimilarTitles.size() / 2).equals(searched_movie.getTitle()))
+                    {
+                        picker.setValue((listSimilarTitles.size() / 2)-2);
+                    }
                     picker.setVisibility(View.VISIBLE);
                 } else {
                     Log.d(TAG, "Retrieve null list of similar movies, change fragment");
