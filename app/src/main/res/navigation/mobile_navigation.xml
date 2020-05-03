@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/navigation_top"
-        android:name="com.example.moviedb_app.ui.Param.ParamFragment"
+        android:name="com.matthieu_louf.movie_blindtest_app.ui.Param.ParamFragment"
         android:label="@string/param"
         tools:layout="@layout/fragment_param" />
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.moviedb_app.ui.home.HomeFragment"
+        android:name="com.matthieu_louf.movie_blindtest_app.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_movies"
-        android:name="com.example.moviedb_app.ui.User.TabedFragment"
+        android:name="com.matthieu_louf.movie_blindtest_app.ui.User.TabedFragment"
         android:label="@string/movies"
         tools:layout="@layout/fragment_tabed" />
 </navigation>

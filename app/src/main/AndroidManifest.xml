@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.moviedb_app">
+    package="com.matthieu_louf.movie_blindtest_app">
     <!-- Add Internet capabilities to our application -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,16 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.User.UserSettingsActivity"
+            android:name="com.matthieu_louf.movie_blindtest_app.ui.User.UserSettingsActivity"
             android:label="@string/user_settings_title" />
         <activity
-            android:name=".ui.blindtest.BlindtestMovieActivity"
+            android:name="com.matthieu_louf.movie_blindtest_app.ui.blindtest.BlindtestMovieActivity"
             android:label="" />
         <activity
-            android:name=".ui.detail_movie_activity.MovieDetailsActivity"
+            android:name="com.matthieu_louf.movie_blindtest_app.ui.detail_movie_activity.MovieDetailsActivity"
             android:label="@string/movie_details" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.matthieu_louf.movie_blindtest_app.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".data.MovieAPIHelper" />
+        <activity android:name="com.matthieu_louf.movie_blindtest_app.data.MovieAPIHelper" />
     </application>
 
 </manifest>

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.moviedb_app.MainActivity">
+    tools:context="com.matthieu_louf.movie_blindtest_app.MainActivity">
     <item
         android:title="user_params_item"
         android:id="@+id/menu_user_appbar_settings"
