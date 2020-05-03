@@ -225,6 +225,10 @@ public class MovieAPIHelper extends AppCompatActivity {
     }
 
     public Movie chooseMovieInList(List<Movie> movies) {
+        if(movies.size()<10)
+        {
+            return null;
+        }
         int random = rnd.nextInt(movies.size());
 
         Movie movie = movies.get(random);
