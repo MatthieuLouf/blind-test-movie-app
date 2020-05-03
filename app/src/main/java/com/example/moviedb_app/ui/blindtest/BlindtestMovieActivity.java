@@ -119,7 +119,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         if (!loadingFail) {
             movie_count++;
         }
-        if (movie_count < 10) {
+        if (movie_count <= 10) {
             OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId(),
                     getString(blindtestParameters.getIdName()) + " : " + movie_count + "/10");
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
