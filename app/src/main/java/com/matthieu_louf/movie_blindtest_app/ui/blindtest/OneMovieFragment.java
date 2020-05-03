@@ -52,11 +52,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OneMovieFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class OneMovieFragment extends Fragment {
     private static final String TAG = "OneMovieFragment";
     private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
@@ -376,12 +371,24 @@ public class OneMovieFragment extends Fragment {
         if (listSimilarTitles.size() != 0) {
             TextView result_sentence = root.findViewById(R.id.result_sentence);
             if (isGuessed) {
+                BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
+
                 if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
                     result_sentence.setText(R.string.good_response);
                     result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                    if(blindtestMovieActivity!=null)
+                    {
+                        blindtestMovieActivity.newResponse(true);
+                    }
                 } else {
                     result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
                     result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
+
+                    if(blindtestMovieActivity!=null)
+                    {
+                        blindtestMovieActivity.newResponse(false);
+                    }
                 }
             } else {
                 result_sentence.setText(getString(R.string.no_response));

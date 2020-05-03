@@ -19,7 +19,7 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
     private Context context;
     private TextView theme_movie_number;
 
-    public ThemeViewHolder(@NonNull View itemView, Context context) {
+    ThemeViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
         this.theme_title = itemView.findViewById(R.id.theme_title);
         this.theme_image = itemView.findViewById(R.id.theme_image);

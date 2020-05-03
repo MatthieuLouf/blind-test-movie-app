@@ -89,4 +89,8 @@
     <string name="notify_trailer_bug">Notifier un problème</string>
     <string name="send_notify">Envoyer</string>
     <string name="cancel">Annuler</string>
+    <string name="end_blindtest">Retourner au menu principal</string>
+    <string name="result_text_beginning">BlindTest terminé avec</string>
+    <string name="result_text_end">bonnes réponses !</string>
+    <string name="result_next_text">Rejouer sur ce Thème :</string>
 </resources>

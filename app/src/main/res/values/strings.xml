@@ -36,8 +36,8 @@
     <string name="validate_movie">Validate</string>
     <string name="next_movie">Next</string>
     <string name="language_is">Language</string>
-    <string name="good_response">Good response !</string>
-    <string name="not_good_movie">Not the good movie</string>
+    <string name="good_response">Right movie !</string>
+    <string name="not_good_movie">Wrong movie</string>
     <string name="top_rated_cardname">Top Rated</string>
     <string name="heigthies_cardname">80\'s Movies</string>
     <string name="japanese_animation_cardname">Japanese Animation</string>
@@ -92,4 +92,8 @@
     <string name="notify_trailer_bug">Notify Issue</string>
     <string name="send_notify">Send</string>
     <string name="cancel">Cancel</string>
+    <string name="end_blindtest">Return to main menu</string>
+    <string name="result_text_beginning">BlindTest finished with</string>
+    <string name="result_text_end">right responses !</string>
+    <string name="result_next_text">Replay on this Theme :</string>
 </resources>
