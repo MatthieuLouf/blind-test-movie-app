@@ -173,7 +173,7 @@ public class OneMovieFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.menu_blindtest_notify:
-                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie);
+                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie,searched_movie);
                 newFragment.show(getActivity().getSupportFragmentManager(), "notify");
         }
         return super.onOptionsItemSelected(item);    }

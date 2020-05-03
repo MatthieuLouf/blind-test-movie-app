@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.matthieu_louf.movie_blindtest_app.R;
+import com.matthieu_louf.movie_blindtest_app.model.Movie;
 import com.matthieu_louf.movie_blindtest_app.model.Video;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,14 +31,16 @@ public class NotifyDialogFragment extends DialogFragment {
     private String video_db_table = "videos";
 
     List<Integer> selectedItems;
-    String[] error_key = new String[]{"error_title_at_start_count", "error_inappropriate_trailer_count"};
+    String[] error_key = new String[]{"error_title_at_start_count", "error_inappropriate_trailer_count","error_other_count"};
 
     Video video;
+    Movie movie;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public NotifyDialogFragment(Video video) {
+    public NotifyDialogFragment(Video video, Movie movie) {
         this.video = video;
+        this.movie = movie;
     }
 
     @Override
@@ -64,13 +67,13 @@ public class NotifyDialogFragment extends DialogFragment {
                             }
                         })
                 // Set the action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.send_notify, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         initFirebaseVideo();
                     }
                 })
-        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //your code here
             }
@@ -109,6 +112,8 @@ public class NotifyDialogFragment extends DialogFragment {
         video_db.put("name", video.getName());
         video_db.put("size", video.getSize());
         video_db.put("type", video.getType());
+        video_db.put("id_movie", movie.getId());
+        video_db.put("name_movie", movie.getTitle());
 
         video_db.put("start_time", 0);
 
@@ -137,7 +142,8 @@ public class NotifyDialogFragment extends DialogFragment {
         db.collection(video_db_table).document(video.getId())
                 .update(
                         error_key[0], FieldValue.increment(selectedItems.contains(0) ? 1 : 0),
-                        error_key[1], FieldValue.increment(selectedItems.contains(1) ? 1 : 0)
+                        error_key[1], FieldValue.increment(selectedItems.contains(1) ? 1 : 0),
+                        error_key[2], FieldValue.increment(selectedItems.contains(2) ? 1 : 0)
                 )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

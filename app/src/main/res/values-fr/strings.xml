@@ -61,6 +61,7 @@
     <string-array name="notify_array">
         <item>Nom du film au début du trailer</item>
         <item>Trailer Inaproprié</item>
+        <item>Autre Problème</item>
     </string-array>
     <string name="load_error_not_enough_movies">Pas assez de films sélectionnés</string>
     <string name="remove_all_seen_movies">Oublier les films déjà vus</string>
@@ -86,4 +87,6 @@
     <string name="worst_movies_cardname">Pire notes</string>
     <string name="loading_trailer">Chargement du trailer ...</string>
     <string name="notify_trailer_bug">Notifier un problème</string>
+    <string name="send_notify">Envoyer</string>
+    <string name="cancel">Annuler</string>
 </resources>

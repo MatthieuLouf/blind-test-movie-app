@@ -64,6 +64,7 @@
     <string-array name="notify_array">
         <item>Movie Name at the beginning of the trailer</item>
         <item>Inappropriate Trailer</item>
+        <item>Other error</item>
     </string-array>
     <string name="load_error_not_enough_movies">Not enough movies selected</string>
     <string name="remove_all_seen_movies">Forget all seen movies</string>
@@ -89,4 +90,6 @@
     <string name="worst_movies_cardname">Worst Rated</string>
     <string name="loading_trailer">Trailer Loading ...</string>
     <string name="notify_trailer_bug">Notify Issue</string>
+    <string name="send_notify">Send</string>
+    <string name="cancel">Cancel</string>
 </resources>
