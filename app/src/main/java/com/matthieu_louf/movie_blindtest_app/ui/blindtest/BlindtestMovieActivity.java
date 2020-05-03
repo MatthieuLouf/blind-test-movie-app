@@ -1,6 +1,7 @@
 package com.matthieu_louf.movie_blindtest_app.ui.blindtest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -173,11 +174,11 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         Log.d(TAG, "Starting a new FinishPageFragment");
         loadingText.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
-        fragmentContainerView.setVisibility(View.INVISIBLE);
+        fragmentContainerView.setVisibility(View.VISIBLE);
 
         FinishPageFragment fragment = FinishPageFragment.newInstance(good_responses_count, blindtestParameters);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.finish_page_fragment_container, fragment);
+        fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
         fragmentTransaction.commit();
     }
 

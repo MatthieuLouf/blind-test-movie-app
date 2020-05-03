@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,7 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FinishPageFragment extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private String TAG = "FinishPageFragment";
+
     private static final String ARG_NUMBER_GUESSES = "number_guesses";
     private static final String ARG_BLINDTEST_PARAMETERS = "blindtest_parameters";
 
@@ -46,7 +51,7 @@ public class FinishPageFragment extends Fragment {
         FinishPageFragment fragment = new FinishPageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NUMBER_GUESSES, number_guesses);
-        args.putSerializable(ARG_BLINDTEST_PARAMETERS,blindtestParameters);
+        args.putSerializable(ARG_BLINDTEST_PARAMETERS, blindtestParameters);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,9 +68,11 @@ public class FinishPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView");
+
         View root = inflater.inflate(R.layout.fragment_finish_page, container, false);
         resultSentenceTextView = root.findViewById(R.id.finish_result_text);
-        resultSentenceTextView.setText(getText(R.string.result_text_beginning)+" "+number_guesses+"/10 "+getText(R.string.result_text_end));
+        resultSentenceTextView.setText(getText(R.string.result_text_beginning) + " " + number_guesses + "/10 " + getText(R.string.result_text_end));
 
         BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
         ActionBar ab = activity.getSupportActionBar();
@@ -80,7 +87,7 @@ public class FinishPageFragment extends Fragment {
         List<BlindtestParameters> parametersList = new ArrayList<BlindtestParameters>();
         parametersList.add(this.blindtestParameters);
 
-        RecyclerView.Adapter themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getActivity(),true);
+        RecyclerView.Adapter themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getActivity(), true);
         recyclerView.setAdapter(themeAdapter);
 
         exitButton = root.findViewById(R.id.finish_exit_button);
@@ -88,8 +95,7 @@ public class FinishPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
-                if(activity!=null)
-                {
+                if (activity != null) {
                     activity.finish();
                 }
             }

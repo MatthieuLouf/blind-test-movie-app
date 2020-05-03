@@ -165,13 +165,13 @@ public class OneMovieFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.menu_blindtest_notify:
-                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie,searched_movie);
+                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie, searched_movie);
                 newFragment.show(getActivity().getSupportFragmentManager(), "notify");
         }
-        return super.onOptionsItemSelected(item);    }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void fetchMovieDetails() {
         retrofitService.getMovie(movie_id.toString(), getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<Movie>() {
@@ -220,7 +220,7 @@ public class OneMovieFragment extends Fragment {
 
             @Override
             public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
-                Log.d(TAG, "Video change of state : " +state.toString());
+                Log.d(TAG, "Video change of state : " + state.toString());
                 if (state == PlayerConstants.PlayerState.PLAYING) {
                     Log.d(TAG, "Start of the video, set timer to hide the bar on title");
                     Handler handler = new Handler();
@@ -234,11 +234,9 @@ public class OneMovieFragment extends Fragment {
                     setProgressBar();
                     setHasOptionsMenu(true);
                 }
-                if(state== PlayerConstants.PlayerState.BUFFERING)
-                {
+                if (state == PlayerConstants.PlayerState.BUFFERING) {
                     BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
-                    if(blindtestMovieActivity!=null)
-                    {
+                    if (blindtestMovieActivity != null) {
                         blindtestMovieActivity.changeLoadingText(true);
                     }
                 }
@@ -292,8 +290,7 @@ public class OneMovieFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(hasBeenPaused)
-        {
+        if (hasBeenPaused) {
             youTubePlayer.play();
         }
     }
@@ -303,10 +300,9 @@ public class OneMovieFragment extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 listSimilarTitles = response.body();
-                if (listSimilarTitles != null && listSimilarTitles.size()>5) {
+                if (listSimilarTitles != null && listSimilarTitles.size() > 5) {
                     Log.d(TAG, "Retrieve not null list of similar movies");
-                    if(!listSimilarTitles.contains(searched_movie.getTitle()))
-                    {
+                    if (!listSimilarTitles.contains(searched_movie.getTitle())) {
                         listSimilarTitles.add(searched_movie.getTitle());
                     }
                     Collections.sort(listSimilarTitles);
@@ -314,9 +310,8 @@ public class OneMovieFragment extends Fragment {
                     picker.setMaxValue(listSimilarTitles.size() - 1);
                     picker.setDisplayedValues(listSimilarTitles.toArray(new String[listSimilarTitles.size()]));
                     picker.setValue(listSimilarTitles.size() / 2);
-                    if(listSimilarTitles.get(listSimilarTitles.size() / 2).equals(searched_movie.getTitle()))
-                    {
-                        picker.setValue((listSimilarTitles.size() / 2)-2);
+                    if (listSimilarTitles.get(listSimilarTitles.size() / 2).equals(searched_movie.getTitle())) {
+                        picker.setValue((listSimilarTitles.size() / 2) - 2);
                     }
                     picker.setVisibility(View.VISIBLE);
                 } else {
@@ -345,14 +340,12 @@ public class OneMovieFragment extends Fragment {
 
     private void changeFragment(boolean loadingFail) {
         onDestroy();
-        if(loadingFail)
-        {
+        if (loadingFail) {
             movieAPIHelper.setBugMovie(searched_movie);
         }
         Log.d(TAG, "Change Fragment method");
         BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
-        if(blindtestMovieActivity!=null)
-        {
+        if (blindtestMovieActivity != null) {
             blindtestMovieActivity.getRandomMovie(loadingFail);
         }
     }
@@ -377,16 +370,14 @@ public class OneMovieFragment extends Fragment {
                     result_sentence.setText(R.string.good_response);
                     result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-                    if(blindtestMovieActivity!=null)
-                    {
+                    if (blindtestMovieActivity != null) {
                         blindtestMovieActivity.newResponse(true);
                     }
                 } else {
                     result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
                     result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
 
-                    if(blindtestMovieActivity!=null)
-                    {
+                    if (blindtestMovieActivity != null) {
                         blindtestMovieActivity.newResponse(false);
                     }
                 }
@@ -406,7 +397,7 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void setMovieViewComponents() {
-        if(getContext()!=null) {
+        if (getContext() != null) {
             Log.d(TAG, "Set movie view components");
 
             ImageView movie_image = root.findViewById(R.id.movie_image);
