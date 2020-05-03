@@ -105,7 +105,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                 getRandomMovie(loadingFail);
             } else {
                 Log.d(TAG, "Finish activity");
-                Toast.makeText(getBaseContext(), getString(R.string.load_error_not_enough_movies), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), getString(R.string.load_error_not_enough_movies), Toast.LENGTH_SHORT).show();
                 finish();
             }
         } else {

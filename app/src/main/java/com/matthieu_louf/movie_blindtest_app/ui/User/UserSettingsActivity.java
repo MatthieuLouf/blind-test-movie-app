@@ -44,7 +44,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 seenMoviesService.removeAllSeenMovies();
-                Toast.makeText(getApplicationContext(),getString(R.string.all_seen_movies_removed),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),getString(R.string.all_seen_movies_removed),Toast.LENGTH_SHORT).show();
                 NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));
             }
         });
