@@ -96,10 +96,10 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     public void getRandomMovie(boolean loadingFail) {
         showLoading();
-        Movie movie = movieAPIHelper.chooseMovieInList(movieList);
+        Movie movie = movieAPIHelper.chooseMovieInList(movieList,loadingFail);
         if (movie == null) {
             Log.d(TAG, "Error while getting a random movie, error count : " + error_count);
-            if (error_count < (blindtestParameters.getMaximumPage() * 20) / 2) {
+            if (error_count < (blindtestParameters.getMaximumPage() * 20)+1) {
                 Log.d(TAG, "Restart getRandom Movie");
                 error_count++;
                 getRandomMovie(loadingFail);

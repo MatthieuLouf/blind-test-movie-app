@@ -48,6 +48,7 @@ public class MovieAPIHelper extends AppCompatActivity {
     BugMoviesService bugMoviesService;
 
     List<Movie> movieList = new ArrayList<Movie>();
+    Integer last_proposed_movie_index=0;
 
     public MovieAPIHelper(Context ctx) {
         this.context = ctx;
@@ -224,12 +225,26 @@ public class MovieAPIHelper extends AppCompatActivity {
         };
     }
 
-    public Movie chooseMovieInList(List<Movie> movies) {
+    public Movie chooseMovieInList(List<Movie> movies, boolean loading_failed) {
         if(movies.size()<10)
         {
             return null;
         }
-        int random = rnd.nextInt(movies.size());
+        int random=0;
+        if(loading_failed && last_proposed_movie_index+1<movies.size())
+        {
+            last_proposed_movie_index++;
+            random = last_proposed_movie_index;
+        }
+        else if(loading_failed &&last_proposed_movie_index+1==movies.size())
+        {
+            last_proposed_movie_index=0;
+            random = last_proposed_movie_index;
+        }
+        else{
+            random = rnd.nextInt(movies.size());
+            last_proposed_movie_index =random;
+        }
 
         Movie movie = movies.get(random);
         if (seenMoviesService.isSeen(movie.getId()) || bugMoviesService.isBug(movie.getId())) {
@@ -237,6 +252,7 @@ public class MovieAPIHelper extends AppCompatActivity {
             return null;
         } else {
             Log.d(TAG, "return random movie in list");
+            last_proposed_movie_index =0;
             seenMoviesService.addSeenMovies(movie.getId());
         }
         return movie;
