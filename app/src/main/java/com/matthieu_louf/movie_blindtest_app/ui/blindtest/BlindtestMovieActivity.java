@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -60,6 +62,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blindtest_movie_page);
         movieAPIHelper = new MovieAPIHelper(this);
+        checkIfConnected();
 
         fragmentContainerView = findViewById(R.id.one_movie_fragment_container);
         progressBar = findViewById(R.id.loading_progress);
@@ -96,6 +99,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     }
 
     public void getRandomMovie(boolean loadingFail) {
+        checkIfConnected();
         showLoading();
         Movie movie = movieAPIHelper.chooseMovieInList(movieList,loadingFail);
         if (movie == null) {
@@ -180,6 +184,22 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void checkIfConnected()
+    {
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if(!isConnected)
+        {
+            Log.d(TAG, "Finish activity");
+            Toast.makeText(getBaseContext(), getString(R.string.not_connection), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
     @Override

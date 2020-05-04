@@ -96,4 +96,5 @@
     <string name="result_text_beginning">BlindTest finished with</string>
     <string name="result_text_end">right responses !</string>
     <string name="result_next_text">Replay on this Theme :</string>
+    <string name="not_connection">No Internet connection !</string>
 </resources>
