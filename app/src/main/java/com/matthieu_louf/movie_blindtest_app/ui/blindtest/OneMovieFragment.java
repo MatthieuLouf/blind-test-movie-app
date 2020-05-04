@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -418,11 +419,14 @@ public class OneMovieFragment extends Fragment {
             }
             String dateText  = DateUtils.formatDateTime(getContext(), date.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR);
 
+            Locale locale = new Locale(searched_movie.getOriginalLanguage());
+            Locale local_language = new Locale(getContext().getResources().getString(R.string.language_iso639));
+
             Glide.with(this).load(BASE_URL_IMAGE + searched_movie.getPosterPath()).into(movie_image);
             movie_title.setText(searched_movie.getTitle());
             movie_rating.setText(getString(R.string.average_rate) + " : " + searched_movie.getVoteAverage().toString() + "/10");
             movie_release_date.setText(getString(R.string.release_date) + " : " + dateText);
-            movie_language.setText(getString(R.string.language_is) + " : " + searched_movie.getOriginalLanguage().toUpperCase());
+            movie_language.setText(getString(R.string.language_is) + " : " + locale.getDisplayLanguage(local_language));
         }
     }
 

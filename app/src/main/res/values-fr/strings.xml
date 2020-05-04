@@ -91,4 +91,5 @@
     <string name="not_connection">Pas de connexion internet !</string>
     <string name="no_stared_movies">Pas de films en favoris ...</string>
     <string name="no_seen_movies">Pas de films vus ...</string>
+    <string name="language_iso639">fr</string>
 </resources>

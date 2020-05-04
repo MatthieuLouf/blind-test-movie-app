@@ -28,6 +28,7 @@
     <string name="delete_user">Delete Account</string>
     <string name="login_failed">Login Failed</string>
     <string name="api_region_key">US</string>
+    <string name="language_iso639">en</string>
     <string name="validate_movie">Validate</string>
     <string name="next_movie">Next</string>
     <string name="language_is">Language</string>

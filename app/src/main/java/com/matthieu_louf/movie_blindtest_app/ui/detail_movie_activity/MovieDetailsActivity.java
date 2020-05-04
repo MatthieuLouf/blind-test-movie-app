@@ -45,6 +45,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -168,7 +169,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 }
                 String dateText  = DateUtils.formatDateTime(getApplicationContext(), date.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR);
                 release_date.setText(getString(R.string.release_date) + " : " + dateText);
-                language.setText(getString(R.string.language_is) + " : " + res.getOriginalLanguage().toUpperCase());
+
+                Locale locale = new Locale(res.getOriginalLanguage());
+                Locale local_language = new Locale(getResources().getString(R.string.language_iso639));
+                language.setText(getString(R.string.language_is) + " : " + locale.getDisplayLanguage(local_language));
 
                 String genre_comment = "";
                 if (res.getGenres() != null) {
