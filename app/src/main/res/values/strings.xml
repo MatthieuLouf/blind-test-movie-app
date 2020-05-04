@@ -32,8 +32,8 @@
     <string name="validate_movie">Validate</string>
     <string name="next_movie">Next</string>
     <string name="language_is">Language</string>
-    <string name="good_response">Correct answer !</string>
-    <string name="not_good_movie">Wrong movie</string>
+    <string name="good_response">Correct answer ! (%d points)</string>
+    <string name="not_good_movie">Wrong movie, not %s ! (%d points)</string>
     <string name="top_rated_cardname">Top Ratings</string>
     <string name="heigthies_cardname">80\'s Movies</string>
     <string name="japanese_animation_cardname">Japanese Animation</string>

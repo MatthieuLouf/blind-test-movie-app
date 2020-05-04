@@ -372,14 +372,15 @@ public class OneMovieFragment extends Fragment {
                 BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
 
                 if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
-                    result_sentence.setText(R.string.good_response);
+                    Integer score = (int)getScore();
+                    result_sentence.setText(getString(R.string.good_response,score));
                     result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                     if (blindtestMovieActivity != null) {
-                        blindtestMovieActivity.newResponse(true,getScore());
+                        blindtestMovieActivity.newResponse(true,score);
                     }
                 } else {
-                    result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
+                    result_sentence.setText(getString(R.string.not_good_movie,listSimilarTitles.get(picker.getValue()),0) );
                     result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
 
                     if (blindtestMovieActivity != null) {
