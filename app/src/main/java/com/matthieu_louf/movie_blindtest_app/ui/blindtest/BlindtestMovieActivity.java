@@ -46,6 +46,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     Integer movie_count = 0;
     Integer error_count = 0;
     Integer good_responses_count = 0;
+    Integer score_total = 0;
 
     FragmentContainerView fragmentContainerView;
     ProgressBar progressBar;
@@ -168,9 +169,10 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         }
     }
 
-    public void newResponse(boolean right_guessed) {
+    public void newResponse(boolean right_guessed,float score) {
         if (right_guessed) {
             good_responses_count++;
+            score_total+= (int)score;
         }
     }
 
@@ -180,7 +182,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         fragmentContainerView.setVisibility(View.VISIBLE);
 
-        FinishPageFragment fragment = FinishPageFragment.newInstance(good_responses_count, blindtestParameters);
+        FinishPageFragment fragment = FinishPageFragment.newInstance(good_responses_count,score_total, blindtestParameters);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
         fragmentTransaction.commit();

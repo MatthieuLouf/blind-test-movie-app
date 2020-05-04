@@ -85,11 +85,10 @@
     <string name="send_notify">Envoyer</string>
     <string name="cancel">Annuler</string>
     <string name="end_blindtest">Retourner au menu principal</string>
-    <string name="result_text_beginning">BlindTest terminé avec</string>
-    <string name="result_text_end">bonnes réponses !</string>
     <string name="result_next_text">Rejouer sur ce Thème :</string>
     <string name="not_connection">Pas de connexion internet !</string>
     <string name="no_stared_movies">Pas de films en favoris ...</string>
     <string name="no_seen_movies">Pas de films vus ...</string>
     <string name="language_iso639">fr</string>
+    <string name="result_text">BlindTest terminé avec %d %s bonnes réponses et %d points !</string>
 </resources>

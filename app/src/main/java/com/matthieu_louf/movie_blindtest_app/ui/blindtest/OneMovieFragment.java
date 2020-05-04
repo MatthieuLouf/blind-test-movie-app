@@ -376,14 +376,14 @@ public class OneMovieFragment extends Fragment {
                     result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                     if (blindtestMovieActivity != null) {
-                        blindtestMovieActivity.newResponse(true);
+                        blindtestMovieActivity.newResponse(true,getScore());
                     }
                 } else {
                     result_sentence.setText(getString(R.string.not_good_movie) + " (" + listSimilarTitles.get(picker.getValue()) + ")");
                     result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
 
                     if (blindtestMovieActivity != null) {
-                        blindtestMovieActivity.newResponse(false);
+                        blindtestMovieActivity.newResponse(false,0);
                     }
                 }
             } else {
@@ -399,6 +399,25 @@ public class OneMovieFragment extends Fragment {
             }
         });
 
+    }
+
+    private float getScore()
+    {
+        float total_duration = youTubePlayerTracker.getVideoDuration()-video_movie.getStart_time();
+        float guessed_time = youTubePlayerTracker.getCurrentSecond() -video_movie.getStart_time();
+        float score = 0;
+        if(guessed_time<10)
+        {
+            score = 500;
+        }
+        else{
+            score = (1-((guessed_time-10)/total_duration))*500;
+        }
+        if(score<0)
+        {
+            score =0;
+        }
+        return score;
     }
 
     private void setMovieViewComponents() {

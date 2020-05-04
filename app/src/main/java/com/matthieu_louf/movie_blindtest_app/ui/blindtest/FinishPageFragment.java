@@ -2,6 +2,7 @@ package com.matthieu_louf.movie_blindtest_app.ui.blindtest;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,9 +36,11 @@ public class FinishPageFragment extends Fragment {
     private String TAG = "FinishPageFragment";
 
     private static final String ARG_NUMBER_GUESSES = "number_guesses";
+    private static final String ARG_SCORE_TOTAL= "score_total";
     private static final String ARG_BLINDTEST_PARAMETERS = "blindtest_parameters";
 
     private Integer number_guesses;
+    private Integer score_total;
     private BlindtestParameters blindtestParameters;
 
     RecyclerView recyclerView;
@@ -47,10 +50,11 @@ public class FinishPageFragment extends Fragment {
     public FinishPageFragment() {
     }
 
-    public static FinishPageFragment newInstance(Integer number_guesses, BlindtestParameters blindtestParameters) {
+    public static FinishPageFragment newInstance(Integer number_guesses,Integer score_total, BlindtestParameters blindtestParameters) {
         FinishPageFragment fragment = new FinishPageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NUMBER_GUESSES, number_guesses);
+        args.putInt(ARG_SCORE_TOTAL, score_total);
         args.putSerializable(ARG_BLINDTEST_PARAMETERS, blindtestParameters);
         fragment.setArguments(args);
         return fragment;
@@ -61,6 +65,7 @@ public class FinishPageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             number_guesses = getArguments().getInt(ARG_NUMBER_GUESSES);
+            score_total = getArguments().getInt(ARG_SCORE_TOTAL);
             blindtestParameters = (BlindtestParameters) getArguments().getSerializable(ARG_BLINDTEST_PARAMETERS);
         }
     }
@@ -72,7 +77,7 @@ public class FinishPageFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_finish_page, container, false);
         resultSentenceTextView = root.findViewById(R.id.finish_result_text);
-        resultSentenceTextView.setText(getText(R.string.result_text_beginning) + " " + number_guesses + "/10 " + getText(R.string.result_text_end));
+        resultSentenceTextView.setText(getString(R.string.result_text,number_guesses,"/10",score_total));
 
         BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
         ActionBar ab = activity.getSupportActionBar();
