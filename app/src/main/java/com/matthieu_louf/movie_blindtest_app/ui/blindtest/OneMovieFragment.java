@@ -401,6 +401,16 @@ public class OneMovieFragment extends Fragment {
 
     }
 
+    private float getTotalDuration()
+    {
+        return youTubePlayerTracker.getVideoDuration()-video_movie.getStart_time();
+    }
+
+    private float getCurrentTime()
+    {
+        return youTubePlayerTracker.getCurrentSecond() -video_movie.getStart_time();
+    }
+
     private float getScore()
     {
         float total_duration = youTubePlayerTracker.getVideoDuration()-video_movie.getStart_time();
@@ -495,11 +505,11 @@ public class OneMovieFragment extends Fragment {
         new Thread(new Runnable() {
             public void run() {
 
-                while ((youTubePlayerTracker.getVideoDuration()) - youTubePlayerTracker.getCurrentSecond() >= 0f) {
+                while (getTotalDuration()- getCurrentTime() >= 0f) {
 
-                    progressBar.setProgress(progressBarMax - (int) ((youTubePlayerTracker.getCurrentSecond() * progressBarMax) / (youTubePlayerTracker.getVideoDuration())));
+                    progressBar.setProgress(progressBarMax - (int) ((getCurrentTime() * progressBarMax) / getTotalDuration()));
 
-                    if ((youTubePlayerTracker.getVideoDuration() / 3) - youTubePlayerTracker.getCurrentSecond() <= 0f) {
+                    if ((getTotalDuration() / 3) - getCurrentTime() <= 0f) {
                         //Log.d(TAG, "Set ProgressBar Error");
                         //ProgressBar progressBar1 = root.findViewById(R.id.test_progress_bar);
                     }
