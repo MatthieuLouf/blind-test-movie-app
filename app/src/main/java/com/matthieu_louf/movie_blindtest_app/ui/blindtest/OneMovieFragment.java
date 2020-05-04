@@ -13,6 +13,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,8 +44,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -405,10 +409,19 @@ public class OneMovieFragment extends Fragment {
             TextView movie_release_date = root.findViewById(R.id.movie_release_date);
             TextView movie_language = root.findViewById(R.id.movie_language);
 
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+            Date date = null;
+            try {
+                date = ft.parse(searched_movie.getReleaseDate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String dateText  = DateUtils.formatDateTime(getContext(), date.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR);
+
             Glide.with(this).load(BASE_URL_IMAGE + searched_movie.getPosterPath()).into(movie_image);
             movie_title.setText(searched_movie.getTitle());
             movie_rating.setText(getString(R.string.average_rate) + " : " + searched_movie.getVoteAverage().toString() + "/10");
-            movie_release_date.setText(getString(R.string.release_date) + " : " + searched_movie.getReleaseDate().replace('-', '/'));
+            movie_release_date.setText(getString(R.string.release_date) + " : " + dateText);
             movie_language.setText(getString(R.string.language_is) + " : " + searched_movie.getOriginalLanguage().toUpperCase());
         }
     }

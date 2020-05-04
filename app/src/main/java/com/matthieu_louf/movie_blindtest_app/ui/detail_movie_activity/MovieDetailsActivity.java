@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +37,14 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -149,7 +158,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 Glide.with(MovieDetailsActivity.this).load(BASE_URL_IMAGE + res.getPosterPath()).into(image);
                 original_title.setText(res.getTitle());
                 rate.setText(getString(R.string.average_rate) + " : " + res.getVoteAverage().toString() + "/10");
-                release_date.setText(getString(R.string.release_date) + " : " + res.getReleaseDate());
+
+                SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+                Date date = null;
+                try {
+                    date = ft.parse(res.getReleaseDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String dateText  = DateUtils.formatDateTime(getApplicationContext(), date.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR);
+                release_date.setText(getString(R.string.release_date) + " : " + dateText);
                 language.setText(getString(R.string.language_is) + " : " + res.getOriginalLanguage().toUpperCase());
 
                 String genre_comment = "";
