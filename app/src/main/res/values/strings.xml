@@ -6,16 +6,12 @@
     <string name="SEEN_MOVIES_KEY" translatable="false">SEEN_MOVIES_KEY</string>
     <string name="BUG_MOVIES_KEY" translatable="false">BUG_MOVIES_KEY</string>
     <string name="stared">Stared</string>
-    <string name="user_movies">User Liked Movies</string>
     <string name="top">Top</string>
     <string name="top_movies">Top Movies</string>
     <string name="movie_details">Movie Details</string>
     <string name="search">Search</string>
     <string name="like">Like</string>
     <string name="unlike">Unlike</string>
-    <string name="top_textview_popular">Popular Movies</string>
-    <string name="top_textview_toprated">Top Rated Movies</string>
-    <string name="top_textview_discover">Discover 80\'s Movies</string>
     <string name="collection">Collection :</string>
     <string name="production_companies">"Production Companies "</string>
     <string name="synopsis">Synopsis :</string>
@@ -24,7 +20,6 @@
     <string name="average_rate">Rate</string>
     <string name="genres">Genres :</string>
     <string name="release_date">Release</string>
-    <string name="research_empty">Please insert what you want before !</string>
     <string name="api_language_key">en-US</string>
     <string name="start_blindtest">Start Blindtest</string>
     <string name="blindtest_page_title">Movie Blindtest</string>
@@ -36,19 +31,19 @@
     <string name="validate_movie">Validate</string>
     <string name="next_movie">Next</string>
     <string name="language_is">Language</string>
-    <string name="good_response">Right movie !</string>
+    <string name="good_response">Correct answer !</string>
     <string name="not_good_movie">Wrong movie</string>
-    <string name="top_rated_cardname">Top Rated</string>
+    <string name="top_rated_cardname">Top Ratings</string>
     <string name="heigthies_cardname">80\'s Movies</string>
     <string name="japanese_animation_cardname">Japanese Animation</string>
     <string name="french_2010_cardname">French 2010-2020</string>
-    <string name="param">Personalize</string>
+    <string name="param">Customize</string>
     <string name="horror_cardname">Horror</string>
     <string name="science_fiction_cardname">Science Fiction</string>
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="popularity">Popularity</string>
-    <string name="most">With the most</string>
+    <string name="most">With the top</string>
     <string name="in_the">In the</string>
     <string name="movies">Movies</string>
     <string name="with_genres">Genres :</string>
@@ -87,14 +82,14 @@
     <string name="romance_cardname">Romance</string>
     <string name="american_movies_30_60_cardname">American 1930-1960</string>
     <string name="action_movies_90s_cardname">90\'s Action Movies</string>
-    <string name="worst_movies_cardname">Worst Rated</string>
+    <string name="worst_movies_cardname">Worst Ratings</string>
     <string name="loading_trailer">Trailer Loading ...</string>
     <string name="notify_trailer_bug">Notify Issue</string>
     <string name="send_notify">Send</string>
     <string name="cancel">Cancel</string>
     <string name="end_blindtest">Return to main menu</string>
     <string name="result_text_beginning">BlindTest finished with</string>
-    <string name="result_text_end">right responses !</string>
+    <string name="result_text_end">correct answers !</string>
     <string name="result_next_text">Replay on this Theme :</string>
     <string name="not_connection">No Internet connection !</string>
 </resources>
