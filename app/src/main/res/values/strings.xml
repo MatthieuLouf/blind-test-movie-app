@@ -92,4 +92,6 @@
     <string name="result_text_end">correct answers !</string>
     <string name="result_next_text">Replay on this Theme :</string>
     <string name="not_connection">No Internet connection !</string>
+    <string name="no_stared_movies">No stared movies ...</string>
+    <string name="no_seen_movies">No seen movies ...</string>
 </resources>

@@ -60,7 +60,7 @@ public class SeenMoviesFragment extends Fragment {
                 loadOneMovie(userLikesIds.get(i));
             }
         } else {
-            Toast.makeText(getActivity(), "There is no seen Movies", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_seen_movies, Toast.LENGTH_SHORT).show();
         }
     }
 

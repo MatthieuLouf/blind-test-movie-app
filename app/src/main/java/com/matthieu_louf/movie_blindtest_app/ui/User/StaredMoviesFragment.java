@@ -77,7 +77,7 @@ public class StaredMoviesFragment extends Fragment {
                 loadOneMovie(userLikesIds.get(i));
             }
         } else {
-            Toast.makeText(getActivity(), "There is no liked Movies", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_stared_movies, Toast.LENGTH_SHORT).show();
         }
     }
 

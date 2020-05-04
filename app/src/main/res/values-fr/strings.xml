@@ -89,4 +89,6 @@
     <string name="result_text_end">bonnes réponses !</string>
     <string name="result_next_text">Rejouer sur ce Thème :</string>
     <string name="not_connection">Pas de connexion internet !</string>
+    <string name="no_stared_movies">Pas de films en favoris ...</string>
+    <string name="no_seen_movies">Pas de films vus ...</string>
 </resources>
