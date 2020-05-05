@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".ui.User.UserSettingsActivity">
+        tools:context=".pages.userPage.UserSettingsActivity">
 
         <LinearLayout
             android:layout_width="match_parent"

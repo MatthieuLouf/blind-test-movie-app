@@ -18,16 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.matthieu_louf.movie_blindtest_app.ui.User.UserSettingsActivity"
+            android:name="com.matthieu_louf.movie_blindtest_app.pages.userPage.UserSettingsActivity"
             android:label="@string/user_settings_title" />
         <activity
-            android:name="com.matthieu_louf.movie_blindtest_app.ui.blindtest.BlindtestMovieActivity"
+            android:name="com.matthieu_louf.movie_blindtest_app.pages.blindtestPage.BlindtestMovieActivity"
             android:label="" />
         <activity
-            android:name="com.matthieu_louf.movie_blindtest_app.ui.detail_movie_activity.MovieDetailsActivity"
+            android:name="com.matthieu_louf.movie_blindtest_app.pages.detailsPage.MovieDetailsActivity"
             android:label="@string/movie_details" />
         <activity
-            android:name="com.matthieu_louf.movie_blindtest_app.MainActivity"
+            android:name="com.matthieu_louf.movie_blindtest_app.pages.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.matthieu_louf.movie_blindtest_app.data.MovieAPIHelper" />
+        <activity android:name="com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper" />
     </application>
 
 </manifest>
