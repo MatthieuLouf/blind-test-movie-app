@@ -23,18 +23,24 @@ import com.matthieu_louf.movie_blindtest_app.models.detailsMovie.ProductionCompa
 
 public class LanguagePreferenceHolder extends RecyclerView.ViewHolder {
     public TextView languagePreferenceTextView;
+    public TextView positionTextView;
     public CardView cardView;
 
     public LanguagePreferenceHolder(@NonNull View itemView, Context context) {
         super(itemView);
         languagePreferenceTextView=itemView.findViewById(R.id.language_preference_text_view);
+        positionTextView = itemView.findViewById(R.id.language_preference_position_text_view);
         cardView=itemView.findViewById(R.id.language_preference_card_view);
         cardView.setBackgroundColor(context.getResources().getColor(R.color.lt_grey));
-
     }
 
-    public void bind(final String languagePreferenceText) {
+    public void bind(final String languagePreferenceText,int position) {
         languagePreferenceTextView.setText(languagePreferenceText);
+        updatePosition(position+1);
+    }
 
+    public void updatePosition(int position)
+    {
+        positionTextView.setText(position+" - ");
     }
 }

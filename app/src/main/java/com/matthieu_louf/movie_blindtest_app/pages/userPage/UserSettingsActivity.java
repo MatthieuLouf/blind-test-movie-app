@@ -1,13 +1,10 @@
 package com.matthieu_louf.movie_blindtest_app.pages.userPage;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
@@ -18,13 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.matthieu_louf.movie_blindtest_app.pages.MainActivity;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.LanguagePreferenceAdapter;
-import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.MyItemTouchHelper;
-import com.matthieu_louf.movie_blindtest_app.recycler.theme.ThemeAdapter;
+import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.LanguagePreferenceItemTouchHelper;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.SeenMoviesService;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 /*import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -64,7 +59,11 @@ public class UserSettingsActivity extends AppCompatActivity {
                 NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));
             }
         });
+        handleLanguagePreferences();
+    }
 
+    private void handleLanguagePreferences()
+    {
         languagePreferencesTexts.add("VOST");
         languagePreferencesTexts.add("VF");
         languagePreferencesTexts.add("VO");
@@ -77,10 +76,9 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         adapter = new LanguagePreferenceAdapter(languagePreferencesTexts, R.layout.preview_language_preference,this);
         recyclerView.setAdapter(adapter);
-        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(adapter,languagePreferencesTexts,this);
+        LanguagePreferenceItemTouchHelper itemTouchHelper = new LanguagePreferenceItemTouchHelper(adapter,languagePreferencesTexts,this,recyclerView);
         ItemTouchHelper helper = new ItemTouchHelper(itemTouchHelper);
         helper.attachToRecyclerView(recyclerView);
-
     }
 
     @Override

@@ -25,14 +25,14 @@ public class LanguagePreferenceAdapter extends RecyclerView.Adapter<LanguagePref
 
     @NonNull
     @Override
-    public LanguagePreferenceHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
+    public LanguagePreferenceHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup,false);
         return new LanguagePreferenceHolder(view,context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull LanguagePreferenceHolder viewHolder, int i) {
-        viewHolder.bind(languagePreferences.get(i));
+        viewHolder.bind(languagePreferences.get(i),i);
     }
 
     @Override

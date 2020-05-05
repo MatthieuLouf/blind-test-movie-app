@@ -12,16 +12,18 @@ import com.matthieu_louf.movie_blindtest_app.R;
 import java.util.Collections;
 import java.util.List;
 
-public class MyItemTouchHelper extends ItemTouchHelper.Callback {
+public class LanguagePreferenceItemTouchHelper extends ItemTouchHelper.Callback {
 
     private final LanguagePreferenceAdapter mAdapter;
     private List<String> languagePreferencesTexts;
     private Context context;
+    private RecyclerView recyclerView;
 
-    public MyItemTouchHelper(LanguagePreferenceAdapter adapter, List<String> languagePreferencesTexts, Context context) {
+    public LanguagePreferenceItemTouchHelper(LanguagePreferenceAdapter adapter, List<String> languagePreferencesTexts, Context context, RecyclerView recyclerView) {
         mAdapter = adapter;
         this.languagePreferencesTexts = languagePreferencesTexts;
         this.context = context;
+        this.recyclerView =recyclerView;
     }
 
     @Override
@@ -39,6 +41,7 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
         super.clearView(recyclerView, viewHolder);
         LanguagePreferenceHolder languagePreferenceHolder = (LanguagePreferenceHolder) viewHolder;
         languagePreferenceHolder.cardView.setBackgroundColor(context.getResources().getColor(R.color.lt_grey));
+        updateViewPositions();
     }
 
     @Override
@@ -66,9 +69,18 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
         int position_target = target.getAdapterPosition();
 
         Collections.swap(languagePreferencesTexts,position_dragged,position_target);
-
         mAdapter.notifyItemMoved(position_dragged,position_target);
+
         return false;
+    }
+
+    public void updateViewPositions()
+    {
+        for(int i=0;i<recyclerView.getChildCount();i++)
+        {
+            LanguagePreferenceHolder languagePreferenceHolder = (LanguagePreferenceHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+            languagePreferenceHolder.updatePosition(i+1);
+        }
     }
 
 
