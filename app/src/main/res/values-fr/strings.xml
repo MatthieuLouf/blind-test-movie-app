@@ -91,4 +91,6 @@
     <string name="no_seen_movies">Pas de films vus ...</string>
     <string name="language_iso639">fr</string>
     <string name="result_text">BlindTest terminé avec %d %s bonnes réponses et %d points !</string>
+    <string name="user_language_preference">Ordre des préférences de langue</string>
+    <string name="user_movies_seen">Films vus</string>
 </resources>

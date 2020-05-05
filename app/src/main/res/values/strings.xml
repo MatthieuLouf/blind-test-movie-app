@@ -94,4 +94,6 @@
     <string name="no_stared_movies">No stared movies ...</string>
     <string name="no_seen_movies">No seen movies ...</string>
     <string name="result_text">Blindtest finished with %d %s correct answers and %d points !</string>
+    <string name="user_language_preference">Language preference order</string>
+    <string name="user_movies_seen">Seen movies</string>
 </resources>

@@ -1,28 +1,44 @@
 package com.matthieu_louf.movie_blindtest_app.pages.userPage;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.matthieu_louf.movie_blindtest_app.pages.MainActivity;
 import com.matthieu_louf.movie_blindtest_app.R;
+import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.LanguagePreferenceAdapter;
+import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.MyItemTouchHelper;
+import com.matthieu_louf.movie_blindtest_app.recycler.theme.ThemeAdapter;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.SeenMoviesService;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 /*import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;*/
 
 public class UserSettingsActivity extends AppCompatActivity {
 
-    MaterialButton remove_seen_movies_button;
-    Button delete_button;
-    Button logout_button;
+    private MaterialButton remove_seen_movies_button;
+    // private Button delete_button;
+    // private Button logout_button;
+    private RecyclerView recyclerView;
+    private LanguagePreferenceAdapter adapter;
+
+    private List<String> languagePreferencesTexts = new ArrayList<String>();
 
     AppCompatActivity userSettingsActivity;
     SeenMoviesService seenMoviesService;
@@ -48,19 +64,23 @@ public class UserSettingsActivity extends AppCompatActivity {
                 NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));
             }
         });
-        /*logout_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
 
-        delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                delete();
-            }
-        });*/
+        languagePreferencesTexts.add("VOST");
+        languagePreferencesTexts.add("VF");
+        languagePreferencesTexts.add("VO");
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        recyclerView = findViewById(R.id.recycler_view_language_preferences);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        adapter = new LanguagePreferenceAdapter(languagePreferencesTexts, R.layout.preview_language_preference,this);
+        recyclerView.setAdapter(adapter);
+        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(adapter,languagePreferencesTexts,this);
+        ItemTouchHelper helper = new ItemTouchHelper(itemTouchHelper);
+        helper.attachToRecyclerView(recyclerView);
+
     }
 
     @Override
