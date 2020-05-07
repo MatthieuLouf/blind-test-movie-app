@@ -52,6 +52,8 @@ public class MovieAPIHelper extends AppCompatActivity {
     List<Movie> movieList = new ArrayList<Movie>();
     Integer last_proposed_movie_index=0;
 
+    public MovieAPIHelper(){}
+
     public MovieAPIHelper(Context ctx) {
         this.context = ctx;
         seenMoviesService = new SeenMoviesService(context);
