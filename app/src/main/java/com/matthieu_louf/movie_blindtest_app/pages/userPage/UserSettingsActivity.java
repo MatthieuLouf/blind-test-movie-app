@@ -30,10 +30,9 @@ public class UserSettingsActivity extends AppCompatActivity {
     private MaterialButton remove_seen_movies_button;
     // private Button delete_button;
     // private Button logout_button;
-    private RecyclerView recyclerView;
-    private LanguagePreferenceAdapter adapter;
-
-    private List<String> languagePreferencesTexts = new ArrayList<String>();
+    // private RecyclerView recyclerView;
+    // private LanguagePreferenceAdapter adapter;
+    // private List<String> languagePreferencesTexts = new ArrayList<String>();
 
     AppCompatActivity userSettingsActivity;
     SeenMoviesService seenMoviesService;
@@ -59,10 +58,10 @@ public class UserSettingsActivity extends AppCompatActivity {
                 NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));
             }
         });
-        handleLanguagePreferences();
+        //handleLanguagePreferences();
     }
 
-    private void handleLanguagePreferences()
+    /*private void handleLanguagePreferences()
     {
         languagePreferencesTexts.add("VOST");
         languagePreferencesTexts.add("VF");
@@ -71,7 +70,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-        recyclerView = findViewById(R.id.recycler_view_language_preferences);
+        /recyclerView = findViewById(R.id.recycler_view_language_preferences);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         adapter = new LanguagePreferenceAdapter(languagePreferencesTexts, R.layout.preview_language_preference,this);
@@ -79,7 +78,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         LanguagePreferenceItemTouchHelper itemTouchHelper = new LanguagePreferenceItemTouchHelper(adapter,languagePreferencesTexts,this,recyclerView);
         ItemTouchHelper helper = new ItemTouchHelper(itemTouchHelper);
         helper.attachToRecyclerView(recyclerView);
-    }
+    }*/
 
     @Override
     public boolean onSupportNavigateUp() {
