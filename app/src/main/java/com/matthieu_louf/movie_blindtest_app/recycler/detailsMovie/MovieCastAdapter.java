@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
+import com.annimon.stream.function.Predicate;
 import com.matthieu_louf.movie_blindtest_app.models.detailsMovie.Cast;
 
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class MovieCastAdapter extends RecyclerView.Adapter<MovieCastHolder> {
     private final List<Cast> castList;
@@ -19,8 +20,7 @@ public class MovieCastAdapter extends RecyclerView.Adapter<MovieCastHolder> {
 
     public MovieCastAdapter(List<Cast> castList, int layout) {
         Predicate<Cast> byOrder = person -> person.getOrder() <15;
-        this.castList = castList.stream().filter(byOrder)
-                .collect(Collectors.toList());
+        this.castList = Stream.of(castList).filter(byOrder).collect(Collectors.toList());
         this.layout=layout;
     }
 

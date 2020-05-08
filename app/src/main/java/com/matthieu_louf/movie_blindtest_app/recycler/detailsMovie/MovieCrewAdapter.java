@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
+import com.annimon.stream.function.Predicate;
 import com.matthieu_louf.movie_blindtest_app.models.detailsMovie.Crew;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class MovieCrewAdapter extends RecyclerView.Adapter<MovieCrewHolder> {
     private final List<Crew> crewList;
@@ -26,13 +27,13 @@ public class MovieCrewAdapter extends RecyclerView.Adapter<MovieCrewHolder> {
                 person.getJob().equals("Story") ||
                 person.getJob().equals("Music") ||
                 person.getJob().equals("Executive Producer");
-        List<Crew> filteredCrewList = crewList.stream().filter(byOrder)
+        List<Crew> filteredCrewList = Stream.of(crewList).filter(byOrder)
                 .collect(Collectors.toList());
 
         this.crewList = new ArrayList<Crew>();
         for(Crew crew : filteredCrewList)
         {
-            Crew crewInList = this.crewList.stream()
+            Crew crewInList = Stream.of(this.crewList)
                     .filter(person -> crew.getId().equals(person.getId()))
                     .findFirst()
                     .orElse(null);
