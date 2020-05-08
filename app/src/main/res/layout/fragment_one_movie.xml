@@ -9,8 +9,8 @@
         android:id="@+id/hider_top"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:backgroundTint="@color/black"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:backgroundTint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,8 +18,9 @@
         android:id="@+id/youtube_player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        app:autoPlay="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,10 +56,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
-                app:srcCompat="@mipmap/default_poster"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/default_poster" />
 
             <TextView
                 android:id="@+id/movie_rating"
@@ -144,19 +145,19 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/next_movie"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        style="?attr/materialButtonOutlinedStyle"
-        android:textColor="@color/colorAccent"
-        android:textColorHighlight="@color/colorAccent"
-        app:strokeColor="@color/colorAccent"
         android:gravity="center"
         android:text="@string/validate_movie"
+        android:textColor="@color/colorAccent"
+        android:textColorHighlight="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/test_progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_picker" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_picker"
+        app:strokeColor="@color/colorAccent" />
 
     <ProgressBar
         android:id="@+id/test_progress_bar"
@@ -165,11 +166,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:progressTint="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:indeterminate="false"
         android:progress="100"
-        android:indeterminate="false"/>
+        android:progressTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
