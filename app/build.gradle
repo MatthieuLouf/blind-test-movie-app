@@ -9,8 +9,8 @@ android {
         applicationId 'com.matthieu_louf.movie_blindtest_app'
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 6
-        versionName '1.0.5'
+        versionCode 7
+        versionName '1.0.6'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -74,9 +74,8 @@ dependencies {
     //implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation('com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5') {
-        exclude group: 'androidx.appcompat'
-    }
+    implementation'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
     implementation 'com.annimon:stream:1.2.1'
+    implementation files('libs\\YouTubeAndroidPlayerApi.jar')
 }

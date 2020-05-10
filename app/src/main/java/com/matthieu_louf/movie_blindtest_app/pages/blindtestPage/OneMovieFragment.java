@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.youtube.player.YouTubePlayer;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.models.movie.Movie;
 import com.matthieu_louf.movie_blindtest_app.models.video.Video;
@@ -37,12 +38,6 @@ import com.matthieu_louf.movie_blindtest_app.api.RetrofitInstance;
 import com.matthieu_louf.movie_blindtest_app.pages.detailsPage.MovieDetailsActivity;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.UserLikeService;
 import com.google.android.material.button.MaterialButton;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerTracker;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,16 +63,11 @@ public class OneMovieFragment extends Fragment {
     private Movie searched_movie;
     private Video video_movie;
 
-    private Button hider_top;
     private MaterialButton next_movie;
     private NumberPicker picker;
     private TextView movie_title;
     private CardView movieCardView;
     private ProgressBar progressBar;
-
-    private YouTubePlayerView youTubePlayerView;
-    private YouTubePlayerTracker youTubePlayerTracker;
-    private YouTubePlayer youTubePlayer;
 
     private ImageView isLikedIcon;
     private boolean isLiked;
@@ -92,6 +82,8 @@ public class OneMovieFragment extends Fragment {
     private MovieAPIHelper movieAPIHelper;
 
     private boolean hasBeenPaused = false;
+
+    private BlindtestMovieActivity blindtestMovieActivity;
 
     public OneMovieFragment() {
     }
@@ -123,12 +115,12 @@ public class OneMovieFragment extends Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_one_movie, container, false);
 
-        BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
-        ActionBar ab = activity.getSupportActionBar();
+        blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
+
+        ActionBar ab = blindtestMovieActivity.getSupportActionBar();
         ab.setTitle(ab_title);
 
         movie_title = root.findViewById(R.id.movie_title);
-        hider_top = root.findViewById(R.id.hider_top);
         next_movie = root.findViewById(R.id.next_movie);
         picker = root.findViewById(R.id.movie_picker);
         picker.setVisibility(View.INVISIBLE);
@@ -149,9 +141,6 @@ public class OneMovieFragment extends Fragment {
                 }
             }
         });
-
-        youTubePlayerView = root.findViewById(R.id.youtube_player_view);
-        getLifecycle().addObserver(youTubePlayerView);
 
         setIsLikedIcon();
 
@@ -197,71 +186,45 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void setYouTubePlayerView() {
-        PlayerUiController playerUiController = youTubePlayerView.getPlayerUiController();
-        playerUiController.showVideoTitle(false);
-        playerUiController.showCurrentTime(false);
-        playerUiController.showDuration(false);
-        playerUiController.showMenuButton(false);
-        playerUiController.showFullscreenButton(false);
-        playerUiController.showYouTubeButton(false);
-        playerUiController.showBufferingProgress(false);
-        playerUiController.showPlayPauseButton(false);
-        playerUiController.showCustomAction1(false);
-        playerUiController.showCustomAction2(false);
-        playerUiController.showSeekBar(false);
 
     }
 
     private void initVideo() {
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+        blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(),(int)video_movie.getStart_time()*1000);
+        blindtestMovieActivity.youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
             @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayerOnReady) {
-                youTubePlayer = youTubePlayerOnReady;
-                Log.d(TAG, "Start video loading");
-                youTubePlayer.loadVideo(video_movie.getKey(), video_movie.getStart_time());
-                youTubePlayerTracker = new YouTubePlayerTracker();
-                youTubePlayer.addListener(youTubePlayerTracker);
+            public void onLoading() {
+                blindtestMovieActivity.changeLoadingText(true);
             }
 
             @Override
-            public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
-                Log.d(TAG, "Video change of state : " + state.toString());
-                if (state == PlayerConstants.PlayerState.PLAYING) {
-                    Log.d(TAG, "Start of the video, set timer to hide the bar on title");
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            hider_top.setVisibility(View.INVISIBLE);
-                        }
-                    }, 5000);
-
-                    dismissLoadingDialog();
-                    setProgressBar();
-                    setHasOptionsMenu(true);
-                }
-                if (state == PlayerConstants.PlayerState.BUFFERING) {
-                    BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
-                    if (blindtestMovieActivity != null) {
-                        blindtestMovieActivity.changeLoadingText(true);
-                    }
-                }
-                if (state == PlayerConstants.PlayerState.PAUSED) {
-                    hider_top.setVisibility(View.VISIBLE);
-                }
-                if (state == PlayerConstants.PlayerState.ENDED) {
-                    showResult(false);
-                }
-            }
-
-            @Override
-            public void onVideoId(@NonNull YouTubePlayer youTubePlayer, String videoId) {
+            public void onLoaded(String s) {
 
             }
 
             @Override
-            public void onError(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerError error) {
-                Log.d(TAG, "Error while loading the video, changing fragment");
-                changeFragment(true);
+            public void onAdStarted() {
+                blindtestMovieActivity.changeLoadingText(true);
+            }
+
+            @Override
+            public void onVideoStarted() {
+                dismissLoadingDialog();
+                setProgressBar();
+            }
+
+            @Override
+            public void onVideoEnded() {
+                showResult(false);
+            }
+
+            @Override
+            public void onError(YouTubePlayer.ErrorReason errorReason) {
+                Log.d(TAG, "Error while loading the video, changing fragment, reason : " + errorReason);
+                if (errorReason != YouTubePlayer.ErrorReason.UNAUTHORIZED_OVERLAY) {
+
+                    changeFragment(true);
+                }
             }
         });
     }
@@ -296,7 +259,7 @@ public class OneMovieFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (hasBeenPaused) {
-            youTubePlayer.play();
+            blindtestMovieActivity.youTubePlayer.play();
         }
     }
 
@@ -334,12 +297,10 @@ public class OneMovieFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        youTubePlayerView.release();
     }
 
     private void dismissLoadingDialog() {
         Log.d(TAG, "Dismiss Dialog");
-        BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
         blindtestMovieActivity.hideLoading();
     }
 
@@ -349,10 +310,7 @@ public class OneMovieFragment extends Fragment {
             movieAPIHelper.setBugMovie(searched_movie);
         }
         Log.d(TAG, "Change Fragment method");
-        BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
-        if (blindtestMovieActivity != null) {
-            blindtestMovieActivity.getRandomMovie(loadingFail);
-        }
+        blindtestMovieActivity.getRandomMovie(loadingFail);
     }
 
     private void showResult(boolean isGuessed) {
@@ -369,23 +327,19 @@ public class OneMovieFragment extends Fragment {
         if (listSimilarTitles.size() != 0) {
             TextView result_sentence = root.findViewById(R.id.result_sentence);
             if (isGuessed) {
-                BlindtestMovieActivity blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
 
                 if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
-                    Integer score = (int)getScore();
-                    result_sentence.setText(getString(R.string.good_response,score));
+                    Integer score = (int) getScore();
+                    result_sentence.setText(getString(R.string.good_response, score));
                     result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-                    if (blindtestMovieActivity != null) {
-                        blindtestMovieActivity.newResponse(true,score);
-                    }
+                    blindtestMovieActivity.newResponse(true, score);
                 } else {
-                    result_sentence.setText(getString(R.string.not_good_movie,listSimilarTitles.get(picker.getValue()),0) );
+                    result_sentence.setText(getString(R.string.not_good_movie, listSimilarTitles.get(picker.getValue()), 0));
                     result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
 
-                    if (blindtestMovieActivity != null) {
-                        blindtestMovieActivity.newResponse(false,0);
-                    }
+                    blindtestMovieActivity.newResponse(false, 0);
+
                 }
             } else {
                 result_sentence.setText(getString(R.string.no_response));
@@ -402,31 +356,39 @@ public class OneMovieFragment extends Fragment {
 
     }
 
-    private float getTotalDuration()
-    {
-        return youTubePlayerTracker.getVideoDuration()-video_movie.getStart_time();
+    private float getTotalDuration() {
+        float total_duration = 0;
+        try {
+            total_duration = blindtestMovieActivity.youTubePlayer.getDurationMillis() * 1000 - video_movie.getStart_time();
+        } catch (Exception e) {
+
+        }
+
+        return total_duration;
     }
 
-    private float getCurrentTime()
-    {
-        return youTubePlayerTracker.getCurrentSecond() -video_movie.getStart_time();
+    private float getCurrentTime() {
+        float current_time = 0;
+        try {
+            current_time = blindtestMovieActivity.youTubePlayer.getCurrentTimeMillis() * 1000 - video_movie.getStart_time();
+        } catch (Exception e) {
+
+        }
+
+        return current_time;
     }
 
-    private float getScore()
-    {
-        float total_duration = youTubePlayerTracker.getVideoDuration()-video_movie.getStart_time();
-        float guessed_time = youTubePlayerTracker.getCurrentSecond() -video_movie.getStart_time();
+    private float getScore() {
+        float total_duration = getTotalDuration();
+        float guessed_time = getCurrentTime();
         float score = 0;
-        if(guessed_time<10)
-        {
+        if (guessed_time < 10) {
             score = 500;
+        } else {
+            score = (1 - ((guessed_time - 10) / total_duration)) * 500;
         }
-        else{
-            score = (1-((guessed_time-10)/total_duration))*500;
-        }
-        if(score<0)
-        {
-            score =0;
+        if (score < 0) {
+            score = 0;
         }
         return score;
     }
@@ -440,14 +402,14 @@ public class OneMovieFragment extends Fragment {
             TextView movie_release_date = root.findViewById(R.id.movie_release_date);
             TextView movie_language = root.findViewById(R.id.movie_language);
 
-            SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
             try {
                 date = ft.parse(searched_movie.getReleaseDate());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            String dateText  = DateUtils.formatDateTime(getContext(), date.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR);
+            String dateText = DateUtils.formatDateTime(getContext(), date.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR);
 
             Locale locale = new Locale(searched_movie.getOriginalLanguage());
             Locale local_language = new Locale(getContext().getResources().getString(R.string.language_iso639));
@@ -497,7 +459,7 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void setProgressBar() {
-        Log.d(TAG, "Set ProgressBar Loader Thread " + youTubePlayerTracker.getVideoDuration());
+        Log.d(TAG, "Set ProgressBar Loader Thread " + getTotalDuration());
 
         int progressBarMax = 10000;
         progressBar.setMax(progressBarMax);
@@ -506,7 +468,7 @@ public class OneMovieFragment extends Fragment {
         new Thread(new Runnable() {
             public void run() {
 
-                while (getTotalDuration()- getCurrentTime() >= 0f) {
+                while (getTotalDuration() - getCurrentTime() >= 0f) {
 
                     progressBar.setProgress(progressBarMax - (int) ((getCurrentTime() * progressBarMax) / getTotalDuration()));
 

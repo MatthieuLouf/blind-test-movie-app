@@ -88,7 +88,7 @@ public class Video implements Serializable {
         this.type = type;
     }
 
-    public Long getStart_time() {
+    public long getStart_time() {
         return start_time;
     }
 

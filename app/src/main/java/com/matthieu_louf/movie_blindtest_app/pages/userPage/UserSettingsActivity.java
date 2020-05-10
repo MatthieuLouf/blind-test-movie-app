@@ -16,6 +16,7 @@ import com.matthieu_louf.movie_blindtest_app.pages.MainActivity;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.LanguagePreferenceAdapter;
 import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.LanguagePreferenceItemTouchHelper;
+import com.matthieu_louf.movie_blindtest_app.sharedPreferences.BugMoviesService;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.SeenMoviesService;
 import com.google.android.material.button.MaterialButton;
 
@@ -36,12 +37,14 @@ public class UserSettingsActivity extends AppCompatActivity {
 
     AppCompatActivity userSettingsActivity;
     SeenMoviesService seenMoviesService;
+    BugMoviesService bugMoviesService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
         seenMoviesService = new SeenMoviesService(this);
+        bugMoviesService = new BugMoviesService(this);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
@@ -54,6 +57,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 seenMoviesService.removeAllSeenMovies();
+                bugMoviesService.removeAllBugMovies();
                 Toast.makeText(getApplicationContext(),getString(R.string.all_seen_movies_removed),Toast.LENGTH_SHORT).show();
                 NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));
             }

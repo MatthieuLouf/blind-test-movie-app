@@ -22,6 +22,7 @@
             android:label="@string/user_settings_title" />
         <activity
             android:name="com.matthieu_louf.movie_blindtest_app.pages.blindtestPage.BlindtestMovieActivity"
+            android:configChanges="orientation"
             android:label="" />
         <activity
             android:name="com.matthieu_louf.movie_blindtest_app.pages.detailsPage.MovieDetailsActivity"
