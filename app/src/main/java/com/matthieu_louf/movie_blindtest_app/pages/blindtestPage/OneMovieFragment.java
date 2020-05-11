@@ -190,43 +190,48 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void initVideo() {
-        blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(),(int)video_movie.getStart_time()*1000);
-        blindtestMovieActivity.youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
-            @Override
-            public void onLoading() {
-                blindtestMovieActivity.changeLoadingText(true);
-            }
-
-            @Override
-            public void onLoaded(String s) {
-
-            }
-
-            @Override
-            public void onAdStarted() {
-                blindtestMovieActivity.changeLoadingText(true);
-            }
-
-            @Override
-            public void onVideoStarted() {
-                dismissLoadingDialog();
-                setProgressBar();
-            }
-
-            @Override
-            public void onVideoEnded() {
-                showResult(false);
-            }
-
-            @Override
-            public void onError(YouTubePlayer.ErrorReason errorReason) {
-                Log.d(TAG, "Error while loading the video, changing fragment, reason : " + errorReason);
-                if (errorReason != YouTubePlayer.ErrorReason.UNAUTHORIZED_OVERLAY) {
-
-                    changeFragment(true);
+        try {
+            blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(), (int) video_movie.getStart_time() * 1000);
+            blindtestMovieActivity.youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
+                @Override
+                public void onLoading() {
+                    blindtestMovieActivity.changeLoadingText(true);
                 }
-            }
-        });
+
+                @Override
+                public void onLoaded(String s) {
+
+                }
+
+                @Override
+                public void onAdStarted() {
+                    blindtestMovieActivity.changeLoadingText(true);
+                }
+
+                @Override
+                public void onVideoStarted() {
+                    dismissLoadingDialog();
+                    setProgressBar();
+                }
+
+                @Override
+                public void onVideoEnded() {
+                    showResult(false);
+                }
+
+                @Override
+                public void onError(YouTubePlayer.ErrorReason errorReason) {
+                    Log.d(TAG, "Error while loading the video, changing fragment, reason : " + errorReason);
+                    if (errorReason != YouTubePlayer.ErrorReason.UNAUTHORIZED_OVERLAY) {
+
+                        changeFragment(true);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.d(TAG, "Exception : " + e);
+
+        }
     }
 
     private void getBestTrailer(String movie_id) {
