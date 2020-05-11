@@ -16,6 +16,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.api.GetMovieService;
 import com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper;
@@ -28,10 +31,6 @@ import com.matthieu_louf.movie_blindtest_app.recycler.detailsMovie.MovieProducti
 import com.matthieu_louf.movie_blindtest_app.models.detailsMovie.Genre;
 import com.matthieu_louf.movie_blindtest_app.models.detailsMovie.MovieDetails;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.UserLikeService;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -74,7 +73,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private boolean isLiked;
 
     MovieAPIHelper movieAPIHelper;
-    private YouTubePlayerView youTubePlayerView;
+
+    private YouTubePlayerFragment youTubePlayerFragment;
+    public com.google.android.youtube.player.YouTubePlayer youTubePlayer;
+    View fragmentYoutubePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +130,33 @@ public class MovieDetailsActivity extends AppCompatActivity {
         });
 
         movieAPIHelper = new MovieAPIHelper(this);
-        youTubePlayerView = findViewById(R.id.youtube_player_view);
-        getLifecycle().addObserver(youTubePlayerView);
+        fragmentYoutubePlayer = findViewById(R.id.youtube_player_fragment);
+    }
+
+    private void initializeYoutubePlayer(Video video) {
+        youTubePlayerFragment = (YouTubePlayerFragment) getFragmentManager()
+                .findFragmentById(R.id.youtube_player_fragment);
+
+        if (youTubePlayerFragment == null)
+            return;
+
+        youTubePlayerFragment.initialize("AIzaSyBeRW9uCifWJtoceLeeaRy6rcKkzWAaJoQ", new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean b) {
+                if (player!=null) {
+                    youTubePlayer =player;
+                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
+                    youTubePlayer.cueVideo(video.getKey());
+                    Log.d(TAG, "Youtube Player View initialization succeed");
+                }
+                Log.d(TAG, "Youtube Player View initialization failed");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                Log.d(TAG, "Youtube Player View initialization failed");
+            }
+        });
     }
 
     private void setLikedIconFromDrawable(int drawable, int color) {
@@ -241,12 +268,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     public void getBestTrailer(String movie_id, MovieDetails movieDetails) {
-        PlayerUiController playerUiController = youTubePlayerView.getPlayerUiController();
-        playerUiController.showMenuButton(false);
-        playerUiController.showFullscreenButton(false);
-        playerUiController.showYouTubeButton(false);
-        playerUiController.showCustomAction1(false);
-        playerUiController.showCustomAction2(false);
 
         movieAPIHelper.getBestTrailer(this, movie_id, movieDetails.getOriginalLanguage(), new Callback<Video>() {
             @Override
@@ -254,13 +275,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 Video video = response.body();
                 if (video != null) {
                     Log.d(TAG, "Got best trailer not null, init video");
-                    youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                        @Override
-                        public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                            Log.d(TAG, "Start video loading");
-                            youTubePlayer.cueVideo(video.getKey(), 0f);
-                        }
-                    });
+                    initializeYoutubePlayer(video);
                 } else {
                     Log.d(TAG, "Null video");
                 }
