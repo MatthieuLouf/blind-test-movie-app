@@ -217,7 +217,10 @@ public class OneMovieFragment extends Fragment {
 
                 @Override
                 public void onVideoEnded() {
-                    showResult(false);
+                    if(!next)
+                    {
+                        showResult(false);
+                    }
                 }
 
                 @Override
@@ -312,6 +315,7 @@ public class OneMovieFragment extends Fragment {
 
     private void changeFragment(boolean loadingFail) {
         onDestroy();
+        next=true;
         if (loadingFail) {
             movieAPIHelper.setBugMovie(searched_movie);
         }
@@ -365,20 +369,19 @@ public class OneMovieFragment extends Fragment {
     private float getTotalDuration() {
         float total_duration = 0;
         try {
-            total_duration = blindtestMovieActivity.youTubePlayer.getDurationMillis() * 1000 - video_movie.getStart_time();
+            total_duration = blindtestMovieActivity.youTubePlayer.getDurationMillis() / 1000f - video_movie.getStart_time();
         } catch (Exception e) {
-
+            Log.d(TAG,"Time error : "+e.getMessage());
         }
-
         return total_duration;
     }
 
     private float getCurrentTime() {
         float current_time = 0;
         try {
-            current_time = blindtestMovieActivity.youTubePlayer.getCurrentTimeMillis() * 1000 - video_movie.getStart_time();
+            current_time = blindtestMovieActivity.youTubePlayer.getCurrentTimeMillis() / 1000f - video_movie.getStart_time();
         } catch (Exception e) {
-
+            Log.d(TAG,"Time error : "+e.getMessage());
         }
 
         return current_time;
@@ -474,14 +477,14 @@ public class OneMovieFragment extends Fragment {
         new Thread(new Runnable() {
             public void run() {
 
-                while (getTotalDuration() - getCurrentTime() >= 0f) {
+                while (getTotalDuration() - getCurrentTime() >= 0f && !next) {
 
                     progressBar.setProgress(progressBarMax - (int) ((getCurrentTime() * progressBarMax) / getTotalDuration()));
 
-                    if ((getTotalDuration() / 3) - getCurrentTime() <= 0f) {
-                        //Log.d(TAG, "Set ProgressBar Error");
-                        //ProgressBar progressBar1 = root.findViewById(R.id.test_progress_bar);
-                    }
+                    /*if ((getTotalDuration() / 3) - getCurrentTime() <= 0f) {
+                        Log.d(TAG, "Set ProgressBar Error");
+                        ProgressBar progressBar1 = root.findViewById(R.id.test_progress_bar);
+                    }*/
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
