@@ -34,32 +34,31 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginVertical="@dimen/activity_vertical_margin"
-            android:gravity="center"
             android:text="@string/result_next_text"
             android:textSize="@dimen/activity_textsize_title"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/finish_result_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_theme_cards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/activity_vertical_margin"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/finish_next_text" />
+            app:layout_constraintTop_toBottomOf="@+id/finish_next_text"
+            app:layout_constraintEnd_toStartOf="@+id/finish_exit_button"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/finish_exit_button"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:text="@string/end_blindtest"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_view_theme_cards"
+            app:layout_constraintStart_toEndOf="@+id/recycler_view_theme_cards"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_view_theme_cards"
             app:strokeColor="@color/colorPrimary" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.matthieu_louf.movie_blindtest_app.pages.blindtestPage;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -73,8 +74,11 @@ public class FinishPageFragment extends Fragment {
         ab.setTitle(getString(blindtestParameters.getIdName()));
 
         LinearLayoutManager linearLayoutManager = null;
-        linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-
+        if (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
+            linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        } else {
+            linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        }
         recyclerView = root.findViewById(R.id.recycler_view_theme_cards);
         recyclerView.setLayoutManager(linearLayoutManager);
 
