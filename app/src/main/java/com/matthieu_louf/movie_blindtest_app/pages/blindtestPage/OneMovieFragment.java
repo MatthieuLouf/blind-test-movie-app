@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -114,7 +115,7 @@ public class OneMovieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_one_movie, container, false);
-
+        setHasOptionsMenu(true);
         blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
 
         ActionBar ab = blindtestMovieActivity.getSupportActionBar();
@@ -154,7 +155,7 @@ public class OneMovieFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(R.menu.menu_blindtest_actionbar, menu);
+        requireActivity().getMenuInflater().inflate(R.menu.menu_blindtest_actionbar, menu);
     }
 
     @Override
@@ -162,7 +163,7 @@ public class OneMovieFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.menu_blindtest_notify:
                 NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie, searched_movie);
-                newFragment.show(getActivity().getSupportFragmentManager(), "notify");
+                newFragment.show(requireActivity().getSupportFragmentManager(), "notify");
         }
         return super.onOptionsItemSelected(item);
     }

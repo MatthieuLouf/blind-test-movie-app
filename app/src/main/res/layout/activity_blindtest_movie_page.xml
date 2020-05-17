@@ -36,6 +36,16 @@
             app:layout_constraintTop_toBottomOf="@+id/loading_progress" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/one_movie_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/youtube_player_fragment"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <fragment
         android:id="@+id/youtube_player_fragment"
         class="com.google.android.youtube.player.YouTubePlayerFragment"
@@ -46,14 +56,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/one_movie_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/youtube_player_fragment"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
