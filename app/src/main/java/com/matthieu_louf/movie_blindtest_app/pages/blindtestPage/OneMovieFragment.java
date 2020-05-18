@@ -217,8 +217,7 @@ public class OneMovieFragment extends Fragment {
 
                 @Override
                 public void onVideoEnded() {
-                    if(!next)
-                    {
+                    if (!next) {
                         showResult(false);
                     }
                 }
@@ -315,7 +314,7 @@ public class OneMovieFragment extends Fragment {
 
     private void changeFragment(boolean loadingFail) {
         onDestroy();
-        next=true;
+        next = true;
         if (loadingFail) {
             movieAPIHelper.setBugMovie(searched_movie);
         }
@@ -371,7 +370,7 @@ public class OneMovieFragment extends Fragment {
         try {
             total_duration = blindtestMovieActivity.youTubePlayer.getDurationMillis() / 1000f - video_movie.getStart_time();
         } catch (Exception e) {
-            Log.d(TAG,"Time error : "+e.getMessage());
+            Log.d(TAG, "Time error : " + e.getMessage());
         }
         return total_duration;
     }
@@ -381,7 +380,7 @@ public class OneMovieFragment extends Fragment {
         try {
             current_time = blindtestMovieActivity.youTubePlayer.getCurrentTimeMillis() / 1000f - video_movie.getStart_time();
         } catch (Exception e) {
-            Log.d(TAG,"Time error : "+e.getMessage());
+            Log.d(TAG, "Time error : " + e.getMessage());
         }
 
         return current_time;
@@ -497,6 +496,7 @@ public class OneMovieFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        next = true;
         super.onDestroyView();
     }
 
