@@ -90,7 +90,7 @@ public class MovieAPIHelper extends AppCompatActivity {
         }
     }
 
-    public void getBestTrailer(Context context, String movie_id, String originalLanguage, Callback<Video> callback) {
+    public void getBestTrailer(Context context, String movie_id, String originalLanguage, List<String> video_id_error_list, Callback<Video> callback) {
         if (context == null) {
             callback.onResponse(newCall(null), Response.success(null));
         } else {
@@ -100,7 +100,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                 public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
                     if (response.body() != null) {
                         List<Video> videoList = response.body().getResults();
-                        Video video = selectBestTrailer(context, videoList);
+                        Video video = selectBestTrailer(context, videoList,video_id_error_list);
                         if (video != null) {
                             Log.d(TAG, "return best trailer in language area");
                             checkStartTime(video, callback);
@@ -110,7 +110,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                                 public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
                                     if (response.body() != null) {
                                         List<Video> videoList = response.body().getResults();
-                                        Video video = selectBestTrailer(context, videoList);
+                                        Video video = selectBestTrailer(context, videoList,video_id_error_list);
                                         checkStartTime(video, callback);
                                         Log.d(TAG, "return best trailer in original language");
                                     }
@@ -133,10 +133,10 @@ public class MovieAPIHelper extends AppCompatActivity {
         }
     }
 
-    private Video selectBestTrailer(Context context, List<Video> videoList) {
+    private Video selectBestTrailer(Context context, List<Video> videoList,List<String> video_id_error_list) {
         Video videoSelected = null;
         for (Video video : videoList) {
-            if (video.getType().equals("Trailer") && video.getSite().equals("YouTube")) {
+            if (video.getType().equals("Trailer") && video.getSite().equals("YouTube") && !video_id_error_list.contains(video.getKey())) {
                 if (context.getResources().getString(R.string.api_region_key).equals("FR")) {
                     if (video.getName().toLowerCase().contains("vost")) {
                         videoSelected = video;

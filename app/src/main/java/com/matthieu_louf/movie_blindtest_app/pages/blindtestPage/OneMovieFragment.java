@@ -96,6 +96,8 @@ public class OneMovieFragment extends Fragment {
 
     MutableLiveData<Boolean> listen = new MutableLiveData<>();
 
+    List<String> video_id_error_list = new ArrayList<String>();
+
     public OneMovieFragment() {
     }
 
@@ -224,7 +226,7 @@ public class OneMovieFragment extends Fragment {
 
     private void initVideo() {
         try {
-            blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(), (int) video_movie.getStart_time() * 1000);
+            blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000)+1);
             blindtestMovieActivity.youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
                 @Override
                 public void onLoading() {
@@ -256,9 +258,11 @@ public class OneMovieFragment extends Fragment {
 
                 @Override
                 public void onError(YouTubePlayer.ErrorReason errorReason) {
-                    Log.d(TAG, "Error while loading the video, changing fragment, reason : " + errorReason);
+                    Log.d(TAG, "Error while loading the video, changing video, reason : " + errorReason);
                     if (errorReason!=YouTubePlayer.ErrorReason.UNKNOWN) {
-                        changeFragment(true);
+                        video_id_error_list.add(video_movie.getKey());
+                        getBestTrailer(searched_movie.getId().toString());
+
                     }
                 }
             });
@@ -269,7 +273,7 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void getBestTrailer(String movie_id) {
-        movieAPIHelper.getBestTrailer(getContext(), movie_id, searched_movie.getOriginalLanguage(), new Callback<Video>() {
+        movieAPIHelper.getBestTrailer(getContext(), movie_id, searched_movie.getOriginalLanguage(),video_id_error_list, new Callback<Video>() {
             @Override
             public void onResponse(Call<Video> call, Response<Video> response) {
                 video_movie = response.body();

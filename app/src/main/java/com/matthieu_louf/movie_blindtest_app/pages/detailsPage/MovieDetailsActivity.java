@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -269,7 +270,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     public void getBestTrailer(String movie_id, MovieDetails movieDetails) {
 
-        movieAPIHelper.getBestTrailer(this, movie_id, movieDetails.getOriginalLanguage(), new Callback<Video>() {
+        movieAPIHelper.getBestTrailer(this, movie_id, movieDetails.getOriginalLanguage(),new ArrayList<String>(),
+        new Callback<Video>() {
             @Override
             public void onResponse(Call<Video> call, Response<Video> response) {
                 Video video = response.body();
