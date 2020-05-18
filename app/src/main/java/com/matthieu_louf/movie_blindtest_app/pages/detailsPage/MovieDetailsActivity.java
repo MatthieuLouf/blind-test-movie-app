@@ -41,6 +41,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -73,7 +74,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private UserLikeService userLikeService;
     private boolean isLiked;
 
+    MovieDetails res;
+    Video current_video;
+
     MovieAPIHelper movieAPIHelper;
+    List<String> video_id_error_list = new ArrayList<String>();
 
     private YouTubePlayerFragment youTubePlayerFragment;
     public com.google.android.youtube.player.YouTubePlayer youTubePlayer;
@@ -130,11 +135,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
             isLiked = !isLiked;
         });
 
+        initializeYoutubePlayer();
+
         movieAPIHelper = new MovieAPIHelper(this);
         fragmentYoutubePlayer = findViewById(R.id.youtube_player_fragment);
     }
 
-    private void initializeYoutubePlayer(Video video) {
+    private void initializeYoutubePlayer() {
         youTubePlayerFragment = (YouTubePlayerFragment) getFragmentManager()
                 .findFragmentById(R.id.youtube_player_fragment);
 
@@ -147,10 +154,44 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 if (player!=null) {
                     youTubePlayer =player;
                     youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
-                    youTubePlayer.cueVideo(video.getKey());
-                    Log.d(TAG, "Youtube Player View initialization succeed");
+                    youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
+                        @Override
+                        public void onLoading() {
+
+                        }
+
+                        @Override
+                        public void onLoaded(String s) {
+
+                        }
+
+                        @Override
+                        public void onAdStarted() {
+
+                        }
+
+                        @Override
+                        public void onVideoStarted() {
+
+                        }
+
+                        @Override
+                        public void onVideoEnded() {
+
+                        }
+
+                        @Override
+                        public void onError(YouTubePlayer.ErrorReason errorReason) {
+                            if (errorReason!=YouTubePlayer.ErrorReason.UNKNOWN) {
+                                video_id_error_list.add(current_video.getKey());
+                                getBestTrailer(res.getId().toString(),res);
+                            }
+                        }
+                    });
                 }
-                Log.d(TAG, "Youtube Player View initialization failed");
+                else{
+                    Log.d(TAG, "Youtube Player View initialization failed");
+                }
             }
 
             @Override
@@ -158,6 +199,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 Log.d(TAG, "Youtube Player View initialization failed");
             }
         });
+    }
+
+    private void startVideo(Video video)
+    {
+        current_video = video;
+        if(youTubePlayer!=null)
+        {
+            youTubePlayer.cueVideo(current_video.getKey());
+            Log.d(TAG, "Youtube Player View initialization succeed");
+        }
     }
 
     private void setLikedIconFromDrawable(int drawable, int color) {
@@ -176,7 +227,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         retrofitService.getMovieDetails(query, getString(R.string.tmdb_api_key), getString(R.string.api_language_key)).enqueue(new Callback<MovieDetails>() {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
-                MovieDetails res = response.body();
+                res = response.body();
 
                 getBestTrailer(res.getId().toString(), res);
 
@@ -269,15 +320,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     public void getBestTrailer(String movie_id, MovieDetails movieDetails) {
-
-        movieAPIHelper.getBestTrailer(this, movie_id, movieDetails.getOriginalLanguage(),new ArrayList<String>(),
+        movieAPIHelper.getBestTrailer(this, movie_id, movieDetails.getOriginalLanguage(),video_id_error_list,
         new Callback<Video>() {
             @Override
             public void onResponse(Call<Video> call, Response<Video> response) {
                 Video video = response.body();
                 if (video != null) {
                     Log.d(TAG, "Got best trailer not null, init video");
-                    initializeYoutubePlayer(video);
+                    startVideo(video);
                 } else {
                     Log.d(TAG, "Null video");
                 }
