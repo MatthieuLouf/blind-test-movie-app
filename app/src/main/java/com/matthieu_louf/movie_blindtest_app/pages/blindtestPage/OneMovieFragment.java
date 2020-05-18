@@ -11,6 +11,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import android.os.Handler;
 import android.text.format.DateUtils;
@@ -26,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -86,6 +89,8 @@ public class OneMovieFragment extends Fragment {
 
     private BlindtestMovieActivity blindtestMovieActivity;
 
+    MutableLiveData<Boolean> listen = new MutableLiveData<>();
+
     public OneMovieFragment() {
     }
 
@@ -139,6 +144,20 @@ public class OneMovieFragment extends Fragment {
                 } else {
                     Log.d(TAG, "Ask to change movie on next");
                     changeFragment(false);
+                }
+            }
+        });
+
+        listen.setValue(false);
+
+        listen.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean b) {
+                if(b)
+                {
+                    progressBar.getProgressDrawable().setColorFilter(
+                            getResources().getColor(R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
+                    Log.d(TAG, "First third past");
                 }
             }
         });
@@ -480,10 +499,9 @@ public class OneMovieFragment extends Fragment {
 
                     progressBar.setProgress(progressBarMax - (int) ((getCurrentTime() * progressBarMax) / getTotalDuration()));
 
-                    /*if ((getTotalDuration() / 3) - getCurrentTime() <= 0f) {
-                        Log.d(TAG, "Set ProgressBar Error");
-                        ProgressBar progressBar1 = root.findViewById(R.id.test_progress_bar);
-                    }*/
+                    if (!listen.getValue() && (getTotalDuration() / 2) - getCurrentTime() <= 0f) {
+                        listen.postValue(true);
+                    }
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
