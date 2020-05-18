@@ -38,6 +38,11 @@
             </intent-filter>
         </activity>
         <activity android:name="com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6738826164406524~6657508856"/>
+
     </application>
 
 </manifest>

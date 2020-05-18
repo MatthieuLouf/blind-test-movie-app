@@ -19,6 +19,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+        }
     }
     compileOptions {
         sourceCompatibility = 1.8
@@ -55,6 +57,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf:19.0.7'
     //implementation 'com.google.firebase:firebase-auth:19.3.0'
     //implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+
+    // AdMob
+    implementation 'com.google.android.gms:play-services-ads:19.1.0'
+    //implementation 'com.google.android.ads.consent:consent-library:1.0.8'
+
 
     // Filter stream module
     implementation 'com.annimon:stream:1.2.1'

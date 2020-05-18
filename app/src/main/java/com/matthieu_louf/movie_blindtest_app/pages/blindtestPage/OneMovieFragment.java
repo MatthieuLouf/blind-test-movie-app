@@ -101,7 +101,7 @@ public class OneMovieFragment extends Fragment {
     public OneMovieFragment() {
     }
 
-    public static OneMovieFragment newInstance(Integer movie_id,String ab_title, Integer blindtest_step_number) {
+    public static OneMovieFragment newInstance(Integer movie_id, String ab_title, Integer blindtest_step_number) {
         OneMovieFragment fragment = new OneMovieFragment();
         Bundle args = new Bundle();
         args.putInt(MOVIE_ID, movie_id);
@@ -163,8 +163,7 @@ public class OneMovieFragment extends Fragment {
         listen.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean b) {
-                if(b)
-                {
+                if (b) {
                     progressBar.getProgressDrawable().setColorFilter(
                             getResources().getColor(R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
                     Log.d(TAG, "First third past");
@@ -172,8 +171,7 @@ public class OneMovieFragment extends Fragment {
             }
         });
 
-        if(blindtest_step_number==1)
-        {
+        if (blindtest_step_number == 1) {
             result_sentence.setText(getContext().getString(R.string.blindtest_init_text));
         }
 
@@ -226,7 +224,30 @@ public class OneMovieFragment extends Fragment {
 
     private void initVideo() {
         try {
-            blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000)+1);
+            int pause_time = 0;
+            if (blindtest_step_number % 3 == 0) {
+                pause_time = 2000;
+                blindtestMovieActivity.youTubePlayer.cueVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
+            }
+            else{
+                blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
+            }
+            Handler handler = new Handler();
+            int finalPause_time = pause_time;
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    blindtestMovieActivity.youTubePlayer.play();
+                    if (finalPause_time > 0) {
+                        Handler handler2 = new Handler();
+                        handler2.postDelayed(new Runnable() {
+                            public void run() {
+                                dismissLoadingDialog();
+                                setProgressBar();
+                            }
+                        }, 300);
+                    }
+                }
+            }, pause_time);
             blindtestMovieActivity.youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
                 @Override
                 public void onLoading() {
@@ -235,7 +256,6 @@ public class OneMovieFragment extends Fragment {
 
                 @Override
                 public void onLoaded(String s) {
-
                 }
 
                 @Override
@@ -245,8 +265,11 @@ public class OneMovieFragment extends Fragment {
 
                 @Override
                 public void onVideoStarted() {
-                    dismissLoadingDialog();
-                    setProgressBar();
+                    if (finalPause_time == 0) {
+                        blindtestMovieActivity.youTubePlayer.play();
+                        dismissLoadingDialog();
+                        setProgressBar();
+                    }
                 }
 
                 @Override
@@ -259,7 +282,7 @@ public class OneMovieFragment extends Fragment {
                 @Override
                 public void onError(YouTubePlayer.ErrorReason errorReason) {
                     Log.d(TAG, "Error while loading the video, changing video, reason : " + errorReason);
-                    if (errorReason!=YouTubePlayer.ErrorReason.UNKNOWN) {
+                    if (errorReason != YouTubePlayer.ErrorReason.UNKNOWN) {
                         video_id_error_list.add(video_movie.getKey());
                         getBestTrailer(searched_movie.getId().toString());
 
@@ -273,7 +296,7 @@ public class OneMovieFragment extends Fragment {
     }
 
     private void getBestTrailer(String movie_id) {
-        movieAPIHelper.getBestTrailer(getContext(), movie_id, searched_movie.getOriginalLanguage(),video_id_error_list, new Callback<Video>() {
+        movieAPIHelper.getBestTrailer(getContext(), movie_id, searched_movie.getOriginalLanguage(), video_id_error_list, new Callback<Video>() {
             @Override
             public void onResponse(Call<Video> call, Response<Video> response) {
                 video_movie = response.body();
@@ -312,7 +335,7 @@ public class OneMovieFragment extends Fragment {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 listSimilarTitles = response.body();
                 if (listSimilarTitles != null && listSimilarTitles.size() >= 15) {
-                    listSimilarTitles = listSimilarTitles.subList(0,14);
+                    listSimilarTitles = listSimilarTitles.subList(0, 14);
                     Log.d(TAG, "Retrieve not null list of similar movies");
                     if (!listSimilarTitles.contains(searched_movie.getTitle())) {
                         listSimilarTitles.add(searched_movie.getTitle());
@@ -343,8 +366,7 @@ public class OneMovieFragment extends Fragment {
         super.onDestroy();
     }
 
-    private float pxFromDp(float dp)
-    {
+    private float pxFromDp(float dp) {
         return dp * this.getContext().getResources().getDisplayMetrics().density;
     }
 
@@ -367,14 +389,13 @@ public class OneMovieFragment extends Fragment {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                for(int i =1;i<=15;i++)
-                {
+                for (int i = 1; i <= 15; i++) {
                     Handler handler2 = new Handler();
                     handler2.postDelayed(new Runnable() {
                         public void run() {
-                            changeValueByOne(picker,true);
+                            changeValueByOne(picker, true);
                         }
-                    }, i*50);
+                    }, i * 50);
                 }
             }
         }, 100);
