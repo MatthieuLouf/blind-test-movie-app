@@ -96,4 +96,5 @@
     <string name="result_text">Blindtest finished with %d %s correct answers and %d points !</string>
     <string name="user_language_preference">Language preference order</string>
     <string name="user_movies_seen">Seen movies</string>
+    <string name="blindtest_init_text">Scroll in the list and find the right movie !</string>
 </resources>

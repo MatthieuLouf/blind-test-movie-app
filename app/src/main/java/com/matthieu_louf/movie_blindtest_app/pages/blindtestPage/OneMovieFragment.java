@@ -62,9 +62,11 @@ public class OneMovieFragment extends Fragment {
     private static final String TAG = "OneMovieFragment";
     private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
     private static final String MOVIE_ID = "movie_id";
+    private static final String BLINDTEST_STEP_NUMBER = "blindtest_step_number";
     private static final String AB_TITLE = "ab_title";
 
     private Integer movie_id;
+    private Integer blindtest_step_number;
     private String ab_title;
     private Movie searched_movie;
     private Video video_movie;
@@ -74,6 +76,7 @@ public class OneMovieFragment extends Fragment {
     private TextView movie_title;
     private CardView movieCardView;
     private ProgressBar progressBar;
+    private TextView result_sentence;
 
     private ImageView isLikedIcon;
     private boolean isLiked;
@@ -96,11 +99,12 @@ public class OneMovieFragment extends Fragment {
     public OneMovieFragment() {
     }
 
-    public static OneMovieFragment newInstance(Integer movie_id, String ab_title) {
+    public static OneMovieFragment newInstance(Integer movie_id,String ab_title, Integer blindtest_step_number) {
         OneMovieFragment fragment = new OneMovieFragment();
         Bundle args = new Bundle();
         args.putInt(MOVIE_ID, movie_id);
         args.putString(AB_TITLE, ab_title);
+        args.putInt(BLINDTEST_STEP_NUMBER, blindtest_step_number);
         fragment.setArguments(args);
         Log.d(TAG, "Instantiate OneMovieFragment");
 
@@ -113,6 +117,7 @@ public class OneMovieFragment extends Fragment {
         if (getArguments() != null) {
             movie_id = getArguments().getInt(MOVIE_ID);
             ab_title = getArguments().getString(AB_TITLE);
+            blindtest_step_number = getArguments().getInt(BLINDTEST_STEP_NUMBER);
         }
 
         movieAPIHelper = new MovieAPIHelper(getContext());
@@ -136,6 +141,7 @@ public class OneMovieFragment extends Fragment {
         movieCardView = root.findViewById(R.id.card_movie_view);
         movieCardView.setVisibility(View.INVISIBLE);
         progressBar = root.findViewById(R.id.test_progress_bar);
+        result_sentence = root.findViewById(R.id.result_sentence);
 
         next_movie.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +169,11 @@ public class OneMovieFragment extends Fragment {
                 }
             }
         });
+
+        if(blindtest_step_number==1)
+        {
+            result_sentence.setText(getContext().getString(R.string.blindtest_init_text));
+        }
 
         setIsLikedIcon();
 
@@ -338,19 +349,10 @@ public class OneMovieFragment extends Fragment {
 
         Method method;
         try {
-            // refelction call for
-            // higherPicker.changeValueByOne(true);
             method = higherPicker.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
             method.setAccessible(true);
             method.invoke(higherPicker, increment);
-
-        } catch (final NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (final IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (final IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (final InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -397,7 +399,6 @@ public class OneMovieFragment extends Fragment {
         picker.setVisibility(View.INVISIBLE);
 
         if (listSimilarTitles.size() != 0) {
-            TextView result_sentence = root.findViewById(R.id.result_sentence);
             if (isGuessed) {
 
                 if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
