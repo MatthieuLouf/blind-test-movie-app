@@ -42,6 +42,8 @@ import com.matthieu_louf.movie_blindtest_app.pages.detailsPage.MovieDetailsActiv
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.UserLikeService;
 import com.google.android.material.button.MaterialButton;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -295,7 +297,8 @@ public class OneMovieFragment extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 listSimilarTitles = response.body();
-                if (listSimilarTitles != null && listSimilarTitles.size() > 5) {
+                if (listSimilarTitles != null && listSimilarTitles.size() >= 15) {
+                    listSimilarTitles = listSimilarTitles.subList(0,14);
                     Log.d(TAG, "Retrieve not null list of similar movies");
                     if (!listSimilarTitles.contains(searched_movie.getTitle())) {
                         listSimilarTitles.add(searched_movie.getTitle());
@@ -326,9 +329,50 @@ public class OneMovieFragment extends Fragment {
         super.onDestroy();
     }
 
+    private float pxFromDp(float dp)
+    {
+        return dp * this.getContext().getResources().getDisplayMetrics().density;
+    }
+
+    private void changeValueByOne(final NumberPicker higherPicker, final boolean increment) {
+
+        Method method;
+        try {
+            // refelction call for
+            // higherPicker.changeValueByOne(true);
+            method = higherPicker.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
+            method.setAccessible(true);
+            method.invoke(higherPicker, increment);
+
+        } catch (final NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (final IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (final IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (final InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void dismissLoadingDialog() {
         Log.d(TAG, "Dismiss Dialog");
         blindtestMovieActivity.hideLoading();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                for(int i =1;i<=15;i++)
+                {
+                    Handler handler2 = new Handler();
+                    handler2.postDelayed(new Runnable() {
+                        public void run() {
+                            changeValueByOne(picker,true);
+                        }
+                    }, i*50);
+                }
+            }
+        }, 100);
     }
 
     private void changeFragment(boolean loadingFail) {
