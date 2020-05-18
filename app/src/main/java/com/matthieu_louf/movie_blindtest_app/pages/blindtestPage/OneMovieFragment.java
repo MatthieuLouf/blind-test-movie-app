@@ -257,8 +257,7 @@ public class OneMovieFragment extends Fragment {
                 @Override
                 public void onError(YouTubePlayer.ErrorReason errorReason) {
                     Log.d(TAG, "Error while loading the video, changing fragment, reason : " + errorReason);
-                    if (errorReason != YouTubePlayer.ErrorReason.UNAUTHORIZED_OVERLAY) {
-
+                    if (errorReason!=YouTubePlayer.ErrorReason.UNKNOWN) {
                         changeFragment(true);
                     }
                 }
