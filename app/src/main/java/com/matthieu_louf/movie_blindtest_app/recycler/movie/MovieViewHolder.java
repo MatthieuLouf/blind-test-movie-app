@@ -34,7 +34,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     private ProgressBar progressBar;
     private ImageView image;
     private TextView original_title;
-    private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
+    private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w342/";
 
     private final String viewType;
 

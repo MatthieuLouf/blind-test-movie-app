@@ -60,7 +60,7 @@ import retrofit2.Retrofit;
 
 public class OneMovieFragment extends Fragment {
     private static final String TAG = "OneMovieFragment";
-    private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
+    private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w185/";
     private static final String MOVIE_ID = "movie_id";
     private static final String BLINDTEST_STEP_NUMBER = "blindtest_step_number";
     private static final String AB_TITLE = "ab_title";

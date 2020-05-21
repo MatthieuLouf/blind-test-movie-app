@@ -52,7 +52,7 @@ import retrofit2.Retrofit;
 public class MovieDetailsActivity extends AppCompatActivity {
     private static final String MOVIE_ID = "";
     private String TAG = "MovieDetailsActivity";
-    private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/";
+    private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w342/";
     private String movieId;
     private ImageView image;
     private TextView original_title;
