@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.matthieu_louf.movie_blindtest_app.firebase.FirebaseLog;
 import com.matthieu_louf.movie_blindtest_app.pages.MainActivity;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.LanguagePreferenceAdapter;
@@ -39,6 +40,8 @@ public class UserSettingsActivity extends AppCompatActivity {
     SeenMoviesService seenMoviesService;
     BugMoviesService bugMoviesService;
 
+    FirebaseLog firebaseLog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         bugMoviesService = new BugMoviesService(this);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
+        firebaseLog = new FirebaseLog(getApplicationContext());
 
         userSettingsActivity = this;
         //logout_button = findViewById(R.id.user_settings_logout);
@@ -58,6 +63,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 seenMoviesService.removeAllSeenMovies();
                 bugMoviesService.removeAllBugMovies();
+                firebaseLog.removeSeenMovies();
                 Toast.makeText(getApplicationContext(),getString(R.string.all_seen_movies_removed),Toast.LENGTH_SHORT).show();
                 NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));
             }

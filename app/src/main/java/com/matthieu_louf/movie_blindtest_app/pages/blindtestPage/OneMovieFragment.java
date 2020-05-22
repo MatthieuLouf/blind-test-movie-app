@@ -32,7 +32,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubePlayer;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.matthieu_louf.movie_blindtest_app.R;
+import com.matthieu_louf.movie_blindtest_app.firebase.FirebaseLog;
 import com.matthieu_louf.movie_blindtest_app.models.movie.Movie;
 import com.matthieu_louf.movie_blindtest_app.models.video.Video;
 import com.matthieu_louf.movie_blindtest_app.api.GetMovieService;
@@ -52,6 +54,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,6 +96,7 @@ public class OneMovieFragment extends Fragment {
     private boolean hasBeenPaused = false;
 
     public BlindtestMovieActivity blindtestMovieActivity;
+    private FirebaseLog firebaseLog;
 
     MutableLiveData<Boolean> listen = new MutableLiveData<>();
 
@@ -121,7 +125,7 @@ public class OneMovieFragment extends Fragment {
             ab_title = getArguments().getString(AB_TITLE);
             blindtest_step_number = getArguments().getInt(BLINDTEST_STEP_NUMBER);
         }
-
+        firebaseLog = new FirebaseLog(getContext());
         movieAPIHelper = new MovieAPIHelper(getContext());
     }
 
@@ -270,6 +274,7 @@ public class OneMovieFragment extends Fragment {
                         dismissLoadingDialog();
                         setProgressBar();
                     }
+                    firebaseLog.newMovieSeenEvent(searched_movie);
                 }
 
                 @Override

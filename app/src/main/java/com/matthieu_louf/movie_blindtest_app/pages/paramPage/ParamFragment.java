@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.matthieu_louf.movie_blindtest_app.R;
+import com.matthieu_louf.movie_blindtest_app.firebase.FirebaseLog;
 import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
 import com.matthieu_louf.movie_blindtest_app.models.genre.Genre;
 import com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper;
@@ -45,12 +46,16 @@ public class ParamFragment extends Fragment {
     private String[] sort_by_display;
     private String[] numberMoviesDisplay = new String[10];
     private List<Genre> genreList = new ArrayList<Genre>();
-    private String[] languageKeyArray = new String[]{"en", "fr", "ja", "es","it"};
+    private String[] languageKeyArray = new String[]{"en", "fr", "ja", "es", "it"};
+
+    private FirebaseLog firebaseLog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_param, container, false);
+
+        firebaseLog = new FirebaseLog(getContext());
 
         startBlindtestButton = root.findViewById(R.id.params_start);
         numberPickerMinYear = root.findViewById(R.id.number_picker_min_year);
@@ -102,6 +107,8 @@ public class ParamFragment extends Fragment {
                         genres,
                         "",
                         language);
+
+                firebaseLog.startCustomBlindtest(blindtestParameters);
 
                 BlindtestMovieActivity.start(getContext(), blindtestParameters);
             }
@@ -164,7 +171,7 @@ public class ParamFragment extends Fragment {
                         ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                         chip.setChipDrawable(chipDrawable);
                         chip.setText(genre.getName());
-                        setOnCheckedChangeListener(chip,R.color.colorPrimary);
+                        setOnCheckedChangeListener(chip, R.color.colorPrimary);
 
                         genresChipGroup.addView(chip);
                     }
@@ -188,7 +195,7 @@ public class ParamFragment extends Fragment {
             chip.setChipDrawable(chipDrawable);
             chip.setText(language_array[i]);
 
-            setOnCheckedChangeListener(chip,R.color.colorAccent);
+            setOnCheckedChangeListener(chip, R.color.colorAccent);
 
             languagesChipGroup.addView(chip);
         }

@@ -23,6 +23,7 @@ import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.api.GetMovieService;
 import com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper;
 import com.matthieu_louf.movie_blindtest_app.api.RetrofitInstance;
+import com.matthieu_louf.movie_blindtest_app.firebase.FirebaseLog;
 import com.matthieu_louf.movie_blindtest_app.models.video.Video;
 import com.matthieu_louf.movie_blindtest_app.models.detailsMovie.Credits;
 import com.matthieu_louf.movie_blindtest_app.recycler.detailsMovie.MovieCastAdapter;
@@ -84,10 +85,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
     public com.google.android.youtube.player.YouTubePlayer youTubePlayer;
     View fragmentYoutubePlayer;
 
+    FirebaseLog firebaseLog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
+
+        firebaseLog = new FirebaseLog(getApplicationContext());
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -228,6 +233,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 res = response.body();
+
+                firebaseLog.seeMovieDetails(res);
 
                 getBestTrailer(res.getId().toString(), res);
 
