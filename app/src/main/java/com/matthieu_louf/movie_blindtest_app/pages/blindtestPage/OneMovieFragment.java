@@ -92,7 +92,7 @@ public class OneMovieFragment extends Fragment {
 
     private boolean hasBeenPaused = false;
 
-    private BlindtestMovieActivity blindtestMovieActivity;
+    public BlindtestMovieActivity blindtestMovieActivity;
 
     MutableLiveData<Boolean> listen = new MutableLiveData<>();
 
@@ -194,7 +194,7 @@ public class OneMovieFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_blindtest_notify:
-                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie, searched_movie);
+                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie, searched_movie,this);
                 newFragment.show(requireActivity().getSupportFragmentManager(), "notify");
         }
         return super.onOptionsItemSelected(item);
@@ -285,7 +285,6 @@ public class OneMovieFragment extends Fragment {
                     if (errorReason != YouTubePlayer.ErrorReason.UNKNOWN && errorReason!=YouTubePlayer.ErrorReason.UNAUTHORIZED_OVERLAY) {
                         video_id_error_list.add(video_movie.getKey());
                         getBestTrailer(searched_movie.getId().toString());
-
                     }
                 }
             });

@@ -30,17 +30,19 @@ public class NotifyDialogFragment extends DialogFragment {
     private String TAG = "NotifyDialogFragment";
     private String video_db_table = "videos";
 
-    List<Integer> selectedItems;
-    String[] error_key = new String[]{"error_title_at_start_count", "error_inappropriate_trailer_count","error_other_count"};
+    private List<Integer> selectedItems;
+    private String[] error_key = new String[]{"error_title_at_start_count", "error_inappropriate_trailer_count","error_other_count"};
 
-    Video video;
-    Movie movie;
+    private Video video;
+    private Movie movie;
+    private OneMovieFragment fragment;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public NotifyDialogFragment(Video video, Movie movie) {
+    NotifyDialogFragment(Video video, Movie movie, OneMovieFragment fragment) {
         this.video = video;
         this.movie = movie;
+        this.fragment = fragment;
     }
 
     @Override
@@ -82,24 +84,27 @@ public class NotifyDialogFragment extends DialogFragment {
     }
 
     private void initFirebaseVideo() {
-        DocumentReference docRef = db.collection(video_db_table).document(video.getId());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        updateFirebaseVideo();
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+        if(video!=null)
+        {
+            DocumentReference docRef = db.collection(video_db_table).document(video.getId());
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            updateFirebaseVideo();
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            createFirebaseVideo();
+                            Log.d(TAG, "No such document");
+                        }
                     } else {
-                        createFirebaseVideo();
-                        Log.d(TAG, "No such document");
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+            });
+        }
     }
 
     public void createFirebaseVideo() {
@@ -159,5 +164,9 @@ public class NotifyDialogFragment extends DialogFragment {
                 });
     }
 
-
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        fragment.blindtestMovieActivity.youTubePlayer.play();
+        super.onDismiss(dialog);
+    }
 }
