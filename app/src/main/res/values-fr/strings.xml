@@ -90,7 +90,7 @@
     <string name="no_stared_movies">Pas de films en favoris ...</string>
     <string name="no_seen_movies">Pas de films vus ...</string>
     <string name="language_iso639">fr</string>
-    <string name="result_text">BlindTest terminé avec %d %s bonnes réponses et %d points !</string>
+    <string name="result_text">BlindTest terminé avec %d%s bonnes réponses et %d%s points !</string>
     <string name="user_language_preference">Ordre des préférences de langue</string>
     <string name="user_movies_seen">Films vus</string>
     <string name="blindtest_init_text">Scrolles dans la liste et trouves le bon film !</string>

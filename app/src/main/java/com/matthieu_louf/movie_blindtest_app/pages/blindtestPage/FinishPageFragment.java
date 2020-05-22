@@ -67,7 +67,7 @@ public class FinishPageFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_finish_page, container, false);
         resultSentenceTextView = root.findViewById(R.id.finish_result_text);
-        resultSentenceTextView.setText(getString(R.string.result_text,number_guesses,"/10",score_total));
+        resultSentenceTextView.setText(getString(R.string.result_text,number_guesses,"/10",score_total, "/"+10*500));
 
         BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
         ActionBar ab = activity.getSupportActionBar();

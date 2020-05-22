@@ -93,7 +93,7 @@
     <string name="not_connection">No Internet connection !</string>
     <string name="no_stared_movies">No stared movies ...</string>
     <string name="no_seen_movies">No seen movies ...</string>
-    <string name="result_text">Blindtest finished with %d %s correct answers and %d points !</string>
+    <string name="result_text">Blindtest finished with %d%s correct answers and %d%s points !</string>
     <string name="user_language_preference">Language preference order</string>
     <string name="user_movies_seen">Seen movies</string>
     <string name="blindtest_init_text">Scroll in the list and find the right movie !</string>
