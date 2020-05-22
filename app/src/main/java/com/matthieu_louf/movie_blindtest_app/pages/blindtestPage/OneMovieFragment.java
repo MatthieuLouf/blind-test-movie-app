@@ -282,7 +282,7 @@ public class OneMovieFragment extends Fragment {
                 @Override
                 public void onError(YouTubePlayer.ErrorReason errorReason) {
                     Log.d(TAG, "Error while loading the video, changing video, reason : " + errorReason);
-                    if (errorReason != YouTubePlayer.ErrorReason.UNKNOWN) {
+                    if (errorReason != YouTubePlayer.ErrorReason.UNKNOWN && errorReason!=YouTubePlayer.ErrorReason.UNAUTHORIZED_OVERLAY) {
                         video_id_error_list.add(video_movie.getKey());
                         getBestTrailer(searched_movie.getId().toString());
 
