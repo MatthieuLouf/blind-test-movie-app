@@ -5,6 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".pages.blindtestPage.OneMovieFragment">
 
+    <ProgressBar
+        android:id="@+id/test_progress_bar"
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:indeterminate="false"
+        android:progress="100"
+        android:progressTint="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <NumberPicker
         android:id="@+id/movie_picker"
         android:layout_width="match_parent"
@@ -12,7 +26,7 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/test_progress_bar" />
 
     <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_movie_view"
@@ -119,7 +133,7 @@
         android:singleLine="false"
         android:textSize="@dimen/activity_textsize_title"
         app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@+id/test_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/next_movie"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_picker" />
@@ -135,23 +149,9 @@
         android:text="@string/validate_movie"
         android:textColor="@color/colorAccent"
         android:textColorHighlight="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/test_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movie_picker"
         app:strokeColor="@color/colorAccent" />
-
-    <ProgressBar
-        android:id="@+id/test_progress_bar"
-        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:indeterminate="false"
-        android:progress="100"
-        android:progressTint="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
