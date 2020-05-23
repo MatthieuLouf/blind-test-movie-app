@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>movie_number_in_one_blindtest</key>
+        <value>8</value>
+    </entry>
+    <entry>
+        <key>ads_time_length</key>
+        <value>5</value>
+    </entry>
+    <entry>
+        <key>score_maximum_value</key>
+        <value>500</value>
+    </entry>
+    <entry>
+        <key>similar_movies_number</key>
+        <value>14</value>
+    </entry>
+</defaultsMap>

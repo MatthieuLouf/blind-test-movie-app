@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,6 +19,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.pages.userPage.UserSettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private String TAG ="MainActivity";
 
     //private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    FirebaseRemoteConfig mFirebaseRemoteConfig;
 
 
     @Override
@@ -43,57 +50,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        /*ConsentInformation consentInformation = ConsentInformation.getInstance(this);
-        String[] publisherIds = {"pub-6738826164406524"};
-        consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
-            @Override
-            public void onConsentInfoUpdated(ConsentStatus consentStatus) {
-                Toast.makeText(getApplicationContext(),"Consent",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailedToUpdateConsentInfo(String errorDescription) {
-                Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        URL privacyUrl = null;
-        try {
-            privacyUrl = new URL("https://www.your.com/privacyurl");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            // Handle error.
-        }
-        ConsentForm form = new ConsentForm.Builder(getApplicationContext(), privacyUrl)
-                .withListener(new ConsentFormListener() {
-                    @Override
-                    public void onConsentFormLoaded() {
-                        // Consent form loaded successfully.
-                    }
-
-                    @Override
-                    public void onConsentFormOpened() {
-                        // Consent form was displayed.
-                    }
-
-                    @Override
-                    public void onConsentFormClosed(
-                            ConsentStatus consentStatus, Boolean userPrefersAdFree) {
-                        // Consent form was closed.
-                    }
-
-                    @Override
-                    public void onConsentFormError(String errorDescription) {
-                        // Consent form error.
-                    }
-                })
-                .withPersonalizedAdsOption()
-                .withNonPersonalizedAdsOption()
-                .build();
-
-        form.load();
-        form.show();*/
-
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -101,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(3600)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
     }
 
     @Override

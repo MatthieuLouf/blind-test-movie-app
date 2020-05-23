@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
 import com.matthieu_louf.movie_blindtest_app.recycler.theme.ThemeAdapter;
@@ -26,7 +27,7 @@ public class FinishPageFragment extends Fragment {
     private String TAG = "FinishPageFragment";
 
     private static final String ARG_NUMBER_GUESSES = "number_guesses";
-    private static final String ARG_SCORE_TOTAL= "score_total";
+    private static final String ARG_SCORE_TOTAL = "score_total";
     private static final String ARG_BLINDTEST_PARAMETERS = "blindtest_parameters";
 
     private Integer number_guesses;
@@ -37,10 +38,12 @@ public class FinishPageFragment extends Fragment {
     TextView resultSentenceTextView;
     MaterialButton exitButton;
 
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+
     public FinishPageFragment() {
     }
 
-    public static FinishPageFragment newInstance(Integer number_guesses,Integer score_total, BlindtestParameters blindtestParameters) {
+    public static FinishPageFragment newInstance(Integer number_guesses, Integer score_total, BlindtestParameters blindtestParameters) {
         FinishPageFragment fragment = new FinishPageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NUMBER_GUESSES, number_guesses);
@@ -58,6 +61,7 @@ public class FinishPageFragment extends Fragment {
             score_total = getArguments().getInt(ARG_SCORE_TOTAL);
             blindtestParameters = (BlindtestParameters) getArguments().getSerializable(ARG_BLINDTEST_PARAMETERS);
         }
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
     }
 
     @Override
@@ -67,7 +71,11 @@ public class FinishPageFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_finish_page, container, false);
         resultSentenceTextView = root.findViewById(R.id.finish_result_text);
-        resultSentenceTextView.setText(getString(R.string.result_text,number_guesses,"/10",score_total, "/"+10*500));
+        resultSentenceTextView.setText(getString(R.string.result_text,
+                number_guesses,
+                "/" + mFirebaseRemoteConfig.getLong("movie_number_in_one_blindtest"),
+                score_total,
+                "/" + mFirebaseRemoteConfig.getLong("movie_number_in_one_blindtest") * mFirebaseRemoteConfig.getLong("score_maximum_value")));
 
         BlindtestMovieActivity activity = (BlindtestMovieActivity) getActivity();
         ActionBar ab = activity.getSupportActionBar();

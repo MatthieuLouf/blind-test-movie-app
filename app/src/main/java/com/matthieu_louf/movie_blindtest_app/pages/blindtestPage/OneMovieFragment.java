@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.firebase.FirebaseLog;
 import com.matthieu_louf.movie_blindtest_app.models.movie.Movie;
@@ -97,10 +98,11 @@ public class OneMovieFragment extends Fragment {
 
     public BlindtestMovieActivity blindtestMovieActivity;
     private FirebaseLog firebaseLog;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
-    MutableLiveData<Boolean> listen = new MutableLiveData<>();
+    private MutableLiveData<Boolean> listen = new MutableLiveData<>();
 
-    List<String> video_id_error_list = new ArrayList<String>();
+    private List<String> video_id_error_list = new ArrayList<String>();
 
     public OneMovieFragment() {
     }
@@ -125,6 +127,7 @@ public class OneMovieFragment extends Fragment {
             ab_title = getArguments().getString(AB_TITLE);
             blindtest_step_number = getArguments().getInt(BLINDTEST_STEP_NUMBER);
         }
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         firebaseLog = new FirebaseLog(getContext());
         movieAPIHelper = new MovieAPIHelper(getContext());
     }
@@ -230,7 +233,7 @@ public class OneMovieFragment extends Fragment {
         try {
             int pause_time = 0;
             if (blindtest_step_number % 3 == 0) {
-                pause_time = 2000;
+                pause_time = (int) mFirebaseRemoteConfig.getLong("ads_time_length")*1000;
                 blindtestMovieActivity.youTubePlayer.cueVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
             }
             else{
@@ -338,8 +341,8 @@ public class OneMovieFragment extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 listSimilarTitles = response.body();
-                if (listSimilarTitles != null && listSimilarTitles.size() >= 15) {
-                    listSimilarTitles = listSimilarTitles.subList(0, 14);
+                if (listSimilarTitles != null && listSimilarTitles.size() >= mFirebaseRemoteConfig.getLong("similar_movies_number")) {
+                    listSimilarTitles = listSimilarTitles.subList(0, (int) (mFirebaseRemoteConfig.getLong("similar_movies_number")-1));
                     Log.d(TAG, "Retrieve not null list of similar movies");
                     if (!listSimilarTitles.contains(searched_movie.getTitle())) {
                         listSimilarTitles.add(searched_movie.getTitle());
@@ -483,9 +486,9 @@ public class OneMovieFragment extends Fragment {
         float guessed_time = getCurrentTime();
         float score = 0;
         if (guessed_time < 10) {
-            score = 500;
+            score = mFirebaseRemoteConfig.getLong("score_maximum_value");
         } else {
-            score = (1 - ((guessed_time - 10) / total_duration)) * 500;
+            score = (1 - ((guessed_time - 10) / total_duration)) * mFirebaseRemoteConfig.getLong("score_maximum_value");
         }
         if (score < 0) {
             score = 0;
