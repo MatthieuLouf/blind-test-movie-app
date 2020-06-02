@@ -98,4 +98,5 @@
     <string name="user_movies_seen">Seen movies</string>
     <string name="blindtest_init_text">Scroll in the list and find the right movie !</string>
     <string name="analytics_deactivated" translatable="false">false</string>
+    <string name="video_player_error">Video player error</string>
 </resources>

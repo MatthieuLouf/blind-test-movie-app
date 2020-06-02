@@ -94,4 +94,5 @@
     <string name="user_language_preference">Ordre des préférences de langue</string>
     <string name="user_movies_seen">Films vus</string>
     <string name="blindtest_init_text">Scrolles dans la liste et trouves le bon film !</string>
+    <string name="video_player_error">Erreur du lecteur vidéo</string>
 </resources>
