@@ -243,7 +243,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             loading_constraint_layout_ad.setVisibility(View.VISIBLE);
             loading_constraint_layout.setVisibility(View.INVISIBLE);
         }
-        else if((movie_count)%3==0)
+        else if((movie_count)%3==0&& !loadingFail)
         {
             loadNewAd();
         }

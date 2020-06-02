@@ -34,7 +34,7 @@
     <string name="language_is">Language</string>
     <string name="good_response">Correct answer ! (%d points)</string>
     <string name="not_good_movie">Wrong movie, not %s ! (%d points)</string>
-    <string name="top_rated_cardname">Top Ratings</string>
+    <string name="top_rated_cardname">Best Movies</string>
     <string name="heigthies_cardname">80\'s Movies</string>
     <string name="japanese_animation_cardname">Japanese Animation</string>
     <string name="french_2010_cardname">French 2010-2020</string>
@@ -99,4 +99,6 @@
     <string name="blindtest_init_text">Scroll in the list and find the right movie !</string>
     <string name="analytics_deactivated" translatable="false">false</string>
     <string name="video_player_error">Video player error</string>
+    <string name="_2020" translatable="false">2020</string>
+    <string name="_2019" translatable="false">2019</string>
 </resources>
