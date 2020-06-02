@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,14 +52,18 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        LinearLayoutManager linearLayoutManager = null;
-        if (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
-            linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        } else {
-            linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        int orientation = GridLayoutManager.VERTICAL;
+        int spanCount=1;
+        if(getContext().getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE))
+        {
+            spanCount = 2;
         }
+        if (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
+            orientation = GridLayoutManager.HORIZONTAL;
+        }
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),spanCount,orientation,false);
         recyclerView = root.findViewById(R.id.recycler_view_theme_cards);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
         List<BlindtestParameters> parametersList = new ArrayList<BlindtestParameters>();
 
