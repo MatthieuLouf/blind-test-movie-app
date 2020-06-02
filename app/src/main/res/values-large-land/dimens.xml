@@ -1,4 +1,5 @@
 <resources>
     <dimen name="theme_card_image_height">100dp</dimen>
     <dimen name="theme_card_min_width">300dp</dimen>
+    <dimen name="movie_card_land_width">0dp</dimen>
 </resources>

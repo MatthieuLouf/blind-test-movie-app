@@ -41,12 +41,16 @@ public class SeenMoviesFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.recycler_view_user);
 
-        LinearLayoutManager gridLayoutManager = null;
-        if (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
-            gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
-        } else {
-            gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
+        int orientation = GridLayoutManager.VERTICAL;
+        int spanCount=2;
+        if(getContext().getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) && Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation)
+        {
+            spanCount = 4;
         }
+        else if (getContext().getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) || Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
+            spanCount = 3;
+        }
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),spanCount,orientation,false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         return root;

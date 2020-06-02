@@ -26,7 +26,7 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/movie_card_land_width"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginVertical="@dimen/activity_vertical_margin"
