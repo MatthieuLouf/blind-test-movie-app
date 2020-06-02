@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="theme_card_image_height">100dp</dimen>
+    <dimen name="theme_card_min_width">300dp</dimen>
+</resources>

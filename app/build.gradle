@@ -9,8 +9,8 @@ android {
         applicationId 'com.matthieu_louf.movie_blindtest_app'
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 12
-        versionName '1.1.4'
+        versionCode 13
+        versionName '1.2.1'
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
