@@ -103,7 +103,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                         Video video = selectBestTrailer(context, videoList,video_id_error_list);
                         if (video != null) {
                             Log.d(TAG, "return best trailer in language area");
-                            checkStartTime(video, callback);
+                            checkStartTime(video, context, movie_id, originalLanguage, video_id_error_list,callback);
                         } else {
                             retrofitService.getVideos(movie_id, context.getResources().getString(R.string.tmdb_api_key), originalLanguage).enqueue(new Callback<VideoPageResult>() {
                                 @Override
@@ -111,7 +111,7 @@ public class MovieAPIHelper extends AppCompatActivity {
                                     if (response.body() != null) {
                                         List<Video> videoList = response.body().getResults();
                                         Video video = selectBestTrailer(context, videoList,video_id_error_list);
-                                        checkStartTime(video, callback);
+                                        checkStartTime(video, context, movie_id, originalLanguage, video_id_error_list,callback);
                                         Log.d(TAG, "return best trailer in original language");
                                     }
                                 }
@@ -154,7 +154,7 @@ public class MovieAPIHelper extends AppCompatActivity {
         return videoSelected;
     }
 
-    private void checkStartTime(Video video, Callback<Video> callback) {
+    private void checkStartTime(Video video, Context context, String movie_id, String originalLanguage, List<String> video_id_error_list, Callback<Video> callback) {
         if(video==null)
         {
             callback.onResponse(newCall(null), Response.success(null));
@@ -171,7 +171,15 @@ public class MovieAPIHelper extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "add start_time");
                         video.setStart_time((Long) document.get("start_time"));
-                        callback.onResponse(newCall(video), Response.success(video));
+                        Boolean pass_video =(Boolean) document.get("pass_video");
+                        if(pass_video !=null && pass_video)
+                        {
+                            video_id_error_list.add(video.getKey());
+                            getBestTrailer(context, movie_id, originalLanguage,video_id_error_list, callback);
+                        }
+                        else{
+                            callback.onResponse(newCall(video), Response.success(video));
+                        }
                     } else {
                         Log.d(TAG, "no start time");
                         video.setStart_time(0L);

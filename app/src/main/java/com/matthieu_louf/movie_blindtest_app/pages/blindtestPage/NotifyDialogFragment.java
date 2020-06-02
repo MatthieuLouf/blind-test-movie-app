@@ -31,7 +31,7 @@ public class NotifyDialogFragment extends DialogFragment {
     private String video_db_table = "videos";
 
     private List<Integer> selectedItems;
-    private String[] error_key = new String[]{"error_title_at_start_count", "error_inappropriate_trailer_count","error_other_count"};
+    private String[] error_key = new String[]{"error_title_at_start_count", "error_inappropriate_trailer_count", "error_other_count"};
 
     private Video video;
     private Movie movie;
@@ -75,17 +75,16 @@ public class NotifyDialogFragment extends DialogFragment {
                         initFirebaseVideo();
                     }
                 })
-        .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //your code here
-            }
-        });
+                .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //your code here
+                    }
+                });
         return builder.create();
     }
 
     private void initFirebaseVideo() {
-        if(video!=null)
-        {
+        if (video != null) {
             DocumentReference docRef = db.collection(video_db_table).document(video.getId());
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -121,6 +120,7 @@ public class NotifyDialogFragment extends DialogFragment {
         video_db.put("name_movie", movie.getTitle());
 
         video_db.put("start_time", 0);
+        video_db.put("pass_video", false);
 
         for (int i = 0; i < error_key.length; i++) {
             video_db.put(error_key[i], 0);
@@ -148,8 +148,7 @@ public class NotifyDialogFragment extends DialogFragment {
                 .update(
                         error_key[0], FieldValue.increment(selectedItems.contains(0) ? 1 : 0),
                         error_key[1], FieldValue.increment(selectedItems.contains(1) ? 1 : 0),
-                        error_key[2], FieldValue.increment(selectedItems.contains(2) ? 1 : 0)
-                )
+                        error_key[2], FieldValue.increment(selectedItems.contains(2) ? 1 : 0))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

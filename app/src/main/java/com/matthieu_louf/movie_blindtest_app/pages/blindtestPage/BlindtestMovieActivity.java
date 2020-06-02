@@ -322,9 +322,6 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                 fragmentTransaction.remove(fragmentLoaded);
                 fragmentTransaction.commitAllowingStateLoss();
         }
-        youTubePlayerFragment.onDestroy();
-        youTubePlayerFragment.onDestroyView();
-        youTubePlayer.release();
         adView.removeAllViews();
         hideLoading();
         super.onDestroy();
