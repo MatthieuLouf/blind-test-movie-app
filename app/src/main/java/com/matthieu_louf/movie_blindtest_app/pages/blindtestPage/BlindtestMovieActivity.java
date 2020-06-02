@@ -144,12 +144,18 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                     youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
                     Log.d(TAG, "Youtube Player View initialization succeed");
                 }
-                Log.d(TAG, "Youtube Player View initialization failed");
+                else{
+                    Toast.makeText(getBaseContext(), getString(R.string.video_player_error), Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                    Log.d(TAG, "Youtube Player View initialization failed");
+                }
             }
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
                 Log.d(TAG, "Youtube Player View initialization failed");
+                Toast.makeText(getBaseContext(), getString(R.string.video_player_error), Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         });
     }
@@ -316,6 +322,9 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                 fragmentTransaction.remove(fragmentLoaded);
                 fragmentTransaction.commitAllowingStateLoss();
         }
+        youTubePlayerFragment.onDestroy();
+        youTubePlayerFragment.onDestroyView();
+        youTubePlayer.release();
         adView.removeAllViews();
         hideLoading();
         super.onDestroy();
