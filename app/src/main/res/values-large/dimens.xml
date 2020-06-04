@@ -1,4 +1,8 @@
 <resources>
+    <dimen name="activity_horizontal_margin">20dp</dimen>
+    <dimen name="activity_horizontal_separator">10dp</dimen>
+    <dimen name="activity_vertical_margin">20dp</dimen>
+    <dimen name="activity_vertical_separator">10dp</dimen>
     <dimen name="theme_card_height">250dp</dimen>
     <dimen name="theme_card_image_height">120dp</dimen>
     <dimen name="activity_textsize_normal">18sp</dimen>

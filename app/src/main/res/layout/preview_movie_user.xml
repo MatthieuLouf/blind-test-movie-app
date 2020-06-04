@@ -5,8 +5,8 @@
     android:id="@+id/card_movie_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-    android:layout_marginVertical="@dimen/activity_vertical_margin"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_separator"
+    android:layout_marginVertical="@dimen/activity_vertical_separator"
     card_view:cardCornerRadius="@dimen/activity_cardview_border_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
