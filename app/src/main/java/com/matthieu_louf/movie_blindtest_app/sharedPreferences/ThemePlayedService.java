@@ -48,6 +48,41 @@ public class ThemePlayedService {
         saveAllThemePlayed(list);
     }
 
+    public void incrementExpectedMovieNumber(int incrementBy,int themePlayedId,int numberPages)
+    {
+        ThemePlayed themePlayed = getOneThemePlayed(themePlayedId,numberPages);
+        if(themePlayed.getExpected_movie_number()+incrementBy>=themePlayed.getNumber_movie_played())
+        {
+            themePlayed.setExpected_movie_number(themePlayed.getExpected_movie_number()+incrementBy);
+            updateThemePlayed(themePlayed);
+        }
+    }
+
+    public void incrementPlayedMovieNumber(int incrementBy,int themePlayedId,int numberPages)
+    {
+        ThemePlayed themePlayed = getOneThemePlayed(themePlayedId,numberPages);
+        if(themePlayed.getExpected_movie_number()>=themePlayed.getNumber_movie_played()+incrementBy)
+        {
+            themePlayed.setNumber_movie_played(themePlayed.getNumber_movie_played()+incrementBy);
+            updateThemePlayed(themePlayed);
+        }
+    }
+
+    public void updateThemePlayed(ThemePlayed themePlayed)
+    {
+        removeThemePlayed(themePlayed.getId());
+        addThemePlayed(themePlayed);
+    }
+
+    public void removeThemePlayed(int themePlayedId) {
+        List<ThemePlayed> allThemePlayed = this.getAllThemePlayed();
+        if(Stream.of(allThemePlayed).filter(theme -> theme.getId().equals(themePlayedId)).findFirst().isPresent())
+        {
+            allThemePlayed.remove(Stream.of(allThemePlayed).filter(theme -> theme.getId().equals(themePlayedId)).findFirst().get());
+            saveAllThemePlayed(allThemePlayed);
+        }
+    }
+
     public ThemePlayed getOneThemePlayed(int themePlayedId, int numberPages) {
         List<ThemePlayed> allThemePlayed = getAllThemePlayed();
         ThemePlayed themePlayed;

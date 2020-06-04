@@ -39,6 +39,7 @@ import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameter
 import com.matthieu_louf.movie_blindtest_app.models.movie.Movie;
 
 import com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper;
+import com.matthieu_louf.movie_blindtest_app.sharedPreferences.ThemePlayedService;
 
 
 import java.util.ArrayList;
@@ -86,11 +87,14 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     public YouTubePlayer youTubePlayer;
     View fragmentYoutubePlayer;
 
+    private ThemePlayedService themePlayedService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blindtest_movie_page);
         movieAPIHelper = new MovieAPIHelper(this);
+        themePlayedService = new ThemePlayedService(this);
         checkIfConnected();
 
         adView = findViewById(R.id.ad_view_loading_next_movie);
@@ -206,6 +210,9 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         if (!loadingFail) {
             movie_count++;
         }
+        else{
+            this.themePlayedService.incrementExpectedMovieNumber(-1,blindtestParameters.getId(),blindtestParameters.getMaximumPage());
+        }
         if(movie_count==1)
         {
             firebaseLog.startBlindtestEvent(blindtestParameters.getIdName());
@@ -271,6 +278,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             good_responses_count++;
             score_total += (int) score;
         }
+        this.themePlayedService.incrementPlayedMovieNumber(1,blindtestParameters.getId(),blindtestParameters.getMaximumPage());
     }
 
     public void startFinishFragment() {

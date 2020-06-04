@@ -243,7 +243,13 @@ public class OneMovieFragment extends Fragment {
             int finalPause_time = pause_time;
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    blindtestMovieActivity.youTubePlayer.play();
+                    try {
+                        blindtestMovieActivity.youTubePlayer.play();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.d(TAG,e.getMessage());
+                    }
                     if (finalPause_time > 0) {
                         Handler handler2 = new Handler();
                         handler2.postDelayed(new Runnable() {

@@ -45,13 +45,15 @@ public class HomeFragment extends Fragment {
     private ThemeAdapter themeAdapter;
     private RecyclerView recyclerView;
 
-    public HomeFragment() {
+    public void onStart() {
+        super.onStart();
+        themeAdapter.notifyDataSetChanged();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
+        recyclerView = root.findViewById(R.id.recycler_view_theme_cards);
         int orientation = GridLayoutManager.VERTICAL;
         int spanCount = 1;
         if (getContext().getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE)) {
@@ -61,9 +63,7 @@ public class HomeFragment extends Fragment {
             orientation = GridLayoutManager.HORIZONTAL;
         }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), spanCount, orientation, false);
-        recyclerView = root.findViewById(R.id.recycler_view_theme_cards);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         List<BlindtestParameters> parametersList = new ArrayList<BlindtestParameters>();
 
         for (int i = 0; i < blindtestParameters.length; i++) {
@@ -72,7 +72,10 @@ public class HomeFragment extends Fragment {
 
         themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getActivity(), false);
         recyclerView.setAdapter(themeAdapter);
-
         return root;
+    }
+
+    private void loadThemeList()
+    {
     }
 }
