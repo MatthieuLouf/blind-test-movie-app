@@ -48,6 +48,21 @@ public class ThemePlayedService {
         saveAllThemePlayed(list);
     }
 
+    public void finishBlindTest(int themePlayedId, int score, int number_guesses,int numberPages)
+    {
+        ThemePlayed themePlayed = getOneThemePlayed(themePlayedId,numberPages);
+        themePlayed.setNumber_blind_tests_played(themePlayed.getNumber_blind_tests_played()+1);
+        if(themePlayed.getBest_number_guesses()<number_guesses)
+        {
+            themePlayed.setBest_number_guesses(number_guesses);
+        }
+        if(themePlayed.getBest_score()<score)
+        {
+            themePlayed.setBest_score(score);
+        }
+        updateThemePlayed(themePlayed);
+    }
+
     public void incrementExpectedMovieNumber(int incrementBy,int themePlayedId,int numberPages)
     {
         ThemePlayed themePlayed = getOneThemePlayed(themePlayedId,numberPages);

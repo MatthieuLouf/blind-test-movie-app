@@ -287,6 +287,8 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         loading_constraint_layout.setVisibility(View.INVISIBLE);
         loading_constraint_layout_ad.setVisibility(View.INVISIBLE);
 
+        themePlayedService.finishBlindTest(blindtestParameters.getId(),score_total,good_responses_count,blindtestParameters.getMaximumPage());
+
         if (!fragmentManager.isDestroyed()) {
             ConstraintLayout constraintLayout = findViewById(R.id.blindtest_parent_constraint);
             ConstraintSet constraintSet = new ConstraintSet();

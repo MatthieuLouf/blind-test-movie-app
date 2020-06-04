@@ -47,7 +47,10 @@ public class HomeFragment extends Fragment {
 
     public void onStart() {
         super.onStart();
-        themeAdapter.notifyDataSetChanged();
+        for(int i=0;i<blindtestParameters.length;i++)
+        {
+            themeAdapter.notifyItemChanged(i);
+        }
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -73,9 +76,5 @@ public class HomeFragment extends Fragment {
         themeAdapter = new ThemeAdapter(parametersList, R.layout.preview_theme_card, getActivity(), false);
         recyclerView.setAdapter(themeAdapter);
         return root;
-    }
-
-    private void loadThemeList()
-    {
     }
 }
