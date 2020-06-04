@@ -3,6 +3,7 @@ package com.matthieu_louf.movie_blindtest_app.recycler.theme;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,7 +41,7 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
         number_movie_played_chip.setText(themePlayed.getNumber_movie_played()+"/"+themePlayed.getExpected_movie_number());
         if(themePlayed.getBest_score()==0)
         {
-            best_score_chip.setVisibility(View.INVISIBLE);
+            best_score_chip.setVisibility(View.GONE);
         }
         else {
             best_score_chip.setText(themePlayed.getBest_score().toString());
