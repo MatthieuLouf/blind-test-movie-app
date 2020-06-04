@@ -52,11 +52,10 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/theme_best_score_chip"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
-                android:clickable="false"
                 android:textColor="@color/colorAccent"
                 card_view:chipBackgroundColor="@color/white"
                 card_view:chipIcon="@drawable/ic_trending_up_black_24dp"
