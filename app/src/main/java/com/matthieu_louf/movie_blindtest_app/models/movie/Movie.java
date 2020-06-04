@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class Movie implements Serializable
-{
+public class Movie implements Serializable {
     @SerializedName("popularity")
     private Double popularity;
     @SerializedName("vote_count")

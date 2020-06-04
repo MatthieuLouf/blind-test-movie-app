@@ -23,7 +23,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeViewHolder> {
     private ThemePlayedService themePlayedService;
 
 
-    public ThemeAdapter(List<BlindtestParameters> parameters, int layout, Activity activity,boolean finish_activity) {
+    public ThemeAdapter(List<BlindtestParameters> parameters, int layout, Activity activity, boolean finish_activity) {
         this.parameters = parameters;
         this.layout = layout;
         this.activity = activity;
@@ -35,13 +35,13 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeViewHolder> {
     @Override
     public ThemeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup, false);
-        return new ThemeViewHolder(view,activity);
+        return new ThemeViewHolder(view, activity);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ThemeViewHolder viewHolder, int i) {
-        ThemePlayed themePlayed = this.themePlayedService.getOneThemePlayed(parameters.get(i).getId(),parameters.get(i).getMaximumPage());
-        viewHolder.bind(parameters.get(i),themePlayed,activity, finish_activity);
+        ThemePlayed themePlayed = this.themePlayedService.getOneThemePlayed(parameters.get(i).getId(), parameters.get(i).getMaximumPage());
+        viewHolder.bind(parameters.get(i), themePlayed, activity, finish_activity);
     }
 
     @Override

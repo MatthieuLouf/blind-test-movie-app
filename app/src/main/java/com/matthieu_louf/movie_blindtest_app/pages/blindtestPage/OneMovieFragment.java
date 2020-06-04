@@ -201,7 +201,7 @@ public class OneMovieFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_blindtest_notify:
-                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie, searched_movie,this);
+                NotifyDialogFragment newFragment = new NotifyDialogFragment(video_movie, searched_movie, this);
                 newFragment.show(requireActivity().getSupportFragmentManager(), "notify");
         }
         return super.onOptionsItemSelected(item);
@@ -233,10 +233,9 @@ public class OneMovieFragment extends Fragment {
         try {
             int pause_time = 0;
             if (blindtest_step_number % 3 == 0) {
-                pause_time = (int) mFirebaseRemoteConfig.getLong("ads_time_length")*1000;
+                pause_time = (int) mFirebaseRemoteConfig.getLong("ads_time_length") * 1000;
                 blindtestMovieActivity.youTubePlayer.cueVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
-            }
-            else{
+            } else {
                 blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
             }
             Handler handler = new Handler();
@@ -245,10 +244,8 @@ public class OneMovieFragment extends Fragment {
                 public void run() {
                     try {
                         blindtestMovieActivity.youTubePlayer.play();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.d(TAG,e.getMessage());
+                    } catch (Exception e) {
+                        Log.d(TAG, e.getMessage());
                     }
                     if (finalPause_time > 0) {
                         Handler handler2 = new Handler();
@@ -296,7 +293,7 @@ public class OneMovieFragment extends Fragment {
                 @Override
                 public void onError(YouTubePlayer.ErrorReason errorReason) {
                     Log.d(TAG, "Error while loading the video, changing video, reason : " + errorReason);
-                    if (errorReason != YouTubePlayer.ErrorReason.UNKNOWN && errorReason!=YouTubePlayer.ErrorReason.UNAUTHORIZED_OVERLAY) {
+                    if (errorReason != YouTubePlayer.ErrorReason.UNKNOWN && errorReason != YouTubePlayer.ErrorReason.UNAUTHORIZED_OVERLAY) {
                         video_id_error_list.add(video_movie.getKey());
                         getBestTrailer(searched_movie.getId().toString());
                     }
@@ -348,7 +345,7 @@ public class OneMovieFragment extends Fragment {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 listSimilarTitles = response.body();
                 if (listSimilarTitles != null && listSimilarTitles.size() >= mFirebaseRemoteConfig.getLong("similar_movies_number")) {
-                    listSimilarTitles = listSimilarTitles.subList(0, (int) (mFirebaseRemoteConfig.getLong("similar_movies_number")-1));
+                    listSimilarTitles = listSimilarTitles.subList(0, (int) (mFirebaseRemoteConfig.getLong("similar_movies_number") - 1));
                     Log.d(TAG, "Retrieve not null list of similar movies");
                     if (!listSimilarTitles.contains(searched_movie.getTitle())) {
                         listSimilarTitles.add(searched_movie.getTitle());

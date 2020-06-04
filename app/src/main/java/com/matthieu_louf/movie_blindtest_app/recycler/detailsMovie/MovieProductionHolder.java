@@ -19,17 +19,18 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieProductionHolder extends RecyclerView.ViewHolder {
-    private final String BASE_IMAGE_URL="https://image.tmdb.org/t/p/w92/";
+    private final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w92/";
     private TextView production_name;
     private ImageView production_logo;
     private ProgressBar progressBar;
 
     public MovieProductionHolder(@NonNull View itemView) {
         super(itemView);
-        production_logo=itemView.findViewById(R.id.movie_details_production_image);
-        production_name=itemView.findViewById(R.id.movie_details_production_name);
-        progressBar=itemView.findViewById(R.id.movie_details_progress_circular);
+        production_logo = itemView.findViewById(R.id.movie_details_production_image);
+        production_name = itemView.findViewById(R.id.movie_details_production_name);
+        progressBar = itemView.findViewById(R.id.movie_details_progress_circular);
     }
+
     public void bind(final ProductionCompany productionCompany) {
         production_name.setText(productionCompany.getName());
 

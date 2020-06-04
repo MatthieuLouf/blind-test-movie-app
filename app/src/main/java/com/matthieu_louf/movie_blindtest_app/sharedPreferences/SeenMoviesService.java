@@ -28,8 +28,7 @@ public class SeenMoviesService {
 
     public void addSeenMovies(int movieId) {
         List<Integer> seenMovies = this.getSeenMovies();
-        if(!seenMovies.contains(movieId))
-        {
+        if (!seenMovies.contains(movieId)) {
             seenMovies.add(movieId);
             saveSeenMovies(seenMovies);
         }
@@ -37,15 +36,13 @@ public class SeenMoviesService {
 
     public void removeSeenMovies(int movieId) {
         List<Integer> seenMovies = this.getSeenMovies();
-        if(seenMovies.contains(movieId))
-        {
+        if (seenMovies.contains(movieId)) {
             seenMovies.remove(seenMovies.indexOf(movieId));
             saveSeenMovies(seenMovies);
         }
     }
 
-    public void removeAllSeenMovies()
-    {
+    public void removeAllSeenMovies() {
         List<Integer> list = new ArrayList<Integer>();
         saveSeenMovies(list);
     }
@@ -63,11 +60,10 @@ public class SeenMoviesService {
         }
     }
 
-    private void saveSeenMovies(List<Integer> seenMovies)
-    {
+    private void saveSeenMovies(List<Integer> seenMovies) {
         String json = gson.toJson(seenMovies);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(this.moviesDataString,json );
+        editor.putString(this.moviesDataString, json);
         editor.commit();
     }
 }

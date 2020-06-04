@@ -29,7 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
-    private String TAG ="MainActivity";
+    private String TAG = "MainActivity";
 
     //private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_top,R.id.navigation_home, R.id.navigation_movies)
+                R.id.navigation_top, R.id.navigation_home, R.id.navigation_movies)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
-                Log.d(TAG,"admob initialization " +initializationStatus.toString());
+                Log.d(TAG, "admob initialization " + initializationStatus.toString());
             }
         });
 
@@ -66,20 +66,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         //FirebaseUser currentUser = mAuth.getCurrentUser();
         /*if (currentUser != null) {*/
-            getMenuInflater().inflate(R.menu.menu_user_actionbar, menu);
+        getMenuInflater().inflate(R.menu.menu_user_actionbar, menu);
         //}
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.menu_user_appbar_settings:
                 startActivity(new Intent(this, UserSettingsActivity.class));
         }

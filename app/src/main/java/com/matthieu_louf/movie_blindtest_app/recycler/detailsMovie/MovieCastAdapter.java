@@ -19,15 +19,15 @@ public class MovieCastAdapter extends RecyclerView.Adapter<MovieCastHolder> {
     private final int layout;
 
     public MovieCastAdapter(List<Cast> castList, int layout) {
-        Predicate<Cast> byOrder = person -> person.getOrder() <15;
+        Predicate<Cast> byOrder = person -> person.getOrder() < 15;
         this.castList = Stream.of(castList).filter(byOrder).collect(Collectors.toList());
-        this.layout=layout;
+        this.layout = layout;
     }
 
     @NonNull
     @Override
     public MovieCastHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup, false);
         return new MovieCastHolder(view);
     }
 

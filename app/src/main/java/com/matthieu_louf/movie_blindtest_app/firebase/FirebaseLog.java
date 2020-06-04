@@ -13,24 +13,20 @@ public class FirebaseLog {
     private FirebaseAnalytics mFirebaseAnalytics;
     private Context context;
 
-    public FirebaseLog(Context context)
-    {
-        this.context =context;
-        if(context!=null)
-        {
+    public FirebaseLog(Context context) {
+        this.context = context;
+        if (context != null) {
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.context);
         }
     }
 
-    public void startBlindtestEvent(int theme)
-    {
+    public void startBlindtestEvent(int theme) {
         Bundle bundle = new Bundle();
         bundle.putInt("theme", theme);
         mFirebaseAnalytics.logEvent("start_blindtest", bundle);
     }
 
-    public void newMovieSeenEvent(Movie movie)
-    {
+    public void newMovieSeenEvent(Movie movie) {
         Bundle bundle = new Bundle();
         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movie.getId());
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, movie.getOriginalTitle());
@@ -38,8 +34,7 @@ public class FirebaseLog {
         mFirebaseAnalytics.logEvent("new_movie_seen", bundle);
     }
 
-    public void endBlindtestEvent(int guessed_movies_count,int points,int theme)
-    {
+    public void endBlindtestEvent(int guessed_movies_count, int points, int theme) {
         Bundle bundle = new Bundle();
         bundle.putInt("guessed_movies_count", guessed_movies_count);
         bundle.putInt("points", points);
@@ -48,8 +43,7 @@ public class FirebaseLog {
         mFirebaseAnalytics.logEvent("blindtest_end", bundle);
     }
 
-    public void startCustomBlindtest(BlindtestParameters blindtestParameters)
-    {
+    public void startCustomBlindtest(BlindtestParameters blindtestParameters) {
         Bundle bundle = new Bundle();
         bundle.putInt("maximum_page", blindtestParameters.getMaximumPage());
         bundle.putString("release_date_gte", blindtestParameters.getReleaseDateGTE());
@@ -61,14 +55,12 @@ public class FirebaseLog {
         mFirebaseAnalytics.logEvent("start_custom_blindtest", bundle);
     }
 
-    public void removeSeenMovies()
-    {
+    public void removeSeenMovies() {
         Bundle bundle = new Bundle();
         mFirebaseAnalytics.logEvent("remove_seen_movies", bundle);
     }
 
-    public void seeMovieDetails(MovieDetails movieDetails)
-    {
+    public void seeMovieDetails(MovieDetails movieDetails) {
         Bundle bundle = new Bundle();
         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, movieDetails.getId());
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "movie");

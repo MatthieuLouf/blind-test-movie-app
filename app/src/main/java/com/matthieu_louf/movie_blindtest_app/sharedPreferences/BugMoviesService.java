@@ -28,8 +28,7 @@ public class BugMoviesService {
 
     public void addBugMovies(int movieId) {
         List<Integer> bugMovies = this.getBugMovies();
-        if(!bugMovies.contains(movieId))
-        {
+        if (!bugMovies.contains(movieId)) {
             bugMovies.add(movieId);
             saveBugMovies(bugMovies);
         }
@@ -37,15 +36,13 @@ public class BugMoviesService {
 
     public void removeBugMovies(int movieId) {
         List<Integer> bugMovies = this.getBugMovies();
-        if(bugMovies.contains(movieId))
-        {
+        if (bugMovies.contains(movieId)) {
             bugMovies.remove(bugMovies.indexOf(movieId));
             saveBugMovies(bugMovies);
         }
     }
 
-    public void removeAllBugMovies()
-    {
+    public void removeAllBugMovies() {
         List<Integer> list = new ArrayList<Integer>();
         saveBugMovies(list);
     }
@@ -63,11 +60,10 @@ public class BugMoviesService {
         }
     }
 
-    private void saveBugMovies(List<Integer> bugMovies)
-    {
+    private void saveBugMovies(List<Integer> bugMovies) {
         String json = gson.toJson(bugMovies);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(this.moviesDataString,json );
+        editor.putString(this.moviesDataString, json);
         editor.commit();
     }
 }

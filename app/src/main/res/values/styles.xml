@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="alertDialogTheme">@style/DialogTheme</item>
     </style>
-    
+
     <style name="Base.TextAppearance.AppCompat.Widget.ActionBar.Title." parent="@android:style/TextAppearance">
         <item name="android:textColor">#FFFFFF</item>
     </style>

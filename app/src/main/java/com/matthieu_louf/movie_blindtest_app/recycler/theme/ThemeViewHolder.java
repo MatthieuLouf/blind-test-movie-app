@@ -38,12 +38,10 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
         theme_title.setText(context.getResources().getString(parameters.getIdName()));
         theme_image.setImageResource(parameters.getIdImage());
 
-        number_movie_played_chip.setText(themePlayed.getNumber_movie_played()+"/"+themePlayed.getExpected_movie_number());
-        if(themePlayed.getBest_score()==0)
-        {
+        number_movie_played_chip.setText(themePlayed.getNumber_movie_played() + "/" + themePlayed.getExpected_movie_number());
+        if (themePlayed.getBest_score() == 0) {
             best_score_chip.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             best_score_chip.setText(themePlayed.getBest_score().toString());
         }
 

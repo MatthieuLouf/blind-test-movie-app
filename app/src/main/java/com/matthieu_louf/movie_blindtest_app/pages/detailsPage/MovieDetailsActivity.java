@@ -156,8 +156,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         youTubePlayerFragment.initialize("AIzaSyBeRW9uCifWJtoceLeeaRy6rcKkzWAaJoQ", new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean b) {
-                if (player!=null) {
-                    youTubePlayer =player;
+                if (player != null) {
+                    youTubePlayer = player;
                     youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
                     youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
                         @Override
@@ -187,14 +187,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(YouTubePlayer.ErrorReason errorReason) {
-                            if (errorReason!=YouTubePlayer.ErrorReason.UNKNOWN) {
+                            if (errorReason != YouTubePlayer.ErrorReason.UNKNOWN) {
                                 video_id_error_list.add(current_video.getKey());
-                                getBestTrailer(res.getId().toString(),res);
+                                getBestTrailer(res.getId().toString(), res);
                             }
                         }
                     });
-                }
-                else{
+                } else {
                     Log.d(TAG, "Youtube Player View initialization failed");
                 }
             }
@@ -206,11 +205,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void startVideo(Video video)
-    {
+    private void startVideo(Video video) {
         current_video = video;
-        if(youTubePlayer!=null)
-        {
+        if (youTubePlayer != null) {
             youTubePlayer.cueVideo(current_video.getKey());
             Log.d(TAG, "Youtube Player View initialization succeed");
         }
@@ -242,14 +239,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 original_title.setText(res.getTitle());
                 rate.setText(getString(R.string.average_rate) + " : " + res.getVoteAverage().toString() + "/10");
 
-                SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+                SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = null;
                 try {
                     date = ft.parse(res.getReleaseDate());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                String dateText  = DateUtils.formatDateTime(getApplicationContext(), date.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR);
+                String dateText = DateUtils.formatDateTime(getApplicationContext(), date.getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR);
                 release_date.setText(getString(R.string.release_date) + " : " + dateText);
 
                 Locale locale = new Locale(res.getOriginalLanguage());
@@ -276,7 +273,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 }
                 if (res.getProductionCompanies() != null) {
                     production_separator.setText(getString(R.string.production_companies) + " :");
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this,  LinearLayoutManager.HORIZONTAL, false);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
                     recyclerView_production_company.setLayoutManager(linearLayoutManager);
                     MovieProductionAdapter movieProductionAdapter = new MovieProductionAdapter(res.getProductionCompanies(), R.layout.preview_movie_details_production);
                     recyclerView_production_company.setAdapter(movieProductionAdapter);
@@ -294,22 +291,19 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         });
 
-        retrofitService.getMovieCredits(movieId,getString(R.string.tmdb_api_key)).enqueue(new Callback<Credits>() {
+        retrofitService.getMovieCredits(movieId, getString(R.string.tmdb_api_key)).enqueue(new Callback<Credits>() {
             @Override
             public void onResponse(Call<Credits> call, Response<Credits> response) {
-                if(response.isSuccessful()&&response.body()!=null)
-                {
+                if (response.isSuccessful() && response.body() != null) {
                     Credits res = response.body();
-                    if(res.getCast()!=null)
-                    {
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this,  LinearLayoutManager.HORIZONTAL, false);
+                    if (res.getCast() != null) {
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
                         recyclerView_cast.setLayoutManager(linearLayoutManager);
                         MovieCastAdapter movieCastAdapter = new MovieCastAdapter(res.getCast(), R.layout.preview_cast_or_crew);
                         recyclerView_cast.setAdapter(movieCastAdapter);
                     }
-                    if(res.getCrew()!=null)
-                    {
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this,  LinearLayoutManager.HORIZONTAL, false);
+                    if (res.getCrew() != null) {
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MovieDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
                         recyclerView_crew.setLayoutManager(linearLayoutManager);
                         MovieCrewAdapter movieCrewAdapter = new MovieCrewAdapter(res.getCrew(), R.layout.preview_cast_or_crew);
                         recyclerView_crew.setAdapter(movieCrewAdapter);
@@ -327,23 +321,23 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     public void getBestTrailer(String movie_id, MovieDetails movieDetails) {
-        movieAPIHelper.getBestTrailer(this, movie_id, movieDetails.getOriginalLanguage(),video_id_error_list,
-        new Callback<Video>() {
-            @Override
-            public void onResponse(Call<Video> call, Response<Video> response) {
-                Video video = response.body();
-                if (video != null) {
-                    Log.d(TAG, "Got best trailer not null, init video");
-                    startVideo(video);
-                } else {
-                    Log.d(TAG, "Null video");
-                }
-            }
+        movieAPIHelper.getBestTrailer(this, movie_id, movieDetails.getOriginalLanguage(), video_id_error_list,
+                new Callback<Video>() {
+                    @Override
+                    public void onResponse(Call<Video> call, Response<Video> response) {
+                        Video video = response.body();
+                        if (video != null) {
+                            Log.d(TAG, "Got best trailer not null, init video");
+                            startVideo(video);
+                        } else {
+                            Log.d(TAG, "Null video");
+                        }
+                    }
 
-            @Override
-            public void onFailure(Call<Video> call, Throwable t) {
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Video> call, Throwable t) {
+                    }
+                });
     }
 
     @Override

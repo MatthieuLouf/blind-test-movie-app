@@ -1,6 +1,7 @@
 package com.matthieu_louf.movie_blindtest_app.models.detailsMovie;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,13 +19,11 @@ public class Credits {
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public Credits() {
     }
 
     /**
-     *
      * @param cast
      * @param id
      * @param crew

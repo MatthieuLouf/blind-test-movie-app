@@ -9,10 +9,10 @@ public class RetrofitInstance {
     private static Retrofit retrofit;
     private static final String BASE_URL = "https://api.themoviedb.org/3/";
 
-    public static Retrofit getRetrofitInstance(){
+    public static Retrofit getRetrofitInstance() {
 
 
-        if(retrofit == null){
+        if (retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())

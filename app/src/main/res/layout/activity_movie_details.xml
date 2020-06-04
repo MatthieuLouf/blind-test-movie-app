@@ -154,11 +154,11 @@
 
             <fragment
                 android:id="@+id/youtube_player_fragment"
-                class="com.google.android.youtube.player.YouTubePlayerFragment"
                 android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+                class="com.google.android.youtube.player.YouTubePlayerFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"/>
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin" />
 
             <TextView
                 android:id="@+id/synopsis_details_title"

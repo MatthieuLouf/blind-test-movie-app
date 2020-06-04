@@ -50,9 +50,10 @@ public class MovieAPIHelper extends AppCompatActivity {
     BugMoviesService bugMoviesService;
 
     List<Movie> movieList = new ArrayList<Movie>();
-    Integer last_proposed_movie_index=0;
+    Integer last_proposed_movie_index = 0;
 
-    public MovieAPIHelper(){}
+    public MovieAPIHelper() {
+    }
 
     public MovieAPIHelper(Context ctx) {
         this.context = ctx;
@@ -100,18 +101,18 @@ public class MovieAPIHelper extends AppCompatActivity {
                 public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
                     if (response.body() != null) {
                         List<Video> videoList = response.body().getResults();
-                        Video video = selectBestTrailer(context, videoList,video_id_error_list);
+                        Video video = selectBestTrailer(context, videoList, video_id_error_list);
                         if (video != null) {
                             Log.d(TAG, "return best trailer in language area");
-                            checkStartTime(video, context, movie_id, originalLanguage, video_id_error_list,callback);
+                            checkStartTime(video, context, movie_id, originalLanguage, video_id_error_list, callback);
                         } else {
                             retrofitService.getVideos(movie_id, context.getResources().getString(R.string.tmdb_api_key), originalLanguage).enqueue(new Callback<VideoPageResult>() {
                                 @Override
                                 public void onResponse(Call<VideoPageResult> call, Response<VideoPageResult> response) {
                                     if (response.body() != null) {
                                         List<Video> videoList = response.body().getResults();
-                                        Video video = selectBestTrailer(context, videoList,video_id_error_list);
-                                        checkStartTime(video, context, movie_id, originalLanguage, video_id_error_list,callback);
+                                        Video video = selectBestTrailer(context, videoList, video_id_error_list);
+                                        checkStartTime(video, context, movie_id, originalLanguage, video_id_error_list, callback);
                                         Log.d(TAG, "return best trailer in original language");
                                     }
                                 }
@@ -133,7 +134,7 @@ public class MovieAPIHelper extends AppCompatActivity {
         }
     }
 
-    private Video selectBestTrailer(Context context, List<Video> videoList,List<String> video_id_error_list) {
+    private Video selectBestTrailer(Context context, List<Video> videoList, List<String> video_id_error_list) {
         Video videoSelected = null;
         for (Video video : videoList) {
             if (video.getType().equals("Trailer") && video.getSite().equals("YouTube") && !video_id_error_list.contains(video.getKey())) {
@@ -155,8 +156,7 @@ public class MovieAPIHelper extends AppCompatActivity {
     }
 
     private void checkStartTime(Video video, Context context, String movie_id, String originalLanguage, List<String> video_id_error_list, Callback<Video> callback) {
-        if(video==null)
-        {
+        if (video == null) {
             callback.onResponse(newCall(null), Response.success(null));
             return;
         }
@@ -171,13 +171,11 @@ public class MovieAPIHelper extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "add start_time");
                         video.setStart_time((Long) document.get("start_time"));
-                        Boolean pass_video =(Boolean) document.get("pass_video");
-                        if(pass_video !=null && pass_video)
-                        {
+                        Boolean pass_video = (Boolean) document.get("pass_video");
+                        if (pass_video != null && pass_video) {
                             video_id_error_list.add(video.getKey());
-                            getBestTrailer(context, movie_id, originalLanguage,video_id_error_list, callback);
-                        }
-                        else{
+                            getBestTrailer(context, movie_id, originalLanguage, video_id_error_list, callback);
+                        } else {
                             callback.onResponse(newCall(video), Response.success(video));
                         }
                     } else {
@@ -238,24 +236,19 @@ public class MovieAPIHelper extends AppCompatActivity {
     }
 
     public Movie chooseMovieInList(List<Movie> movies, boolean loading_failed) {
-        if(movies.size()<10)
-        {
+        if (movies.size() < 10) {
             return null;
         }
-        int random=0;
-        if(loading_failed && last_proposed_movie_index+1<movies.size())
-        {
+        int random = 0;
+        if (loading_failed && last_proposed_movie_index + 1 < movies.size()) {
             last_proposed_movie_index++;
             random = last_proposed_movie_index;
-        }
-        else if(loading_failed &&last_proposed_movie_index+1==movies.size())
-        {
-            last_proposed_movie_index=0;
+        } else if (loading_failed && last_proposed_movie_index + 1 == movies.size()) {
+            last_proposed_movie_index = 0;
             random = last_proposed_movie_index;
-        }
-        else{
+        } else {
             random = rnd.nextInt(movies.size());
-            last_proposed_movie_index =random;
+            last_proposed_movie_index = random;
         }
 
         Movie movie = movies.get(random);
@@ -264,7 +257,7 @@ public class MovieAPIHelper extends AppCompatActivity {
             return null;
         } else {
             Log.d(TAG, "return random movie in list");
-            last_proposed_movie_index =0;
+            last_proposed_movie_index = 0;
             seenMoviesService.addSeenMovies(movie.getId());
         }
         return movie;

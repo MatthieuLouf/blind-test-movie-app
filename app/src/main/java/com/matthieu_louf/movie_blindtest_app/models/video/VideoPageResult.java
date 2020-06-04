@@ -1,6 +1,7 @@
 package com.matthieu_louf.movie_blindtest_app.models.video;
 
 import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
 public class VideoPageResult {

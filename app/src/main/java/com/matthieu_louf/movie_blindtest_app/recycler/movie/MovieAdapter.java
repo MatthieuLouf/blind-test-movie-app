@@ -17,7 +17,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     private final Context context;
 
-    public MovieAdapter(List<Integer> moviesId,int layout, String viewType,Context context) {
+    public MovieAdapter(List<Integer> moviesId, int layout, String viewType, Context context) {
         this.moviesId = moviesId;
         this.layout = layout;
         this.viewType = viewType;
@@ -28,12 +28,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup, false);
-        return new MovieViewHolder(view,viewType);
+        return new MovieViewHolder(view, viewType);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder viewHolder, int i) {
-        viewHolder.bind(moviesId.get(i),context);
+        viewHolder.bind(moviesId.get(i), context);
     }
 
     @Override

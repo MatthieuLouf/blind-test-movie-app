@@ -31,8 +31,7 @@ public class UserLikeService {
 
     public void addLike(int movieId) {
         List<Integer> likedMovies = this.getLikes();
-        if(!likedMovies.contains(movieId))
-        {
+        if (!likedMovies.contains(movieId)) {
             likedMovies.add(movieId);
             saveLikes(likedMovies);
         }
@@ -40,8 +39,7 @@ public class UserLikeService {
 
     public void removeLike(int movieId) {
         List<Integer> likedMovies = this.getLikes();
-        if(likedMovies.contains(movieId))
-        {
+        if (likedMovies.contains(movieId)) {
             likedMovies.remove(likedMovies.indexOf(movieId));
             saveLikes(likedMovies);
         }
@@ -60,11 +58,10 @@ public class UserLikeService {
         }
     }
 
-    private void saveLikes(List<Integer> likedMovies)
-    {
+    private void saveLikes(List<Integer> likedMovies) {
         String json = gson.toJson(likedMovies);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(this.userDataString,json );
+        editor.putString(this.userDataString, json);
         editor.commit();
     }
 }

@@ -41,14 +41,14 @@
             android:id="@+id/ad_view_loading_next_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:layout_marginVertical="25dp"
+            ads:adSize="MEDIUM_RECTANGLE"
+            ads:adUnitId="@string/next_movie_ad_id"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginVertical="25dp"
-            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
-            app:layout_constraintTop_toBottomOf="@+id/loading_textview"
-            ads:adSize="MEDIUM_RECTANGLE"
-            ads:adUnitId="@string/next_movie_ad_id" />
+            app:layout_constraintTop_toBottomOf="@+id/loading_textview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

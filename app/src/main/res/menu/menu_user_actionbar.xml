@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.matthieu_louf.movie_blindtest_app.pages.MainActivity">
     <item
-        android:title="user_params_item"
         android:id="@+id/menu_user_appbar_settings"
         android:icon="@drawable/ic_settings_black_24dp"
-        app:showAsAction="always"/>
+        android:title="user_params_item"
+        app:showAsAction="always" />
 
 </menu>

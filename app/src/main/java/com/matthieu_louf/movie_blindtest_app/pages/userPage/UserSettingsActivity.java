@@ -68,8 +68,8 @@ public class UserSettingsActivity extends AppCompatActivity {
                 bugMoviesService.removeAllBugMovies();
                 themePlayedService.removeAllThemePlayed();
                 firebaseLog.removeSeenMovies();
-                Toast.makeText(getApplicationContext(),getString(R.string.all_seen_movies_removed),Toast.LENGTH_SHORT).show();
-                NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));
+                Toast.makeText(getApplicationContext(), getString(R.string.all_seen_movies_removed), Toast.LENGTH_SHORT).show();
+                NavUtils.navigateUpTo(userSettingsActivity, new Intent(userSettingsActivity, MainActivity.class));
             }
         });
         //handleLanguagePreferences();

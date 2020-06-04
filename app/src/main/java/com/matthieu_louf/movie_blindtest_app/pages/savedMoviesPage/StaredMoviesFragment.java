@@ -57,15 +57,13 @@ public class StaredMoviesFragment extends Fragment {
         Log.d(TAG, "onCreateView()");
 
         int orientation = GridLayoutManager.VERTICAL;
-        int spanCount=2;
-        if(getContext().getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) && Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation)
-        {
+        int spanCount = 2;
+        if (getContext().getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) && Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
             spanCount = 4;
-        }
-        else if (getContext().getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) || Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
+        } else if (getContext().getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) || Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) {
             spanCount = 3;
         }
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),spanCount,orientation,false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), spanCount, orientation, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         return root;

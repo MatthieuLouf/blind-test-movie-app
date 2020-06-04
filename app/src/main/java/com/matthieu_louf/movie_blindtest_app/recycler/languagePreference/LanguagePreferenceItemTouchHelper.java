@@ -23,7 +23,7 @@ public class LanguagePreferenceItemTouchHelper extends ItemTouchHelper.Callback 
         mAdapter = adapter;
         this.languagePreferencesTexts = languagePreferencesTexts;
         this.context = context;
-        this.recyclerView =recyclerView;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -68,18 +68,16 @@ public class LanguagePreferenceItemTouchHelper extends ItemTouchHelper.Callback 
         int position_dragged = dragged.getAdapterPosition();
         int position_target = target.getAdapterPosition();
 
-        Collections.swap(languagePreferencesTexts,position_dragged,position_target);
-        mAdapter.notifyItemMoved(position_dragged,position_target);
+        Collections.swap(languagePreferencesTexts, position_dragged, position_target);
+        mAdapter.notifyItemMoved(position_dragged, position_target);
 
         return false;
     }
 
-    public void updateViewPositions()
-    {
-        for(int i=0;i<recyclerView.getChildCount();i++)
-        {
+    public void updateViewPositions() {
+        for (int i = 0; i < recyclerView.getChildCount(); i++) {
             LanguagePreferenceHolder languagePreferenceHolder = (LanguagePreferenceHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
-            languagePreferenceHolder.updatePosition(i+1);
+            languagePreferenceHolder.updatePosition(i + 1);
         }
     }
 

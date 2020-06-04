@@ -15,15 +15,15 @@ public class MovieProductionAdapter extends RecyclerView.Adapter<MovieProduction
     private final List<ProductionCompany> productionCompanies;
     private final int layout;
 
-    public MovieProductionAdapter(List<ProductionCompany> movies,int layout) {
+    public MovieProductionAdapter(List<ProductionCompany> movies, int layout) {
         this.productionCompanies = movies;
-        this.layout=layout;
+        this.layout = layout;
     }
 
     @NonNull
     @Override
     public MovieProductionHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup, false);
         return new MovieProductionHolder(view);
     }
 
