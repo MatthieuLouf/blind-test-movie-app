@@ -3,6 +3,7 @@ package com.matthieu_louf.movie_blindtest_app.models.blindtest;
 import java.io.Serializable;
 
 public class BlindtestParameters implements Serializable {
+    private Integer id;
     private Integer idName;
     private Integer idImage;
     private Integer maximumPage;
@@ -13,7 +14,8 @@ public class BlindtestParameters implements Serializable {
     private String withOutGenres;
     private String withOriginalLanguage;
 
-    public BlindtestParameters(Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOutGenres, String withOriginalLanguage) {
+    public BlindtestParameters(Integer id, Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOutGenres, String withOriginalLanguage) {
+        this.id = id;
         this.idName = idName;
         this.idImage = idImage;
         this.maximumPage = maximumPage;
@@ -23,6 +25,14 @@ public class BlindtestParameters implements Serializable {
         this.withGenres = withGenres;
         this.withOutGenres = withOutGenres;
         this.withOriginalLanguage = withOriginalLanguage;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getIdName() {

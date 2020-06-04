@@ -20,6 +20,7 @@ import com.matthieu_louf.movie_blindtest_app.recycler.languagePreference.Languag
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.BugMoviesService;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.SeenMoviesService;
 import com.google.android.material.button.MaterialButton;
+import com.matthieu_louf.movie_blindtest_app.sharedPreferences.ThemePlayedService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     AppCompatActivity userSettingsActivity;
     SeenMoviesService seenMoviesService;
     BugMoviesService bugMoviesService;
+    ThemePlayedService themePlayedService;
 
     FirebaseLog firebaseLog;
 
@@ -48,6 +50,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_settings);
         seenMoviesService = new SeenMoviesService(this);
         bugMoviesService = new BugMoviesService(this);
+        themePlayedService = new ThemePlayedService(this);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
@@ -63,6 +66,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 seenMoviesService.removeAllSeenMovies();
                 bugMoviesService.removeAllBugMovies();
+                themePlayedService.removeAllThemePlayed();
                 firebaseLog.removeSeenMovies();
                 Toast.makeText(getApplicationContext(),getString(R.string.all_seen_movies_removed),Toast.LENGTH_SHORT).show();
                 NavUtils.navigateUpTo(userSettingsActivity,new Intent(userSettingsActivity, MainActivity.class));

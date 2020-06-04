@@ -5,6 +5,7 @@
     <string name="USER_LIKE_KEY" translatable="false">USER_LIKE_KEY</string>
     <string name="SEEN_MOVIES_KEY" translatable="false">SEEN_MOVIES_KEY</string>
     <string name="BUG_MOVIES_KEY" translatable="false">BUG_MOVIES_KEY</string>
+    <string name="THEME_PLAYED_KEY" translatable="false">BUG_MOVIES_KEY</string>
     <string name="stared">Stared</string>
     <string name="top">Top</string>
     <string name="top_movies">Top Movies</string>
