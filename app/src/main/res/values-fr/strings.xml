@@ -73,12 +73,12 @@
     <string name="no_response">Pas de réponse</string>
     <string name="war_cardname">Guerre</string>
     <string name="crime_thriller_cardname">Thriller Policier</string>
-    <string name="american_comedy_cardname">Comédies Américaines</string>
+    <string name="american_comedy_cardname">Comédies US</string>
     <string name="western_cardname">Westerns</string>
-    <string name="american_animation_cardname">Animation Américaine</string>
+    <string name="american_animation_cardname">Animation US</string>
     <string name="romance_cardname">Romances</string>
     <string name="action_movies_90s_cardname">Action des années 90</string>
-    <string name="american_movies_30_60_cardname">Américain 1930-1960</string>
+    <string name="american_movies_30_60_cardname">US 1930-1960</string>
     <string name="worst_movies_cardname">Pire notes</string>
     <string name="loading_trailer">Chargement du trailer ...</string>
     <string name="notify_trailer_bug">Notifier un problème</string>
@@ -95,4 +95,6 @@
     <string name="user_movies_seen">Films vus</string>
     <string name="blindtest_init_text">Scrolles dans la liste et trouves le bon film !</string>
     <string name="video_player_error">Erreur du lecteur vidéo</string>
+    <string name="number_played_line">%d films</string>
+    <string name="expected_number_line">/ %d</string>
 </resources>

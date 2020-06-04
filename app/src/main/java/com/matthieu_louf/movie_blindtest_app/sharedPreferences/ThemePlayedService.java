@@ -3,6 +3,7 @@ package com.matthieu_louf.movie_blindtest_app.sharedPreferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,38 +26,36 @@ public class ThemePlayedService {
 
     public boolean isThemePlayed(int themePlayedId) {
         List<ThemePlayed> allThemePlayed = this.getAllThemePlayed();
-        return Stream.of(allThemePlayed).filter(theme->theme.getId().equals(themePlayedId)).findFirst().isPresent();
+        return Stream.of(allThemePlayed).filter(theme -> theme.getId().equals(themePlayedId)).findFirst().isPresent();
     }
 
-    public ThemePlayed initThemePlayed(int themePlayedId,int numberPages)
-    {
-        ThemePlayed themePlayed = new ThemePlayed(themePlayedId,numberPages*20);
+    public ThemePlayed initThemePlayed(int themePlayedId, int numberPages) {
+        ThemePlayed themePlayed = new ThemePlayed(themePlayedId, numberPages * 20);
         addThemePlayed(themePlayed);
         return themePlayed;
     }
 
     public void addThemePlayed(ThemePlayed themePlayed) {
         List<ThemePlayed> allThemePlayed = this.getAllThemePlayed();
-        if(!Stream.of(allThemePlayed).filter(theme->theme.getId().equals(themePlayed.getId())).findFirst().isPresent())
-        {
+        if (!Stream.of(allThemePlayed).filter(theme -> theme.getId().equals(themePlayed.getId())).findFirst().isPresent()) {
             allThemePlayed.add(themePlayed);
             saveAllThemePlayed(allThemePlayed);
         }
     }
 
-    public void removeAllThemePlayed()
-    {
+    public void removeAllThemePlayed() {
         List<ThemePlayed> list = new ArrayList<ThemePlayed>();
         saveAllThemePlayed(list);
     }
 
-    public ThemePlayed getOneThemePlayed(int themePlayedId, int numberPages)
-    {
+    public ThemePlayed getOneThemePlayed(int themePlayedId, int numberPages) {
         List<ThemePlayed> allThemePlayed = getAllThemePlayed();
-        ThemePlayed themePlayed = Stream.of(allThemePlayed).filter(theme->theme.getId().equals(themePlayedId)).findFirst().get();
-        if(themePlayed==null)
-        {
-            themePlayed = initThemePlayed(themePlayedId,numberPages);
+        ThemePlayed themePlayed;
+        Optional<ThemePlayed> optionalThemePlayed = Stream.of(allThemePlayed).filter(theme -> theme.getId().equals(themePlayedId)).findFirst();
+        if (optionalThemePlayed.isPresent()) {
+            themePlayed = optionalThemePlayed.get();
+        } else {
+            themePlayed = initThemePlayed(themePlayedId, numberPages);
         }
         return themePlayed;
     }
@@ -74,11 +73,10 @@ public class ThemePlayedService {
         }
     }
 
-    private void saveAllThemePlayed(List<ThemePlayed> allThemePlayed)
-    {
+    private void saveAllThemePlayed(List<ThemePlayed> allThemePlayed) {
         String json = gson.toJson(allThemePlayed);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(this.allThemePlayedDataString,json );
+        editor.putString(this.allThemePlayedDataString, json);
         editor.commit();
     }
 }

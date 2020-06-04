@@ -9,39 +9,48 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
+import com.matthieu_louf.movie_blindtest_app.models.sharedPreferences.ThemePlayed;
 import com.matthieu_louf.movie_blindtest_app.pages.blindtestPage.BlindtestMovieActivity;
+import com.matthieu_louf.movie_blindtest_app.sharedPreferences.ThemePlayedService;
 
 public class ThemeViewHolder extends RecyclerView.ViewHolder {
 
     private TextView theme_title;
     private ImageView theme_image;
     private Context context;
-    private TextView theme_movie_number;
+    private Chip number_movie_played_chip;
+    private Chip best_score_chip;
 
     ThemeViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
         this.theme_title = itemView.findViewById(R.id.theme_title);
         this.theme_image = itemView.findViewById(R.id.theme_image);
-        this.theme_movie_number = itemView.findViewById(R.id.theme_movie_number);
+        this.number_movie_played_chip = itemView.findViewById(R.id.theme_number_movie_played_chip);
+        this.best_score_chip = itemView.findViewById(R.id.theme_best_score_chip);
         this.context = context;
     }
 
-    public void bind(final BlindtestParameters parameters,Activity activity,boolean finish_activity) {
+    public void bind(final BlindtestParameters parameters, ThemePlayed themePlayed, Activity activity, boolean finish_activity) {
         theme_title.setText(context.getResources().getString(parameters.getIdName()));
         theme_image.setImageResource(parameters.getIdImage());
-        Integer movie_number = parameters.getMaximumPage()*20;
-        theme_movie_number.setText(movie_number.toString());
+
+        number_movie_played_chip.setText(themePlayed.getNumber_movie_played()+"/"+themePlayed.getExpected_movie_number());
+        best_score_chip.setText(themePlayed.getBest_score().toString());
+        if(themePlayed.getBest_score()==0)
+        {
+            best_score_chip.setVisibility(View.INVISIBLE);
+        }
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(finish_activity)
-                {
+                if (finish_activity) {
                     activity.finish();
                 }
-                BlindtestMovieActivity.start(view.getContext(),parameters);
+                BlindtestMovieActivity.start(view.getContext(), parameters);
             }
 
         });

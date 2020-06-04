@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
+import com.matthieu_louf.movie_blindtest_app.models.sharedPreferences.ThemePlayed;
+import com.matthieu_louf.movie_blindtest_app.sharedPreferences.ThemePlayedService;
 
 import java.util.List;
 
@@ -18,11 +20,15 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeViewHolder> {
     private final Activity activity;
     private final boolean finish_activity;
 
+    private ThemePlayedService themePlayedService;
+
+
     public ThemeAdapter(List<BlindtestParameters> parameters, int layout, Activity activity,boolean finish_activity) {
         this.parameters = parameters;
         this.layout = layout;
         this.activity = activity;
         this.finish_activity = finish_activity;
+        this.themePlayedService = new ThemePlayedService(activity);
     }
 
     @NonNull
@@ -34,7 +40,8 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ThemeViewHolder viewHolder, int i) {
-        viewHolder.bind(parameters.get(i),activity, finish_activity);
+        ThemePlayed themePlayed = this.themePlayedService.getOneThemePlayed(parameters.get(i).getId(),parameters.get(i).getMaximumPage());
+        viewHolder.bind(parameters.get(i),themePlayed,activity, finish_activity);
     }
 
     @Override

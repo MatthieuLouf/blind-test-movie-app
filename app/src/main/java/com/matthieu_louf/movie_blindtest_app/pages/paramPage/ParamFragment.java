@@ -98,7 +98,9 @@ public class ParamFragment extends Fragment {
                     }
                 }
 
-                BlindtestParameters blindtestParameters = new BlindtestParameters(R.string.param,
+                BlindtestParameters blindtestParameters = new BlindtestParameters(
+                        0,
+                        R.string.param,
                         R.mipmap.infiltres,
                         maximumPage,
                         sort_by,
@@ -166,7 +168,7 @@ public class ParamFragment extends Fragment {
             public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
                 genreList.addAll(response.body());
                 for (Genre genre : genreList) {
-                    if (genre.getId() != 99 && getContext()!=null) {
+                    if (genre.getId() != 99 && getContext() != null) {
                         Chip chip = new Chip(getContext());
                         ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                         chip.setChipDrawable(chipDrawable);

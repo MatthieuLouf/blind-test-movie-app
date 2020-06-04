@@ -78,11 +78,11 @@
     <string name="no_response">No response</string>
     <string name="war_cardname">War</string>
     <string name="crime_thriller_cardname">Crime Thriller</string>
-    <string name="american_comedy_cardname">American Comedy</string>
+    <string name="american_comedy_cardname">US Comedy</string>
     <string name="western_cardname">Western</string>
-    <string name="american_animation_cardname">American Animation</string>
+    <string name="american_animation_cardname">US Animation</string>
     <string name="romance_cardname">Romance</string>
-    <string name="american_movies_30_60_cardname">American 1930-1960</string>
+    <string name="american_movies_30_60_cardname">US 1930-1960</string>
     <string name="action_movies_90s_cardname">90\'s Action Movies</string>
     <string name="worst_movies_cardname">Worst Ratings</string>
     <string name="loading_trailer">Trailer Loading ...</string>
@@ -102,4 +102,6 @@
     <string name="video_player_error">Video player error</string>
     <string name="_2020" translatable="false">2020</string>
     <string name="_2019" translatable="false">2019</string>
+    <string name="number_played_line">%d movies</string>
+    <string name="expected_number_line">/ %d</string>
 </resources>
