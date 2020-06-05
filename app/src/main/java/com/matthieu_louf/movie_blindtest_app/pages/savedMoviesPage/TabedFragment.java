@@ -35,16 +35,16 @@ public class TabedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
-        viewPagerAdapter.addFragment(new StaredMoviesFragment(), getContext().getResources().getString(R.string.stared));
         viewPagerAdapter.addFragment(new SeenMoviesFragment(), getContext().getResources().getString(R.string.seen));
+        viewPagerAdapter.addFragment(new StaredMoviesFragment(), getContext().getResources().getString(R.string.stared));
         viewPager = view.findViewById(R.id.viewpager);
         viewPager.setAdapter(viewPagerAdapter);
 
 
         tabLayout = view.findViewById(R.id.tab_layout);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> tab.setText(new String[]{getContext().getResources().getString(R.string.stared),
-                        getContext().getResources().getString(R.string.seen)}[position])
+                (tab, position) -> tab.setText(new String[]{getContext().getResources().getString(R.string.seen),
+                        getContext().getResources().getString(R.string.stared)}[position])
         );
         tabLayoutMediator.attach();
 

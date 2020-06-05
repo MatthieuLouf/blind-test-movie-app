@@ -30,7 +30,7 @@
     <string name="with_language">Langage :</string>
     <string name="app_name">PopMovie</string>
     <string name="title_activity_home">Thèmes</string>
-    <string name="title_home">Thèmes</string>
+    <string name="title_home">Thèmes de Blind tests</string>
     <string name="stared">Favoris</string>
     <string name="top">Top</string>
     <string name="top_movies">Top Films</string>
@@ -97,4 +97,6 @@
     <string name="video_player_error">Erreur du lecteur vidéo</string>
     <string name="number_played_line">%d films</string>
     <string name="expected_number_line">/ %d</string>
+    <string name="other_fragment">Autres Jeux</string>
+    <string name="param_title">Personnaliser Blind test</string>
 </resources>

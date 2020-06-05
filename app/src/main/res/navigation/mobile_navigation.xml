@@ -6,10 +6,11 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_top"
-        android:name="com.matthieu_louf.movie_blindtest_app.pages.paramPage.ParamFragment"
-        android:label="@string/param"
-        tools:layout="@layout/fragment_param" />
+        android:id="@+id/navigation_movies"
+        android:name="com.matthieu_louf.movie_blindtest_app.pages.savedMoviesPage.TabedFragment"
+        android:label="@string/movies"
+        tools:layout="@layout/fragment_tabed" />
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.matthieu_louf.movie_blindtest_app.pages.homePage.HomeFragment"
@@ -17,8 +18,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_movies"
-        android:name="com.matthieu_louf.movie_blindtest_app.pages.savedMoviesPage.TabedFragment"
-        android:label="@string/movies"
-        tools:layout="@layout/fragment_tabed" />
+        android:id="@+id/navigation_top"
+        android:name="com.matthieu_louf.movie_blindtest_app.pages.paramPage.ParamFragment"
+        android:label="@string/param_title"
+        tools:layout="@layout/fragment_param" />
+
+    <fragment
+        android:id="@+id/navigation_other_games"
+        android:name="com.matthieu_louf.movie_blindtest_app.pages.otherGames.OtherGamesFragment"
+        android:label="@string/other_fragment"
+        tools:layout="@layout/fragment_other_games" />
 </navigation>

@@ -23,7 +23,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private BlindtestParameters[] blindtestParameters = new BlindtestParameters[]{
             new BlindtestParameters(1, R.string.top_rated_cardname, R.mipmap.infiltres, 4, "vote_average.desc", "", "", "", "", ""),
-            new BlindtestParameters(2, R.string._2020, R.mipmap.birds_of_prey, 2, "popularity.desc", "2020-01-01", "2020-12-31", "", "", ""),
+            // new BlindtestParameters(2, R.string._2020, R.mipmap.birds_of_prey, 2, "popularity.desc", "2020-01-01", "2020-12-31", "", "", ""),
             new BlindtestParameters(3, R.string._2019, R.mipmap.parasite, 2, "popularity.desc", "2019-01-01", "2019-12-31", "", "", ""),
             new BlindtestParameters(4, R.string.science_fiction_cardname, R.mipmap.star_wars, 4, "vote_average.desc", "1980-01-01", "", "878", "", ""),
             new BlindtestParameters(5, R.string.war_cardname, R.mipmap.war, 4, "vote_average.desc", "1960-01-01", "", "10752", "", ""),
