@@ -103,7 +103,7 @@ public class ParamFragment extends Fragment {
                         0,
                         GameType.BLIND_TEST,
                         R.string.param,
-                        R.mipmap.infiltres,
+                        R.mipmap.customized,
                         maximumPage,
                         sort_by,
                         releaseDateGTE,
