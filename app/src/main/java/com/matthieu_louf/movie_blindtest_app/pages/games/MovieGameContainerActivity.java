@@ -1,6 +1,5 @@
-package com.matthieu_louf.movie_blindtest_app.pages.blindtestPage;
+package com.matthieu_louf.movie_blindtest_app.pages.games;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -18,16 +17,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.ads.mediation.admob.AdMobAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
@@ -35,10 +30,14 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.matthieu_louf.movie_blindtest_app.R;
 
 import com.matthieu_louf.movie_blindtest_app.firebase.FirebaseLog;
-import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
+import com.matthieu_louf.movie_blindtest_app.models.GameType;
+import com.matthieu_louf.movie_blindtest_app.models.blindtest.GameParameters;
 import com.matthieu_louf.movie_blindtest_app.models.movie.Movie;
 
 import com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper;
+import com.matthieu_louf.movie_blindtest_app.pages.games.blindtestGame.FinishPageFragment;
+import com.matthieu_louf.movie_blindtest_app.pages.games.blindtestGame.BlindTestFragment;
+import com.matthieu_louf.movie_blindtest_app.pages.games.goodOrBadGame.GoodOrBadGameFragment;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.ThemePlayedService;
 
 
@@ -49,12 +48,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BlindtestMovieActivity extends AppCompatActivity {
+public class MovieGameContainerActivity extends AppCompatActivity {
     private String TAG = "BlindtestMovieActivity";
 
     private static final String PARAMETERS_KEY = "PARAMETERS_KEY";
 
-    private BlindtestParameters blindtestParameters;
+    private GameParameters gameParameters;
 
     private List<Movie> movieList = new ArrayList<Movie>();
 
@@ -64,6 +63,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     Integer error_count = 0;
     Integer good_responses_count = 0;
     Integer score_total = 0;
+
 
     FragmentContainerView fragmentContainerView;
 
@@ -92,7 +92,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blindtest_movie_page);
+        setContentView(R.layout.activity_movie_game_container);
         movieAPIHelper = new MovieAPIHelper(this);
         themePlayedService = new ThemePlayedService(this);
         checkIfConnected();
@@ -113,14 +113,13 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            blindtestParameters = (BlindtestParameters) intent.getSerializableExtra(PARAMETERS_KEY);
+            gameParameters = (GameParameters) intent.getSerializableExtra(PARAMETERS_KEY);
         }
         initializeYoutubePlayer();
         showLoading(false);
     }
 
-    private void loadNewAd()
-    {
+    private void loadNewAd() {
         Log.d(TAG, "Load new Add !");
         Bundle extras = new Bundle();
         extras.putString("npa", "1");
@@ -147,8 +146,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
                     youTubePlayer = player;
                     youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
                     Log.d(TAG, "Youtube Player View initialization succeed");
-                }
-                else{
+                } else {
                     Toast.makeText(getBaseContext(), getString(R.string.video_player_error), Toast.LENGTH_SHORT).show();
                     onBackPressed();
                     Log.d(TAG, "Youtube Player View initialization failed");
@@ -167,7 +165,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
     public void loadList() {
         Log.d(TAG, "enter getRandomMovie");
 
-        movieAPIHelper.loadList(this, blindtestParameters, new Callback<List<Movie>>() {
+        movieAPIHelper.loadList(this, gameParameters, new Callback<List<Movie>>() {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 if (response.body() != null) {
@@ -190,7 +188,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         Movie movie = movieAPIHelper.chooseMovieInList(movieList, loadingFail);
         if (movie == null) {
             Log.d(TAG, "Error while getting a random movie, error count : " + error_count);
-            if (error_count < (blindtestParameters.getMaximumPage() * 20) + 1) {
+            if (error_count < (gameParameters.getMaximumPage() * 20) + 1) {
                 Log.d(TAG, "Restart getRandom Movie");
                 error_count++;
                 getRandomMovie(loadingFail);
@@ -209,17 +207,14 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         Log.d(TAG, "Starting a new OneMovieFragment, firstTime = " + firstTime);
         if (!loadingFail) {
             movie_count++;
+        } else {
+            this.themePlayedService.incrementExpectedMovieNumber(-1, gameParameters.getId(), gameParameters.getMaximumPage());
         }
-        else{
-            this.themePlayedService.incrementExpectedMovieNumber(-1,blindtestParameters.getId(),blindtestParameters.getMaximumPage());
-        }
-        if(movie_count==1)
-        {
-            firebaseLog.startBlindtestEvent(blindtestParameters.getIdName());
+        if (movie_count == 1) {
+            firebaseLog.startBlindtestEvent(gameParameters.getIdName());
         }
         if (movie_count <= mFirebaseRemoteConfig.getLong("movie_number_in_one_blindtest") && !fragmentManager.isDestroyed()) {
-            OneMovieFragment fragment = OneMovieFragment.newInstance(movie.getId(),
-                    getString(blindtestParameters.getIdName()) + " : " + movie_count + "/"+mFirebaseRemoteConfig.getLong("movie_number_in_one_blindtest"),movie_count);
+            Fragment fragment = getGameFragment(movie);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if (firstTime) {
                 fragmentTransaction.add(R.id.one_movie_fragment_container, fragment);
@@ -234,8 +229,21 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         }
     }
 
-    public static void start(Context context, BlindtestParameters parameters) {
-        Intent intent = new Intent(context, BlindtestMovieActivity.class);
+    public Fragment getGameFragment(Movie movie) {
+        Fragment fragment = null;
+        if (gameParameters.getGameType() == GameType.BLIND_TEST) {
+            fragment = BlindTestFragment.newInstance(movie.getId(),
+                    getString(gameParameters.getIdName()) + " : " + movie_count + "/" + mFirebaseRemoteConfig.getLong("movie_number_in_one_blindtest"), movie_count);
+        } else if (gameParameters.getGameType() == GameType.GOOD_OR_BAD) {
+            fragment = GoodOrBadGameFragment.newInstance(movie.getId(),
+                    getString(gameParameters.getIdName()) + " : " + movie_count + "/" + mFirebaseRemoteConfig.getLong("movie_number_in_one_blindtest"), movie_count);
+        }
+
+        return fragment;
+    }
+
+    public static void start(Context context, GameParameters parameters) {
+        Intent intent = new Intent(context, MovieGameContainerActivity.class);
         intent.putExtra(PARAMETERS_KEY, parameters);
         context.startActivity(intent);
     }
@@ -245,13 +253,10 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         loading_constraint_layout.setVisibility(View.VISIBLE);
         loading_constraint_layout_ad.setVisibility(View.INVISIBLE);
 
-        if(((movie_count+1)%3==0 && !loadingFail) || ((movie_count)%3==0 && loadingFail))
-        {
+        if (((movie_count + 1) % 3 == 0 && !loadingFail) || ((movie_count) % 3 == 0 && loadingFail)) {
             loading_constraint_layout_ad.setVisibility(View.VISIBLE);
             loading_constraint_layout.setVisibility(View.INVISIBLE);
-        }
-        else if((movie_count)%3==0&& !loadingFail)
-        {
+        } else if ((movie_count) % 3 == 0 && !loadingFail) {
             loadNewAd();
         }
         fragmentContainerView.setVisibility(View.INVISIBLE);
@@ -278,7 +283,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             good_responses_count++;
             score_total += (int) score;
         }
-        this.themePlayedService.incrementPlayedMovieNumber(1,blindtestParameters.getId(),blindtestParameters.getMaximumPage());
+        this.themePlayedService.incrementPlayedMovieNumber(1, gameParameters.getId(), gameParameters.getMaximumPage());
     }
 
     public void startFinishFragment() {
@@ -287,7 +292,7 @@ public class BlindtestMovieActivity extends AppCompatActivity {
         loading_constraint_layout.setVisibility(View.INVISIBLE);
         loading_constraint_layout_ad.setVisibility(View.INVISIBLE);
 
-        themePlayedService.finishBlindTest(blindtestParameters.getId(),score_total,good_responses_count,blindtestParameters.getMaximumPage());
+        themePlayedService.finishBlindTest(gameParameters.getId(), score_total, good_responses_count, gameParameters.getMaximumPage());
 
         if (!fragmentManager.isDestroyed()) {
             ConstraintLayout constraintLayout = findViewById(R.id.blindtest_parent_constraint);
@@ -301,11 +306,11 @@ public class BlindtestMovieActivity extends AppCompatActivity {
             }
             constraintSet.applyTo(constraintLayout);
 
-            FinishPageFragment fragment = FinishPageFragment.newInstance(good_responses_count, score_total, blindtestParameters);
+            FinishPageFragment fragment = FinishPageFragment.newInstance(good_responses_count, score_total, gameParameters);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.one_movie_fragment_container, fragment);
             fragmentTransaction.commit();
-            firebaseLog.endBlindtestEvent(good_responses_count,score_total,blindtestParameters.getIdName());
+            firebaseLog.endBlindtestEvent(good_responses_count, score_total, gameParameters.getIdName());
             fragmentLoaded = fragment;
         }
     }
@@ -326,11 +331,10 @@ public class BlindtestMovieActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if(fragmentManager!=null && fragmentLoaded!=null)
-        {
+        if (fragmentManager != null && fragmentLoaded != null) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.remove(fragmentLoaded);
-                fragmentTransaction.commitAllowingStateLoss();
+            fragmentTransaction.remove(fragmentLoaded);
+            fragmentTransaction.commitAllowingStateLoss();
         }
         adView.removeAllViews();
         hideLoading();

@@ -3,7 +3,6 @@ package com.matthieu_louf.movie_blindtest_app.recycler.theme;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
-import android.view.ViewManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 import com.matthieu_louf.movie_blindtest_app.R;
-import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
+import com.matthieu_louf.movie_blindtest_app.models.GameType;
+import com.matthieu_louf.movie_blindtest_app.models.blindtest.GameParameters;
 import com.matthieu_louf.movie_blindtest_app.models.sharedPreferences.ThemePlayed;
-import com.matthieu_louf.movie_blindtest_app.pages.blindtestPage.BlindtestMovieActivity;
-import com.matthieu_louf.movie_blindtest_app.sharedPreferences.ThemePlayedService;
+import com.matthieu_louf.movie_blindtest_app.pages.games.MovieGameContainerActivity;
 
 public class ThemeViewHolder extends RecyclerView.ViewHolder {
 
@@ -34,7 +33,7 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
         this.context = context;
     }
 
-    public void bind(final BlindtestParameters parameters, ThemePlayed themePlayed, Activity activity, boolean finish_activity) {
+    public void bind(final GameParameters parameters, ThemePlayed themePlayed, Activity activity, boolean finish_activity) {
         theme_title.setText(context.getResources().getString(parameters.getIdName()));
         theme_image.setImageResource(parameters.getIdImage());
 
@@ -51,7 +50,7 @@ public class ThemeViewHolder extends RecyclerView.ViewHolder {
                 if (finish_activity) {
                     activity.finish();
                 }
-                BlindtestMovieActivity.start(view.getContext(), parameters);
+                MovieGameContainerActivity.start(view.getContext(), parameters);
             }
 
         });

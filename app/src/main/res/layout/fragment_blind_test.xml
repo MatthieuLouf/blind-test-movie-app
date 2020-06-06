@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.blindtestPage.OneMovieFragment">
+    tools:context=".pages.games.blindtestGame.BlindTestFragment">
 
     <ProgressBar
         android:id="@+id/test_progress_bar"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-    tools:context=".pages.blindtestPage.FinishPageFragment">
+    tools:context=".pages.games.blindtestGame.FinishPageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

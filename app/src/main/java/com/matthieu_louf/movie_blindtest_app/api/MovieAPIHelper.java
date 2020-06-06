@@ -7,7 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.matthieu_louf.movie_blindtest_app.R;
-import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
+import com.matthieu_louf.movie_blindtest_app.models.GameType;
+import com.matthieu_louf.movie_blindtest_app.models.blindtest.GameParameters;
 import com.matthieu_louf.movie_blindtest_app.models.genre.Genre;
 import com.matthieu_louf.movie_blindtest_app.models.genre.GenrePageResult;
 import com.matthieu_louf.movie_blindtest_app.models.movie.Movie;
@@ -191,11 +192,27 @@ public class MovieAPIHelper extends AppCompatActivity {
         });
     }
 
-    public void loadList(Context context, BlindtestParameters parameters, Callback<List<Movie>> movieCallback) {
+    public void loadList(Context context, GameParameters parameters, Callback<List<Movie>> movieCallback) {
         Log.d(TAG, "enter loadList");
 
+        String voteAverageGTE ="";
+        String voteAverageLTE ="";
         for (int i = 1; i <= parameters.getMaximumPage(); i++) {
-            retrofitService.getParametersMovies(i,
+            int page_number = i;
+            if(parameters.getGameType()== GameType.GOOD_OR_BAD)
+            {
+                if(i%2==0)
+                {
+                    voteAverageGTE ="4";
+                    voteAverageLTE ="5";
+                }
+                else {
+                    voteAverageGTE ="7";
+                    voteAverageLTE ="8";
+                }
+                page_number = i/2;
+            }
+            retrofitService.getParametersMovies(page_number,
                     context.getResources().getString(R.string.tmdb_api_key),
                     context.getResources().getString(R.string.api_language_key),
                     context.getResources().getString(R.string.api_region_key),
@@ -205,6 +222,8 @@ public class MovieAPIHelper extends AppCompatActivity {
                     parameters.getWithGenres(),
                     parameters.getWithOriginalLanguage(),
                     "300",
+                    voteAverageGTE,
+                    voteAverageLTE,
                     "99" + (!parameters.getWithOutGenres().equals("") ? "," + parameters.getWithOutGenres() : "")).enqueue(movieListCallback(movieCallback, parameters.getMaximumPage(), i));
         }
     }

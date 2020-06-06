@@ -1,4 +1,4 @@
-package com.matthieu_louf.movie_blindtest_app.pages.blindtestPage;
+package com.matthieu_louf.movie_blindtest_app.pages.games.blindtestGame;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -23,16 +23,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.firebase.FirebaseLog;
@@ -41,11 +38,11 @@ import com.matthieu_louf.movie_blindtest_app.models.video.Video;
 import com.matthieu_louf.movie_blindtest_app.api.GetMovieService;
 import com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper;
 import com.matthieu_louf.movie_blindtest_app.api.RetrofitInstance;
+import com.matthieu_louf.movie_blindtest_app.pages.games.MovieGameContainerActivity;
 import com.matthieu_louf.movie_blindtest_app.pages.detailsPage.MovieDetailsActivity;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.UserLikeService;
 import com.google.android.material.button.MaterialButton;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,15 +51,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class OneMovieFragment extends Fragment {
+public class BlindTestFragment extends Fragment {
     private static final String TAG = "OneMovieFragment";
     private String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w185/";
     private static final String MOVIE_ID = "movie_id";
@@ -96,7 +91,7 @@ public class OneMovieFragment extends Fragment {
 
     private boolean hasBeenPaused = false;
 
-    public BlindtestMovieActivity blindtestMovieActivity;
+    public MovieGameContainerActivity movieGameContainerActivity;
     private FirebaseLog firebaseLog;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
@@ -104,11 +99,11 @@ public class OneMovieFragment extends Fragment {
 
     private List<String> video_id_error_list = new ArrayList<String>();
 
-    public OneMovieFragment() {
+    public BlindTestFragment() {
     }
 
-    public static OneMovieFragment newInstance(Integer movie_id, String ab_title, Integer blindtest_step_number) {
-        OneMovieFragment fragment = new OneMovieFragment();
+    public static BlindTestFragment newInstance(Integer movie_id, String ab_title, Integer blindtest_step_number) {
+        BlindTestFragment fragment = new BlindTestFragment();
         Bundle args = new Bundle();
         args.putInt(MOVIE_ID, movie_id);
         args.putString(AB_TITLE, ab_title);
@@ -135,11 +130,11 @@ public class OneMovieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_one_movie, container, false);
+        root = inflater.inflate(R.layout.fragment_blind_test, container, false);
         setHasOptionsMenu(true);
-        blindtestMovieActivity = (BlindtestMovieActivity) getActivity();
+        movieGameContainerActivity = (MovieGameContainerActivity) getActivity();
 
-        ActionBar ab = blindtestMovieActivity.getSupportActionBar();
+        ActionBar ab = movieGameContainerActivity.getSupportActionBar();
         ab.setTitle(ab_title);
 
         movie_title = root.findViewById(R.id.movie_title);
@@ -186,8 +181,6 @@ public class OneMovieFragment extends Fragment {
 
         fetchMovieDetails();
 
-        setYouTubePlayerView();
-
         return root;
     }
 
@@ -225,25 +218,21 @@ public class OneMovieFragment extends Fragment {
         });
     }
 
-    private void setYouTubePlayerView() {
-
-    }
-
     private void initVideo() {
         try {
             int pause_time = 0;
             if (blindtest_step_number % 3 == 0) {
                 pause_time = (int) mFirebaseRemoteConfig.getLong("ads_time_length") * 1000;
-                blindtestMovieActivity.youTubePlayer.cueVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
+                movieGameContainerActivity.youTubePlayer.cueVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
             } else {
-                blindtestMovieActivity.youTubePlayer.loadVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
+                movieGameContainerActivity.youTubePlayer.loadVideo(video_movie.getKey(), ((int) video_movie.getStart_time() * 1000) + 1);
             }
             Handler handler = new Handler();
             int finalPause_time = pause_time;
             handler.postDelayed(new Runnable() {
                 public void run() {
                     try {
-                        blindtestMovieActivity.youTubePlayer.play();
+                        movieGameContainerActivity.youTubePlayer.play();
                     } catch (Exception e) {
                         Log.d(TAG, e.getMessage());
                     }
@@ -258,10 +247,10 @@ public class OneMovieFragment extends Fragment {
                     }
                 }
             }, pause_time);
-            blindtestMovieActivity.youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
+            movieGameContainerActivity.youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
                 @Override
                 public void onLoading() {
-                    blindtestMovieActivity.changeLoadingText(true);
+                    movieGameContainerActivity.changeLoadingText(true);
                 }
 
                 @Override
@@ -270,13 +259,13 @@ public class OneMovieFragment extends Fragment {
 
                 @Override
                 public void onAdStarted() {
-                    blindtestMovieActivity.changeLoadingText(true);
+                    movieGameContainerActivity.changeLoadingText(true);
                 }
 
                 @Override
                 public void onVideoStarted() {
                     if (finalPause_time == 0) {
-                        blindtestMovieActivity.youTubePlayer.play();
+                        movieGameContainerActivity.youTubePlayer.play();
                         dismissLoadingDialog();
                         setProgressBar();
                     }
@@ -335,7 +324,7 @@ public class OneMovieFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (hasBeenPaused) {
-            blindtestMovieActivity.youTubePlayer.play();
+            movieGameContainerActivity.youTubePlayer.play();
         }
     }
 
@@ -394,7 +383,7 @@ public class OneMovieFragment extends Fragment {
 
     private void dismissLoadingDialog() {
         Log.d(TAG, "Dismiss Dialog");
-        blindtestMovieActivity.hideLoading();
+        movieGameContainerActivity.hideLoading();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -418,7 +407,7 @@ public class OneMovieFragment extends Fragment {
             movieAPIHelper.setBugMovie(searched_movie);
         }
         Log.d(TAG, "Change Fragment method");
-        blindtestMovieActivity.getRandomMovie(loadingFail);
+        movieGameContainerActivity.getRandomMovie(loadingFail);
     }
 
     private void showResult(boolean isGuessed) {
@@ -440,12 +429,12 @@ public class OneMovieFragment extends Fragment {
                     result_sentence.setText(getString(R.string.good_response, score));
                     result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-                    blindtestMovieActivity.newResponse(true, score);
+                    movieGameContainerActivity.newResponse(true, score);
                 } else {
                     result_sentence.setText(getString(R.string.not_good_movie, listSimilarTitles.get(picker.getValue()), 0));
                     result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
 
-                    blindtestMovieActivity.newResponse(false, 0);
+                    movieGameContainerActivity.newResponse(false, 0);
 
                 }
             } else {
@@ -466,7 +455,7 @@ public class OneMovieFragment extends Fragment {
     private float getTotalDuration() {
         float total_duration = 0;
         try {
-            total_duration = blindtestMovieActivity.youTubePlayer.getDurationMillis() / 1000f - video_movie.getStart_time();
+            total_duration = movieGameContainerActivity.youTubePlayer.getDurationMillis() / 1000f - video_movie.getStart_time();
         } catch (Exception e) {
             Log.d(TAG, "Time error : " + e.getMessage());
         }
@@ -476,7 +465,7 @@ public class OneMovieFragment extends Fragment {
     private float getCurrentTime() {
         float current_time = 0;
         try {
-            current_time = blindtestMovieActivity.youTubePlayer.getCurrentTimeMillis() / 1000f - video_movie.getStart_time();
+            current_time = movieGameContainerActivity.youTubePlayer.getCurrentTimeMillis() / 1000f - video_movie.getStart_time();
         } catch (Exception e) {
             Log.d(TAG, "Time error : " + e.getMessage());
         }

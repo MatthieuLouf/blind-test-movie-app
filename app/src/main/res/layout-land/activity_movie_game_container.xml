@@ -5,7 +5,7 @@
     android:id="@+id/blindtest_parent_constraint"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".pages.blindtestPage.BlindtestMovieActivity">
+    tools:context=".pages.games.MovieGameContainerActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/blindtest_sub_constraint"

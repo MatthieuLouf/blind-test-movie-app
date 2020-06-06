@@ -19,17 +19,17 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.matthieu_louf.movie_blindtest_app.pages.userPage.UserSettingsActivity"
+            android:name=".pages.userPage.UserSettingsActivity"
             android:label="@string/user_settings_title" />
         <activity
-            android:name="com.matthieu_louf.movie_blindtest_app.pages.blindtestPage.BlindtestMovieActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:name=".pages.games.MovieGameContainerActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.matthieu_louf.movie_blindtest_app.pages.detailsPage.MovieDetailsActivity"
+            android:name=".pages.detailsPage.MovieDetailsActivity"
             android:label="@string/movie_details" />
         <activity
-            android:name="com.matthieu_louf.movie_blindtest_app.pages.MainActivity"
+            android:name=".pages.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,16 +37,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper" />
+        <activity android:name=".api.MovieAPIHelper" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/ads_application_id"/>
-
+            android:value="@string/ads_application_id" />
         <meta-data
             android:name="firebase_analytics_collection_deactivated"
             android:value="@string/analytics_deactivated" />
-
     </application>
 
 </manifest>

@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
+import com.matthieu_louf.movie_blindtest_app.models.blindtest.GameParameters;
 import com.matthieu_louf.movie_blindtest_app.models.sharedPreferences.ThemePlayed;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.ThemePlayedService;
 
 import java.util.List;
 
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeViewHolder> {
-    private final List<BlindtestParameters> parameters;
+    private final List<GameParameters> parameters;
     private final int layout;
     private final Activity activity;
     private final boolean finish_activity;
@@ -23,7 +23,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeViewHolder> {
     private ThemePlayedService themePlayedService;
 
 
-    public ThemeAdapter(List<BlindtestParameters> parameters, int layout, Activity activity, boolean finish_activity) {
+    public ThemeAdapter(List<GameParameters> parameters, int layout, Activity activity, boolean finish_activity) {
         this.parameters = parameters;
         this.layout = layout;
         this.activity = activity;

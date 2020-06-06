@@ -15,10 +15,11 @@ import androidx.fragment.app.Fragment;
 
 import com.matthieu_louf.movie_blindtest_app.R;
 import com.matthieu_louf.movie_blindtest_app.firebase.FirebaseLog;
-import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
+import com.matthieu_louf.movie_blindtest_app.models.GameType;
+import com.matthieu_louf.movie_blindtest_app.models.blindtest.GameParameters;
 import com.matthieu_louf.movie_blindtest_app.models.genre.Genre;
 import com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper;
-import com.matthieu_louf.movie_blindtest_app.pages.blindtestPage.BlindtestMovieActivity;
+import com.matthieu_louf.movie_blindtest_app.pages.games.MovieGameContainerActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
@@ -98,8 +99,9 @@ public class ParamFragment extends Fragment {
                     }
                 }
 
-                BlindtestParameters blindtestParameters = new BlindtestParameters(
+                GameParameters gameParameters = new GameParameters(
                         0,
+                        GameType.BLIND_TEST,
                         R.string.param,
                         R.mipmap.infiltres,
                         maximumPage,
@@ -110,9 +112,9 @@ public class ParamFragment extends Fragment {
                         "",
                         language);
 
-                firebaseLog.startCustomBlindtest(blindtestParameters);
+                firebaseLog.startCustomBlindtest(gameParameters);
 
-                BlindtestMovieActivity.start(getContext(), blindtestParameters);
+                MovieGameContainerActivity.start(getContext(), gameParameters);
             }
         });
 

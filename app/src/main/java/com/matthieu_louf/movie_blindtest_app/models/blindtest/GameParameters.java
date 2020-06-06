@@ -1,9 +1,12 @@
 package com.matthieu_louf.movie_blindtest_app.models.blindtest;
 
+import com.matthieu_louf.movie_blindtest_app.models.GameType;
+
 import java.io.Serializable;
 
-public class BlindtestParameters implements Serializable {
+public class GameParameters implements Serializable {
     private Integer id;
+    private GameType gameType;
     private Integer idName;
     private Integer idImage;
     private Integer maximumPage;
@@ -14,8 +17,9 @@ public class BlindtestParameters implements Serializable {
     private String withOutGenres;
     private String withOriginalLanguage;
 
-    public BlindtestParameters(Integer id, Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOutGenres, String withOriginalLanguage) {
+    public GameParameters(Integer id, GameType gameType, Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOutGenres, String withOriginalLanguage) {
         this.id = id;
+        this.gameType = gameType;
         this.idName = idName;
         this.idImage = idImage;
         this.maximumPage = maximumPage;
@@ -33,6 +37,14 @@ public class BlindtestParameters implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(GameType gameType) {
+        this.gameType = gameType;
     }
 
     public Integer getIdName() {

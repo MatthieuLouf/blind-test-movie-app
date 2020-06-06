@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.matthieu_louf.movie_blindtest_app.models.blindtest.BlindtestParameters;
+import com.matthieu_louf.movie_blindtest_app.models.blindtest.GameParameters;
 import com.matthieu_louf.movie_blindtest_app.models.detailsMovie.MovieDetails;
 import com.matthieu_louf.movie_blindtest_app.models.movie.Movie;
 
@@ -43,14 +43,14 @@ public class FirebaseLog {
         mFirebaseAnalytics.logEvent("blindtest_end", bundle);
     }
 
-    public void startCustomBlindtest(BlindtestParameters blindtestParameters) {
+    public void startCustomBlindtest(GameParameters gameParameters) {
         Bundle bundle = new Bundle();
-        bundle.putInt("maximum_page", blindtestParameters.getMaximumPage());
-        bundle.putString("release_date_gte", blindtestParameters.getReleaseDateGTE());
-        bundle.putString("release_date_lte", blindtestParameters.getReleaseDateLTE());
-        bundle.putString("sort_by", blindtestParameters.getSortBy());
-        bundle.putString("with_genres", blindtestParameters.getWithGenres());
-        bundle.putString("with_original_language", blindtestParameters.getWithOriginalLanguage());
+        bundle.putInt("maximum_page", gameParameters.getMaximumPage());
+        bundle.putString("release_date_gte", gameParameters.getReleaseDateGTE());
+        bundle.putString("release_date_lte", gameParameters.getReleaseDateLTE());
+        bundle.putString("sort_by", gameParameters.getSortBy());
+        bundle.putString("with_genres", gameParameters.getWithGenres());
+        bundle.putString("with_original_language", gameParameters.getWithOriginalLanguage());
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "customized_blindtest");
         mFirebaseAnalytics.logEvent("start_custom_blindtest", bundle);
     }

@@ -1,4 +1,4 @@
-package com.matthieu_louf.movie_blindtest_app.pages.blindtestPage;
+package com.matthieu_louf.movie_blindtest_app.pages.games.blindtestGame;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,11 +35,11 @@ public class NotifyDialogFragment extends DialogFragment {
 
     private Video video;
     private Movie movie;
-    private OneMovieFragment fragment;
+    private BlindTestFragment fragment;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    NotifyDialogFragment(Video video, Movie movie, OneMovieFragment fragment) {
+    NotifyDialogFragment(Video video, Movie movie, BlindTestFragment fragment) {
         this.video = video;
         this.movie = movie;
         this.fragment = fragment;
@@ -165,7 +165,7 @@ public class NotifyDialogFragment extends DialogFragment {
 
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
-        fragment.blindtestMovieActivity.youTubePlayer.play();
+        fragment.movieGameContainerActivity.youTubePlayer.play();
         super.onDismiss(dialog);
     }
 }
