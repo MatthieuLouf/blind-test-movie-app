@@ -90,11 +90,11 @@
     <string name="send_notify">Send</string>
     <string name="cancel">Cancel</string>
     <string name="end_blindtest">Return to main menu</string>
-    <string name="result_next_text">Replay on this Theme :</string>
+    <string name="result_next_text">Replay on this %s :</string>
     <string name="not_connection">No Internet connection !</string>
     <string name="no_stared_movies">No stared movies ...</string>
     <string name="no_seen_movies">No seen movies ...</string>
-    <string name="result_text">Blind test finished with %d%s correct answers and %d%s points !</string>
+    <string name="result_text">%s finished with %d%s correct answers and %d%s points !</string>
     <string name="user_language_preference">Language preference order</string>
     <string name="user_movies_seen">Seen movies</string>
     <string name="blindtest_init_text">Scroll in the list and find the right movie !</string>
@@ -109,4 +109,6 @@
     <string name="good_or_bad_game">Good or Bad Movie</string>
     <string name="rate_of_this_movie">What is the rate of this movie ?</string>
     <string name="not_right_rate">Wrong rate ! (%d points)</string>
+    <string name="game">Game</string>
+    <string name="theme">Theme</string>
 </resources>

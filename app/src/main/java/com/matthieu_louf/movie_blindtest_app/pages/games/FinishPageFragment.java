@@ -1,4 +1,4 @@
-package com.matthieu_louf.movie_blindtest_app.pages.games.blindtestGame;
+package com.matthieu_louf.movie_blindtest_app.pages.games;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.matthieu_louf.movie_blindtest_app.R;
+import com.matthieu_louf.movie_blindtest_app.models.GameType;
 import com.matthieu_louf.movie_blindtest_app.models.blindtest.GameParameters;
-import com.matthieu_louf.movie_blindtest_app.pages.games.MovieGameContainerActivity;
 import com.matthieu_louf.movie_blindtest_app.recycler.theme.ThemeAdapter;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ public class FinishPageFragment extends Fragment {
 
     RecyclerView recyclerView;
     TextView resultSentenceTextView;
+    TextView finish_next_text;
     MaterialButton exitButton;
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -72,11 +73,15 @@ public class FinishPageFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_finish_page, container, false);
         resultSentenceTextView = root.findViewById(R.id.finish_result_text);
+        finish_next_text = root.findViewById(R.id.finish_next_text);
         resultSentenceTextView.setText(getString(R.string.result_text,
+                getGameName(),
                 number_guesses,
                 "/" + mFirebaseRemoteConfig.getLong("movie_number_in_one_blindtest"),
                 score_total,
                 "/" + mFirebaseRemoteConfig.getLong("movie_number_in_one_blindtest") * mFirebaseRemoteConfig.getLong("score_maximum_value")));
+
+        finish_next_text.setText(getString(R.string.result_next_text,getParameterType()));
 
         MovieGameContainerActivity activity = (MovieGameContainerActivity) getActivity();
         ActionBar ab = activity.getSupportActionBar();
@@ -108,5 +113,35 @@ public class FinishPageFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    public String getGameName()
+    {
+        String gameName="";
+        switch (gameParameters.getGameType())
+        {
+            case GOOD_OR_BAD:
+                gameName = getContext().getResources().getString(R.string.game);
+                break;
+            case BLIND_TEST:
+                gameName ="Blind test";
+                break;
+        }
+        return gameName;
+    }
+
+    public String getParameterType()
+    {
+        String gameName="";
+        switch (gameParameters.getGameType())
+        {
+            case GOOD_OR_BAD:
+                gameName = getContext().getResources().getString(R.string.game);
+                break;
+            case BLIND_TEST:
+                gameName = getContext().getResources().getString(R.string.theme);
+                break;
+        }
+        return gameName;
     }
 }

@@ -35,7 +35,6 @@ import com.matthieu_louf.movie_blindtest_app.models.blindtest.GameParameters;
 import com.matthieu_louf.movie_blindtest_app.models.movie.Movie;
 
 import com.matthieu_louf.movie_blindtest_app.api.MovieAPIHelper;
-import com.matthieu_louf.movie_blindtest_app.pages.games.blindtestGame.FinishPageFragment;
 import com.matthieu_louf.movie_blindtest_app.pages.games.blindtestGame.BlindTestFragment;
 import com.matthieu_louf.movie_blindtest_app.pages.games.goodOrBadGame.GoodOrBadGameFragment;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.ThemePlayedService;
