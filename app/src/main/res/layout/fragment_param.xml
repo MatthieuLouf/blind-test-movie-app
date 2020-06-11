@@ -147,8 +147,8 @@
                 android:id="@+id/params_genres_chip_group_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:gravity="center"
                 android:text="@string/with_genres"
                 android:textSize="@dimen/activity_textsize_title" />
 
@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     app:chipSpacingVertical="0.1dp"
                     app:singleLine="true"
-                    app:singleSelection="true"/>
+                    app:singleSelection="true" />
             </HorizontalScrollView>
         </LinearLayout>
 
@@ -184,7 +184,7 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:gravity="center"
                 android:text="@string/with_language"
-                android:textSize="@dimen/activity_textsize_title"/>
+                android:textSize="@dimen/activity_textsize_title" />
 
             <HorizontalScrollView
                 android:id="@+id/params_language_chip_group_container"
@@ -205,14 +205,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/params_start"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        style="?attr/materialButtonOutlinedStyle"
-        app:strokeColor="@color/colorPrimary"
         android:text="@string/start_blindtest"
+        android:textSize="@dimen/activity_textsize_normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeColor="@color/colorPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

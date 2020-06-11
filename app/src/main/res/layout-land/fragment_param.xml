@@ -165,10 +165,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/params_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/layout_from_to"
-        app:layout_constraintTop_toBottomOf="@+id/params_genres_chip_group_layout"
-        app:layout_constraintBottom_toTopOf="@id/params_start">
+        app:layout_constraintTop_toBottomOf="@+id/params_genres_chip_group_layout">
 
         <TextView
             android:id="@+id/params_language_chip_group_text"
@@ -203,6 +203,7 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:text="@string/start_blindtest"
+        android:textSize="@dimen/activity_textsize_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:strokeColor="@color/colorPrimary" />

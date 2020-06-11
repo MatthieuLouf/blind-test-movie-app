@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:text="@string/end_blindtest"
+            android:textSize="@dimen/activity_textsize_normal"
             app:layout_constraintBottom_toBottomOf="@+id/recycler_view_theme_cards"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/recycler_view_theme_cards"
