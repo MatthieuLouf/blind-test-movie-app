@@ -107,7 +107,7 @@
             app:np_dividerColor="@color/common_google_signin_btn_text_light"
             app:np_dividerThickness="1dp"
             app:np_selectedTextColor="@color/colorPrimary"
-            app:np_selectedTextSize="@dimen/activity_textsize_title_plus_2"
+            app:np_selectedTextSize="@dimen/activity_textsize_title_plus"
             app:np_textSize="@dimen/activity_textsize_title"
             app:np_wheelItemCount="3" />
 

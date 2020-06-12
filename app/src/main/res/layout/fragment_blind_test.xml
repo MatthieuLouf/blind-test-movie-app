@@ -19,14 +19,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <NumberPicker
+    <com.shawnlin.numberpicker.NumberPicker
         android:id="@+id/movie_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/test_progress_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/test_progress_bar"
+        app:np_dividerColor="@color/common_google_signin_btn_text_light"
+        app:np_dividerThickness="1dp"
+        app:np_selectedTextColor="@color/colorPrimary"
+        app:np_selectedTextSize="@dimen/activity_textsize_normal_plus"
+        app:np_textSize="@dimen/activity_textsize_normal"
+        app:np_wheelItemCount="5" />
 
     <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_movie_view"

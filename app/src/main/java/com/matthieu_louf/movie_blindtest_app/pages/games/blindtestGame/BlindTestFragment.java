@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -42,6 +41,7 @@ import com.matthieu_louf.movie_blindtest_app.pages.games.MovieGameContainerActiv
 import com.matthieu_louf.movie_blindtest_app.pages.detailsPage.MovieDetailsActivity;
 import com.matthieu_louf.movie_blindtest_app.sharedPreferences.UserLikeService;
 import com.google.android.material.button.MaterialButton;
+import com.shawnlin.numberpicker.NumberPicker;
 
 import java.lang.reflect.Method;
 import java.text.ParseException;

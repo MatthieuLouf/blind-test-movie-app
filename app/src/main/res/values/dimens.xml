@@ -6,8 +6,9 @@
     <dimen name="activity_vertical_separator">5dp</dimen>
     <dimen name="activity_cardview_border_radius">2dp</dimen>
     <dimen name="activity_textsize_normal">14sp</dimen>
+    <dimen name="activity_textsize_normal_plus">16sp</dimen>
     <dimen name="activity_textsize_title">18sp</dimen>
-    <dimen name="activity_textsize_title_plus_2">22sp</dimen>
+    <dimen name="activity_textsize_title_plus">22sp</dimen>
     <dimen name="theme_card_min_width">0dp</dimen>
     <dimen name="theme_card_height">140dp</dimen>
     <dimen name="theme_card_image_height">60dp</dimen>
