@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,6 +24,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
+import com.shawnlin.numberpicker.NumberPicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +133,13 @@ public class ParamFragment extends Fragment {
             display_table[i] = inte.toString() + "0";
         }
         numberPickerMinYear.setDisplayedValues(display_table);
+
+        for (int i = 0; i < (201 - 195) + 1; i++) {
+            if (((TextView) numberPickerMinYear.getChildAt(i)) != null) {
+                ((TextView) numberPickerMinYear.getChildAt(i)).setTextSize(30);
+                ((TextView) numberPickerMinYear.getChildAt(i)).setAllCaps(true);
+            }
+        }
 
         numberPickerMaxYear.setMinValue(196);
         numberPickerMaxYear.setMaxValue(202);

@@ -105,13 +105,19 @@
                 app:layout_constraintEnd_toStartOf="@+id/number_picker_min_year"
                 app:layout_constraintTop_toTopOf="@+id/number_picker_min_year" />
 
-            <NumberPicker
+            <com.shawnlin.numberpicker.NumberPicker
                 android:id="@+id/number_picker_min_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toEndOf="@+id/params_date_from"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:np_dividerColor="@color/common_google_signin_btn_text_light"
+                app:np_dividerThickness="1dp"
+                app:np_selectedTextColor="@color/colorPrimary"
+                app:np_selectedTextSize="@dimen/activity_textsize_title_plus_2"
+                app:np_textSize="@dimen/activity_textsize_title"
+                app:np_wheelItemCount="3" />
 
             <TextView
                 android:id="@+id/params_date_to"
@@ -125,13 +131,21 @@
                 app:layout_constraintStart_toEndOf="@id/number_picker_min_year"
                 app:layout_constraintTop_toTopOf="@+id/number_picker_max_year" />
 
-            <NumberPicker
+            <com.shawnlin.numberpicker.NumberPicker
                 android:id="@+id/number_picker_max_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toEndOf="@+id/params_date_to"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:np_dividerColor="@color/common_google_signin_btn_text_light"
+                app:np_dividerThickness="1dp"
+                app:np_fadingEdgeEnabled="true"
+                app:np_scrollerEnabled="true"
+                app:np_selectedTextColor="@color/colorPrimary"
+                app:np_textSize="@dimen/activity_textsize_title"
+                app:np_wheelItemCount="3"
+                app:np_wrapSelectorWheel="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

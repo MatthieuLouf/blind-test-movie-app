@@ -7,4 +7,5 @@
     <dimen name="theme_card_image_height">120dp</dimen>
     <dimen name="activity_textsize_normal">18sp</dimen>
     <dimen name="activity_textsize_title">24sp</dimen>
+    <dimen name="activity_textsize_title_plus_2">30sp</dimen>
 </resources>
