@@ -108,7 +108,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         if (isLiked) {
             setLikedIconFromDrawable(R.drawable.ic_star_black_24dp, getResources().getColor(R.color.colorAccent));
         } else {
-            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, Color.GRAY);
+            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, getResources().getColor(R.color.white));
         }
 
         this.image = findViewById(R.id.image_details);
@@ -132,7 +132,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         this.isLikedIcon.setOnClickListener(v -> {
             if (isLiked) {
                 userLikeService.removeLike(Integer.parseInt(movieId));
-                setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, Color.GRAY);
+                setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, getResources().getColor(R.color.white));
             } else {
                 userLikeService.addLike(Integer.parseInt(movieId));
                 setLikedIconFromDrawable(R.drawable.ic_star_black_24dp, getResources().getColor(R.color.colorAccent));

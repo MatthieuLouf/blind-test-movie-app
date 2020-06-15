@@ -113,10 +113,11 @@
                 app:layout_constraintStart_toEndOf="@+id/params_date_from"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_min="150dp"
-                app:np_dividerColor="@color/common_google_signin_btn_text_light"
+                app:np_dividerColor="@color/white"
                 app:np_dividerThickness="1dp"
-                app:np_selectedTextColor="@color/colorPrimary"
+                app:np_selectedTextColor="@color/colorAccent"
                 app:np_selectedTextSize="@dimen/activity_textsize_title_plus"
+                app:np_textColor="@color/white"
                 app:np_textSize="@dimen/activity_textsize_title"
                 app:np_wheelItemCount="5" />
 
@@ -140,9 +141,10 @@
                 app:layout_constraintStart_toEndOf="@+id/params_date_to"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_min="150dp"
-                app:np_dividerColor="@color/common_google_signin_btn_text_light"
+                app:np_dividerColor="@color/white"
                 app:np_dividerThickness="1dp"
-                app:np_selectedTextColor="@color/colorPrimary"
+                app:np_selectedTextColor="@color/colorAccent"
+                app:np_textColor="@color/white"
                 app:np_textSize="@dimen/activity_textsize_title"
                 app:np_wheelItemCount="5" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -222,9 +224,10 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:text="@string/start_blindtest"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/activity_textsize_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="@color/colorPrimary" />
+        app:strokeColor="@color/colorAccent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,20 @@
         android:id="@+id/movie_picker"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:np_dividerColor="@color/white"
+        app:np_dividerThickness="1dp"
+        app:np_selectedTextColor="@color/colorAccent"
+        app:np_selectedTextSize="@dimen/activity_textsize_normal_plus"
+        app:np_textColor="@color/white"
+        app:np_textSize="@dimen/activity_textsize_normal"
+        app:np_wheelItemCount="5" />
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.card.MaterialCardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_movie_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -103,7 +112,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/result_sentence"
@@ -147,7 +156,7 @@
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:indeterminate="false"
         android:progress="100"
-        android:progressTint="@color/colorPrimary"
+        android:progressTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

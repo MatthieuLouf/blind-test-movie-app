@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.cardview.widget.CardView;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -28,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.matthieu_louf.movie_blindtest_app.R;
@@ -73,7 +73,7 @@ public class BlindTestFragment extends Fragment {
     private MaterialButton next_movie;
     private NumberPicker picker;
     private TextView movie_title;
-    private CardView movieCardView;
+    private MaterialCardView movieCardView;
     private ProgressBar progressBar;
     private TextView result_sentence;
 
@@ -415,9 +415,9 @@ public class BlindTestFragment extends Fragment {
 
         next = true;
         next_movie.setText(R.string.next_movie);
-        next_movie.setHighlightColor(getResources().getColor(R.color.colorPrimary));
-        next_movie.setTextColor(getResources().getColor(R.color.colorPrimary));
-        next_movie.setStrokeColorResource(R.color.colorPrimary);
+        next_movie.setHighlightColor(getResources().getColor(R.color.white));
+        next_movie.setTextColor(getResources().getColor(R.color.white));
+        next_movie.setStrokeColorResource(R.color.white);
         movieCardView.setVisibility(View.VISIBLE);
         picker.setVisibility(View.INVISIBLE);
 
@@ -427,7 +427,7 @@ public class BlindTestFragment extends Fragment {
                 if (listSimilarTitles.get(picker.getValue()).equals(searched_movie.getTitle())) {
                     Integer score = (int) getScore();
                     result_sentence.setText(getString(R.string.good_response, score));
-                    result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    result_sentence.setTextColor(getResources().getColor(R.color.white));
 
                     movieGameContainerActivity.newResponse(true, score);
                 } else {
@@ -528,7 +528,7 @@ public class BlindTestFragment extends Fragment {
         if (isLiked) {
             setLikedIconFromDrawable(R.drawable.ic_star_black_24dp, getResources().getColor(R.color.colorAccent));
         } else {
-            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, Color.GRAY);
+            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, getResources().getColor(R.color.white));
         }
 
         isLikedIcon.setOnClickListener(new View.OnClickListener() {
@@ -536,7 +536,7 @@ public class BlindTestFragment extends Fragment {
             public void onClick(View v) {
                 if (isLiked) {
                     userLikeService.removeLike(movie_id);
-                    setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, Color.GRAY);
+                    setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, getResources().getColor(R.color.white));
                 } else {
                     userLikeService.addLike(movie_id);
                     setLikedIconFromDrawable(R.drawable.ic_star_black_24dp, getResources().getColor(R.color.colorAccent));

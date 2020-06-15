@@ -7,6 +7,7 @@
         android:id="@+id/menu_blindtest_notify"
         android:icon="@drawable/ic_flag_black_24dp"
         android:title="blindtest_notify"
+        app:iconTint="@color/white"
         app:showAsAction="always" />
 
 </menu>

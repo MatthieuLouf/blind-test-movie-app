@@ -180,10 +180,10 @@ public class ParamFragment extends Fragment {
                 for (Genre genre : genreList) {
                     if (genre.getId() != 99 && getContext() != null) {
                         Chip chip = new Chip(getContext());
-                        ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
+                        ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Custom_ChipGroup_Chip);
                         chip.setChipDrawable(chipDrawable);
                         chip.setText(genre.getName());
-                        setOnCheckedChangeListener(chip, R.color.colorPrimary);
+                        setOnCheckedChangeListener(chip, R.color.colorAccent);
 
                         genresChipGroup.addView(chip);
                     }
@@ -203,7 +203,7 @@ public class ParamFragment extends Fragment {
 
             Chip chip = new Chip(getContext());
 
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
+            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Custom_ChipGroup_Chip);
             chip.setChipDrawable(chipDrawable);
             chip.setText(language_array[i]);
 
@@ -219,10 +219,10 @@ public class ParamFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     chip.setChipBackgroundColorResource(color);
-                    chip.setTextColor(Color.WHITE);
+                    chip.setChipStrokeColorResource(color);
                 } else {
-                    chip.setChipBackgroundColorResource(R.color.lt_grey);
-                    chip.setTextColor(Color.BLACK);
+                    chip.setChipBackgroundColorResource(R.color.colorPrimary);
+                    chip.setChipStrokeColorResource(R.color.white);
                 }
             }
         });

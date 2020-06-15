@@ -1,30 +1,59 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="alertDialogTheme">@style/DialogTheme</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+
+        <item name="materialCardViewStyle">@style/Custom.CardView</item>
+        <item name="chipStyle">@style/Custom.CardView.Chip</item>
+        <item name="bottomNavigationStyle">@style/Custom.BottomNavigation</item>
+        <item name="tabStyle">@style/Custom.Tab</item>
+        <item name="chipGroupStyle">@style/Custom.ChipGroup</item>
+
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
     </style>
 
-    <style name="Base.TextAppearance.AppCompat.Widget.ActionBar.Title." parent="@android:style/TextAppearance">
-        <item name="android:textColor">#FFFFFF</item>
+    <style name="Custom.BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
     </style>
 
-    <style name="DialogTheme" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="backgroundColor">@color/colorAccent</item>
-        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
-        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    <style name="Custom.Tab" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
     </style>
 
-    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">#f00</item>
+    <style name="Custom.CardView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/colorPrimary</item>
+        <item name="strokeColor">@color/white</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardCornerRadius">@dimen/activity_cardview_border_radius</item>
+        <item name="chipStyle">@style/Custom.CardView.Chip</item>
     </style>
 
-    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">#00f</item>
+    <style name="Custom.CardView.Chip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipIconTint">@color/white</item>
+        <item name="chipBackgroundColor">@color/colorPrimary</item>
+        <item name="chipStrokeColor">@color/white</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Custom.ChipGroup" parent="Widget.MaterialComponents.ChipGroup">
+        <item name="chipStyle">@style/Custom.ChipGroup.Chip</item>
+    </style>
+
+    <style name="Custom.ChipGroup.Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/colorPrimary</item>
+        <item name="chipStrokeColor">@color/white</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

@@ -112,10 +112,11 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toEndOf="@+id/params_date_from"
                 app:layout_constraintTop_toTopOf="parent"
-                app:np_dividerColor="@color/common_google_signin_btn_text_light"
+                app:np_dividerColor="@color/white"
                 app:np_dividerThickness="1dp"
-                app:np_selectedTextColor="@color/colorPrimary"
+                app:np_selectedTextColor="@color/colorAccent"
                 app:np_selectedTextSize="@dimen/activity_textsize_title_plus"
+                app:np_textColor="@color/white"
                 app:np_textSize="@dimen/activity_textsize_title"
                 app:np_wheelItemCount="3" />
 
@@ -138,11 +139,10 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toEndOf="@+id/params_date_to"
                 app:layout_constraintTop_toTopOf="parent"
-                app:np_dividerColor="@color/common_google_signin_btn_text_light"
+                app:np_dividerColor="@color/white"
                 app:np_dividerThickness="1dp"
-                app:np_fadingEdgeEnabled="true"
-                app:np_scrollerEnabled="true"
-                app:np_selectedTextColor="@color/colorPrimary"
+                app:np_selectedTextColor="@color/colorAccent"
+                app:np_textColor="@color/white"
                 app:np_textSize="@dimen/activity_textsize_title"
                 app:np_wheelItemCount="3"
                 app:np_wrapSelectorWheel="true" />
@@ -226,8 +226,9 @@
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:text="@string/start_blindtest"
         android:textSize="@dimen/activity_textsize_normal"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="@color/colorPrimary" />
+        app:strokeColor="@color/colorAccent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

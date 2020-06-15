@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.card.MaterialCardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/theme_card_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/theme_card_height"
@@ -55,13 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
-                android:clickable="false"
-                android:textColor="@color/colorAccent"
-                card_view:chipBackgroundColor="@color/white"
                 card_view:chipIcon="@drawable/ic_trending_up_black_24dp"
-                card_view:chipIconTint="@color/colorAccent"
-                card_view:chipStrokeColor="@color/colorAccent"
-                card_view:chipStrokeWidth="1dp"
                 card_view:layout_constraintBottom_toTopOf="@id/theme_image"
                 card_view:layout_constraintEnd_toStartOf="@+id/theme_number_movie_played_chip"
                 card_view:layout_constraintTop_toTopOf="parent" />
@@ -72,21 +66,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
-                android:clickable="false"
                 android:gravity="center"
-                android:textColor="@color/colorAccent"
-                card_view:chipBackgroundColor="@color/white"
                 card_view:chipIcon="@drawable/ic_playlist_add_check_black_24dp"
-                card_view:chipIconTint="@color/colorAccent"
-                card_view:chipStrokeColor="@color/colorAccent"
-                card_view:chipStrokeWidth="1dp"
                 card_view:layout_constraintBottom_toTopOf="@id/theme_image"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

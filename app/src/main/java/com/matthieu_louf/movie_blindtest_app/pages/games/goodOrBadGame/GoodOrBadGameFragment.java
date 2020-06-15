@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.matthieu_louf.movie_blindtest_app.R;
@@ -71,7 +72,7 @@ public class GoodOrBadGameFragment extends Fragment {
 
     private MaterialButton next_movie;
     private TextView movie_title;
-    private CardView movieCardView;
+    private MaterialCardView movieCardView;
     private ProgressBar progressBar;
     private TextView result_sentence;
 
@@ -199,16 +200,13 @@ public class GoodOrBadGameFragment extends Fragment {
         });
     }
 
-    public void setVoteAverageOnButtons()
-    {
-        if(searched_movie.getVoteAverage()<=5)
-        {
-            choice_bad_button.setText(String.valueOf(Math.round(searched_movie.getVoteAverage()))+"/10");
-            choice_good_button.setText(String.valueOf(Math.round(searched_movie.getVoteAverage()+3.0))+"/10");
-        }
-        else {
-            choice_good_button.setText(String.valueOf(Math.round(searched_movie.getVoteAverage()))+"/10");
-            choice_bad_button.setText(String.valueOf(Math.round(searched_movie.getVoteAverage()-3.0))+"/10");
+    public void setVoteAverageOnButtons() {
+        if (searched_movie.getVoteAverage() <= 5) {
+            choice_bad_button.setText(String.valueOf(Math.round(searched_movie.getVoteAverage())) + "/10");
+            choice_good_button.setText(String.valueOf(Math.round(searched_movie.getVoteAverage() + 3.0)) + "/10");
+        } else {
+            choice_good_button.setText(String.valueOf(Math.round(searched_movie.getVoteAverage())) + "/10");
+            choice_bad_button.setText(String.valueOf(Math.round(searched_movie.getVoteAverage() - 3.0)) + "/10");
         }
     }
 
@@ -367,18 +365,18 @@ public class GoodOrBadGameFragment extends Fragment {
         choice_bad_button.setVisibility(View.INVISIBLE);
         gobg_text_choose.setVisibility(View.INVISIBLE);
         movieCardView.setVisibility(View.VISIBLE);
-        next=true;
+        next = true;
 
         if (isGuessed) {
 
             if ((searched_movie.getVoteAverage() <= 5 && !isChoiceGood) || (searched_movie.getVoteAverage() >= 7 && isChoiceGood)) {
                 Integer score = (int) getScore();
                 result_sentence.setText(getString(R.string.good_response, score));
-                result_sentence.setTextColor(getResources().getColor(R.color.colorPrimary));
+                result_sentence.setTextColor(getResources().getColor(R.color.white));
 
                 movieGameContainerActivity.newResponse(true, score);
             } else {
-                result_sentence.setText(getString(R.string.not_right_rate,  0));
+                result_sentence.setText(getString(R.string.not_right_rate, 0));
                 result_sentence.setTextColor(getResources().getColor(R.color.colorAccent));
 
                 movieGameContainerActivity.newResponse(false, 0);
@@ -481,7 +479,7 @@ public class GoodOrBadGameFragment extends Fragment {
         if (isLiked) {
             setLikedIconFromDrawable(R.drawable.ic_star_black_24dp, getResources().getColor(R.color.colorAccent));
         } else {
-            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, Color.GRAY);
+            setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, getResources().getColor(R.color.white));
         }
 
         isLikedIcon.setOnClickListener(new View.OnClickListener() {
@@ -489,7 +487,7 @@ public class GoodOrBadGameFragment extends Fragment {
             public void onClick(View v) {
                 if (isLiked) {
                     userLikeService.removeLike(movie_id);
-                    setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, Color.GRAY);
+                    setLikedIconFromDrawable(R.drawable.ic_star_border_black_24dp, getResources().getColor(R.color.white));
                 } else {
                     userLikeService.addLike(movie_id);
                     setLikedIconFromDrawable(R.drawable.ic_star_black_24dp, getResources().getColor(R.color.colorAccent));
