@@ -5,6 +5,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/activity_textsize_title</item>
 
         <item name="materialCardViewStyle">@style/Custom.CardView</item>
         <item name="chipStyle">@style/Custom.CardView.Chip</item>
@@ -29,7 +30,7 @@
         <item name="tabSelectedTextColor">@color/colorAccent</item>
     </style>
 
-    <style name="Custom.CardView" parent="@style/Widget.MaterialComponents.CardView">
+    <style name="Custom.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/colorPrimary</item>
         <item name="strokeColor">@color/white</item>
         <item name="strokeWidth">1dp</item>
