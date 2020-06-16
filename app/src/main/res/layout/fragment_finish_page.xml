@@ -61,6 +61,7 @@
             android:textSize="@dimen/activity_textsize_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recycler_view_theme_cards"
-            app:strokeColor="@color/colorPrimary" />
+            android:textColor="@color/white"
+            app:strokeColor="@color/white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

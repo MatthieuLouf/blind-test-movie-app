@@ -57,7 +57,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/recycler_view_theme_cards"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/recycler_view_theme_cards"
-            app:strokeColor="@color/colorPrimary" />
+            android:textColor="@color/white"
+            app:strokeColor="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
