@@ -111,4 +111,5 @@
     <string name="not_right_rate">Wrong rate ! (%d points)</string>
     <string name="game">Game</string>
     <string name="theme">Theme</string>
+    <string name="musical_cardname">Musical</string>
 </resources>
