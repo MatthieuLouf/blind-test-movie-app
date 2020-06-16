@@ -84,5 +84,7 @@ public interface GetMovieService {
                                               @Query("vote_count.gte") String vote_countGreaterThan,
                                               @Query("vote_average.gte") String vote_averageGreaterThan,
                                               @Query("vote_average.lte") String vote_averageLowerThan,
-                                              @Query("without_genres") String without_genres);
+                                              @Query("without_genres") String without_genres,
+                                              @Query("with_keywords") String with_keywords,
+                                              @Query("without_keywords") String without_keywords);
 }

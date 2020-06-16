@@ -23,7 +23,7 @@ import java.util.List;
 public class OtherGamesFragment extends Fragment {
 
     private GameParameters[] gameParameters = new GameParameters[]{
-            new GameParameters(1000, GameType.GOOD_OR_BAD, R.string.good_or_bad_game, R.mipmap.good_or_bad, 10, "vote_average.asc", "", "", "", "", "")
+            new GameParameters(1000, GameType.GOOD_OR_BAD, R.string.good_or_bad_game, R.mipmap.good_or_bad, 10, "vote_average.asc", "", "", "", "","","", "")
     };
 
     private Button start_good_or_bad_game_button;

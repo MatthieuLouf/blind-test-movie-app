@@ -15,9 +15,11 @@ public class GameParameters implements Serializable {
     private String releaseDateLTE;
     private String withGenres;
     private String withOutGenres;
+    private String withKeywords;
+    private String withOutKeywords;
     private String withOriginalLanguage;
 
-    public GameParameters(Integer id, GameType gameType, Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOutGenres, String withOriginalLanguage) {
+    public GameParameters(Integer id, GameType gameType, Integer idName, Integer idImage, Integer maximumPage, String sortBy, String releaseDateGTE, String releaseDateLTE, String withGenres, String withOutGenres, String withKeywords, String withOutKeywords, String withOriginalLanguage) {
         this.id = id;
         this.gameType = gameType;
         this.idName = idName;
@@ -28,6 +30,8 @@ public class GameParameters implements Serializable {
         this.releaseDateLTE = releaseDateLTE;
         this.withGenres = withGenres;
         this.withOutGenres = withOutGenres;
+        this.withKeywords = withKeywords;
+        this.withOutKeywords = withOutKeywords;
         this.withOriginalLanguage = withOriginalLanguage;
     }
 
@@ -109,6 +113,22 @@ public class GameParameters implements Serializable {
 
     public void setWithOutGenres(String withOutGenres) {
         this.withOutGenres = withOutGenres;
+    }
+
+    public String getWithKeywords() {
+        return withKeywords;
+    }
+
+    public void setWithKeywords(String withKeywords) {
+        this.withKeywords = withKeywords;
+    }
+
+    public String getWithOutKeywords() {
+        return withOutKeywords;
+    }
+
+    public void setWithOutKeywords(String withOutKeywords) {
+        this.withOutKeywords = withOutKeywords;
     }
 
     public String getWithOriginalLanguage() {

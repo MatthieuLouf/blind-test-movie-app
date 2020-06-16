@@ -111,6 +111,8 @@ public class ParamFragment extends Fragment {
                         releaseDateLTE,
                         genres,
                         "",
+                        "",
+                        "",
                         language);
 
                 firebaseLog.startCustomBlindtest(gameParameters);

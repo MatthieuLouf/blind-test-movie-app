@@ -195,22 +195,19 @@ public class MovieAPIHelper extends AppCompatActivity {
     public void loadList(Context context, GameParameters parameters, Callback<List<Movie>> movieCallback) {
         Log.d(TAG, "enter loadList");
 
-        String voteAverageGTE ="";
-        String voteAverageLTE ="";
+        String voteAverageGTE = "";
+        String voteAverageLTE = "";
         for (int i = 1; i <= parameters.getMaximumPage(); i++) {
             int page_number = i;
-            if(parameters.getGameType()== GameType.GOOD_OR_BAD)
-            {
-                if(i%2==0)
-                {
-                    voteAverageGTE ="4";
-                    voteAverageLTE ="5";
+            if (parameters.getGameType() == GameType.GOOD_OR_BAD) {
+                if (i % 2 == 0) {
+                    voteAverageGTE = "4";
+                    voteAverageLTE = "5";
+                } else {
+                    voteAverageGTE = "7";
+                    voteAverageLTE = "8";
                 }
-                else {
-                    voteAverageGTE ="7";
-                    voteAverageLTE ="8";
-                }
-                page_number = i/2;
+                page_number = i / 2;
             }
             retrofitService.getParametersMovies(page_number,
                     context.getResources().getString(R.string.tmdb_api_key),
@@ -224,7 +221,9 @@ public class MovieAPIHelper extends AppCompatActivity {
                     "300",
                     voteAverageGTE,
                     voteAverageLTE,
-                    "99" + (!parameters.getWithOutGenres().equals("") ? "," + parameters.getWithOutGenres() : "")).enqueue(movieListCallback(movieCallback, parameters.getMaximumPage(), i));
+                    "99" + (!parameters.getWithOutGenres().equals("") ? "," + parameters.getWithOutGenres() : ""),
+                    parameters.getWithKeywords(),
+                    parameters.getWithOutKeywords()).enqueue(movieListCallback(movieCallback, parameters.getMaximumPage(), i));
         }
     }
 
